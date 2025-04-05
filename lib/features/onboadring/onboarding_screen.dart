@@ -1,3 +1,4 @@
+import 'package:docpoint/features/onboadring/widgets/pages_onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -12,30 +13,6 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
-
-  final List<OnboardingPage> _pages = [
-    OnboardingPage(
-      title: "Find Trusted Doctors",
-      description:
-          "Connect with verified healthcare professionals near you with just a few taps.",
-      image: "assets/doctor-search.jpg",
-      color: const Color(0xFF2A7DBC),
-    ),
-    OnboardingPage(
-      title: "Instant Appointments",
-      description:
-          "Book same-day or future appointments 24/7 without the phone calls.",
-      image: "assets/calendar.jpg",
-      color: const Color(0xFF4CAF50),
-    ),
-    OnboardingPage(
-      title: "Health at Your Fingertips",
-      description:
-          "Access your medical records, prescriptions, and test results all in one place.",
-      image: "assets/health_records.jpg",
-      color: const Color(0xFF9C27B0),
-    ),
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -53,39 +30,39 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         children: [
           PageView.builder(
             controller: _pageController,
-            itemCount: _pages.length,
+            itemCount: pages.length,
             onPageChanged: (index) {
               setState(() {
                 _currentPage = index;
               });
             },
             itemBuilder: (context, index) {
-              return OnboardingPageWidget(page: _pages[index]);
+              return OnboardingPageWidget(page: pages[index]);
             },
           ),
 
-          // Page Indicator
-          Positioned(
-            bottom: 80.h,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: SmoothPageIndicator(
-                controller: _pageController,
-                count: _pages.length,
-                effect: ExpandingDotsEffect(
-                  activeDotColor: const Color(0xFF2A7DBC),
-                  dotColor: Colors.grey,
-                  dotHeight: 8.h,
-                  dotWidth: 8.w,
-                  spacing: 8.w,
+          if (_currentPage != pages.length - 1)
+            Positioned(
+              bottom: 80.h,
+              left: 0,
+              right: 0,
+              child: Center(
+                child: SmoothPageIndicator(
+                  controller: _pageController,
+                  count: pages.length,
+                  effect: ExpandingDotsEffect(
+                    activeDotColor: const Color(0xFF2A7DBC),
+                    dotColor: Colors.grey,
+                    dotHeight: 8.h,
+                    dotWidth: 8.w,
+                    spacing: 8.w,
+                  ),
                 ),
               ),
             ),
-          ),
 
           // Get Started Button (only on last page)
-          if (_currentPage == _pages.length - 1)
+          if (_currentPage == pages.length - 1)
             Positioned(
               bottom: 30.h,
               left: 24.w,
@@ -119,12 +96,12 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             right: 24.w,
             child: TextButton(
               onPressed: () {
-                _pageController.jumpToPage(_pages.length - 1);
+                _pageController.jumpToPage(pages.length - 1);
               },
               child: Text(
                 "Skip",
                 style: TextStyle(
-                  color: _currentPage == _pages.length - 1
+                  color: _currentPage == pages.length - 1
                       ? Colors.transparent
                       : const Color(0xFF2A7DBC),
                   fontSize: 16.sp,
