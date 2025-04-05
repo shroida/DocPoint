@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
@@ -17,25 +18,36 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       title: "Find Trusted Doctors",
       description:
           "Connect with verified healthcare professionals near you with just a few taps.",
-      image: "assets/doctor_search.png",
-      color: Color(0xFF2A7DBC),
+      image: "assets/doctor-search.jpg",
+      color: const Color(0xFF2A7DBC),
     ),
     OnboardingPage(
-        title: "Instant Appointments",
-        description:
-            "Book same-day or future appointments 24/7 without the phone calls.",
-        image: "assets/calendar.png",
-        color: Color(0xFF4CAF50)),
+      title: "Instant Appointments",
+      description:
+          "Book same-day or future appointments 24/7 without the phone calls.",
+      image: "assets/calendar.jpg",
+      color: const Color(0xFF4CAF50),
+    ),
     OnboardingPage(
-        title: "Health at Your Fingertips",
-        description:
-            "Access your medical records, prescriptions, and test results all in one place.",
-        image: "assets/health_records.png",
-        color: Color(0xFF9C27B0)),
+      title: "Health at Your Fingertips",
+      description:
+          "Access your medical records, prescriptions, and test results all in one place.",
+      image: "assets/health_records.jpg",
+      color: const Color(0xFF9C27B0),
+    ),
   ];
 
   @override
   Widget build(BuildContext context) {
+    // Initialize screenutil
+    ScreenUtil.init(
+      context,
+      designSize: const Size(
+          360, 690), // Standard design size (e.g., based on Figma design)
+      minTextAdapt: true,
+      splitScreenMode: true,
+    );
+
     return Scaffold(
       body: Stack(
         children: [
@@ -51,29 +63,33 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               return OnboardingPageWidget(page: _pages[index]);
             },
           ),
+
+          // Page Indicator
           Positioned(
-            bottom: 80,
+            bottom: 80.h,
             left: 0,
             right: 0,
             child: Center(
               child: SmoothPageIndicator(
                 controller: _pageController,
                 count: _pages.length,
-                effect: const ExpandingDotsEffect(
-                  activeDotColor: Color(0xFF2A7DBC),
+                effect: ExpandingDotsEffect(
+                  activeDotColor: const Color(0xFF2A7DBC),
                   dotColor: Colors.grey,
-                  dotHeight: 8,
-                  dotWidth: 8,
-                  spacing: 8,
+                  dotHeight: 8.h,
+                  dotWidth: 8.w,
+                  spacing: 8.w,
                 ),
               ),
             ),
           ),
+
+          // Get Started Button (only on last page)
           if (_currentPage == _pages.length - 1)
             Positioned(
-              bottom: 30,
-              left: 24,
-              right: 24,
+              bottom: 30.h,
+              left: 24.w,
+              right: 24.w,
               child: ElevatedButton(
                 onPressed: () {
                   // Navigate to main app
@@ -81,26 +97,28 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF2A7DBC),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(12.r),
                   ),
-                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  padding: EdgeInsets.symmetric(vertical: 16.h),
+                  minimumSize: Size(double.infinity, 56.h),
                 ),
-                child: const Text(
+                child: Text(
                   "Get Started",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 18,
+                    fontSize: 18.sp,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
             ),
+
+          // Skip Button
           Positioned(
-            top: 60,
-            right: 24,
+            top: 60.h,
+            right: 24.w,
             child: TextButton(
               onPressed: () {
-                // Skip onboarding
                 _pageController.jumpToPage(_pages.length - 1);
               },
               child: Text(
@@ -109,7 +127,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   color: _currentPage == _pages.length - 1
                       ? Colors.transparent
                       : const Color(0xFF2A7DBC),
-                  fontSize: 16,
+                  fontSize: 16.sp,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -144,13 +162,16 @@ class OnboardingPageWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: Colors.white,
-      padding: const EdgeInsets.symmetric(horizontal: 24),
+      padding: EdgeInsets.symmetric(horizontal: 24.w),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Spacer(flex: 2),
+          SizedBox(height: 50.h), // Top padding
+
+          // Image
           Container(
-            height: 300,
+            height: 300.h,
+            width: double.infinity,
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(page.image),
@@ -158,27 +179,35 @@ class OnboardingPageWidget extends StatelessWidget {
               ),
             ),
           ),
-          const Spacer(),
+
+          SizedBox(height: 40.h),
+
+          // Title
           Text(
             page.title,
             style: TextStyle(
-              fontSize: 28,
+              fontSize: 28.sp,
               fontWeight: FontWeight.bold,
               color: page.color,
+              height: 1.3,
             ),
             textAlign: TextAlign.center,
           ),
-          const SizedBox(height: 16),
+
+          SizedBox(height: 16.h),
+
+          // Description
           Text(
             page.description,
-            style: const TextStyle(
-              fontSize: 16,
+            style: TextStyle(
+              fontSize: 16.sp,
               color: Colors.black54,
               height: 1.5,
             ),
             textAlign: TextAlign.center,
           ),
-          const Spacer(flex: 3),
+
+          const Spacer(), // Pushes content up
         ],
       ),
     );
