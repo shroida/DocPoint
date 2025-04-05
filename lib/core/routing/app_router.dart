@@ -1,4 +1,5 @@
 import 'package:docpoint/core/routing/routes.dart';
+import 'package:docpoint/features/login/ui/login_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
 import 'package:go_router/go_router.dart';
 
@@ -9,6 +10,9 @@ class AppRouter {
         path: Routes.onBoardingScreen,
         builder: (context, state) => const OnboardingScreen(),
       ),
+      GoRoute(
+          path: Routes.loginScreen,
+          builder: (context, state) => const LoginScreen())
     ],
     initialLocation: Routes.onBoardingScreen,
   );
