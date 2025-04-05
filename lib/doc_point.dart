@@ -13,7 +13,11 @@ class DocPoint extends StatelessWidget {
         minTextAdapt: true,
         splitScreenMode: true,
         builder: (_, child) {
-          
+          return MaterialApp.router(
+            routerDelegate: appRouter.routerDelegate,
+            routeInformationParser: appRouter.routeInformationParser,
+            routeInformationProvider: appRouter.routeInformationProvider,
+          );
         });
   }
 }
