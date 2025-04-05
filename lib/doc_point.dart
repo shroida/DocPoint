@@ -7,7 +7,7 @@ class DocPoint extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: On
+      home: 
     );
   }
 }
