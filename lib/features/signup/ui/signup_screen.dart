@@ -32,6 +32,28 @@ class SignupScreenState extends State<SignupScreen> {
   final Location _location = Location();
   bool _isLoading = false;
   bool _obscureText = true;
+
+  Future<void> _pickImage() async {
+    try {
+      final XFile? pickedFile = await _picker.pickImage(
+        source: ImageSource.gallery,
+        maxWidth: 800,
+        maxHeight: 800,
+        imageQuality: 90,
+      );
+
+      if (pickedFile != null) {
+        setState(() {
+          _imageFile = pickedFile;
+        });
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to pick image: ${e.toString()}')),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +72,7 @@ class SignupScreenState extends State<SignupScreen> {
                 children: [
                   Center(
                     child: GestureDetector(
-                      onTap: () {},
+                      onTap: _pickImage,
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(100),
                         child: _imageFile != null
