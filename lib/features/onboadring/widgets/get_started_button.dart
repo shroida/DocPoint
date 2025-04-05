@@ -1,5 +1,7 @@
+import 'package:docpoint/core/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class GetStartedButton extends StatelessWidget {
   const GetStartedButton({
@@ -14,7 +16,7 @@ class GetStartedButton extends StatelessWidget {
       right: 24.w,
       child: ElevatedButton(
         onPressed: () {
-          // Navigate to main app
+          context.go(Routes.loginScreen);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF2A7DBC),
