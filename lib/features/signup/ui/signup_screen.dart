@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
 
@@ -26,7 +27,6 @@ class SignupScreenState extends State<SignupScreen> {
   String yearsOfExperience = '';
   double latitude = 0.0;
   double longitude = 0.0;
-  final ImagePicker _picker = ImagePicker();
   XFile? _imageFile;
 
   final Location _location = Location();
@@ -35,11 +35,8 @@ class SignupScreenState extends State<SignupScreen> {
 
   Future<void> _pickImage() async {
     try {
-      final XFile? pickedFile = await _picker.pickImage(
+      final XFile? pickedFile = await ImagePicker().pickImage(
         source: ImageSource.gallery,
-        maxWidth: 800,
-        maxHeight: 800,
-        imageQuality: 90,
       );
 
       if (pickedFile != null) {
@@ -48,9 +45,11 @@ class SignupScreenState extends State<SignupScreen> {
         });
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Failed to pick image: ${e.toString()}')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Failed to pick image: ${e.toString()}')),
+        );
+      }
     }
   }
 
@@ -96,6 +95,101 @@ class SignupScreenState extends State<SignupScreen> {
                               ),
                       ),
                     ),
+                  ),
+                  SizedBox(
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const Text(
+                          'Select User Type',
+                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        ),
+                        Wrap(
+                          spacing: 8.0, // Spacing between chips
+                          children: ['Patient', 'Doctor'].map((String type) {
+                            final isSelected = userType == type;
+                            return ChoiceChip(
+                              checkmarkColor: Colors.white,
+                              label: Text(type),
+                              selected: isSelected,
+                              selectedColor: const Color(0xff0064FA),
+                              backgroundColor: const Color(0xffF0EFFF),
+                              labelStyle: TextStyle(
+                                color: isSelected
+                                    ? Colors.white
+                                    : const Color(0xff0064FA),
+                                fontFamily: 'Poppins',
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                                side: BorderSide(
+                                  color: isSelected
+                                      ? const Color(0xff0064FA)
+                                      : const Color(0xff0064FA),
+                                  width: 2.0,
+                                ),
+                              ),
+                              onSelected: (bool selected) {
+                                setState(() {
+                                  userType = selected ? type : 'Patient';
+                                });
+                              },
+                            );
+                          }).toList(),
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  SizedBox(
+                    height: 44,
+                    child: TextFormField(
+                      style: const TextStyle(
+                          fontSize: 13, fontWeight: FontWeight.w500),
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: const Color(0xffF0EFFF),
+                        contentPadding:
+                            const EdgeInsets.only(left: 10, right: 10),
+                        labelText: 'Email',
+                        labelStyle: TextStyle(
+                            fontSize: 13, color: Colors.grey.shade400),
+                        border: OutlineInputBorder(
+                          borderRadius:
+                              BorderRadius.circular(10.0), // Rounded corners
+                          borderSide: const BorderSide(
+                            color: Color(0xff0064FA), // Blue border color
+                            width: 1.0, // Border width
+                          ),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Color(
+                                0xff0064FA), // Blue border color when focused
+                            width: 1.0, // Border width
+                          ),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          borderSide: const BorderSide(
+                            color: Color(
+                                0xff0064FA), // Blue border color when not focused
+                            width: 1.0, // Border width
+                          ),
+                        ),
+                      ),
+                      keyboardType: TextInputType.emailAddress,
+                      onChanged: (val) => email = val,
+                      validator: (val) =>
+                          val!.isEmpty ? 'Enter an email' : null,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
                   ),
                 ]),
           ),
