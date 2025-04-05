@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DocPoint extends StatelessWidget {
   const DocPoint({super.key, required this.appRouter});
@@ -7,11 +8,12 @@ class DocPoint extends StatelessWidget {
   final GoRouter appRouter;
   @override
   Widget build(BuildContext context) {
-    return MaterialApp.router(
-      routeInformationParser: appRouter.routeInformationParser,
-      routerDelegate: appRouter.routerDelegate,
-      routeInformationProvider: appRouter.routeInformationProvider,
-      debugShowCheckedModeBanner: false,
-    );
+    return ScreenUtilInit(
+        designSize: const Size(360, 690),
+        minTextAdapt: true,
+        splitScreenMode: true,
+        builder: (_, child) {
+          
+        });
   }
 }
