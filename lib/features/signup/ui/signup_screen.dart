@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:location/location.dart';
@@ -36,13 +38,45 @@ class SignupScreenState extends State<SignupScreen> {
         appBar: AppBar(
           title: const Text(
             'Register',
-            style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
           ),
         ),
-        body: const SafeArea(
-          child: Center(
-            child: Text('signup'),
+        body: SafeArea(
+            child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Center(
+                    child: GestureDetector(
+                      onTap: () {},
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(100),
+                        child: _imageFile != null
+                            ? Image.file(
+                                File(_imageFile!.path),
+                                width: 100,
+                                height: 100,
+                                fit: BoxFit.cover,
+                              )
+                            : Container(
+                                color: const Color(0xffF0EFFF),
+                                width: 100,
+                                height: 100,
+                                child: Center(
+                                  child: Icon(
+                                    Icons.add_a_photo,
+                                    color: Colors.grey.shade600,
+                                    size: 30,
+                                  ),
+                                ),
+                              ),
+                      ),
+                    ),
+                  ),
+                ]),
           ),
-        ));
+        )));
   }
 }
