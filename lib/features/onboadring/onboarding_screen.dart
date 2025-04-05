@@ -1,3 +1,4 @@
+import 'package:docpoint/features/onboadring/widgets/dots_indicator.dart';
 import 'package:docpoint/features/onboadring/widgets/pages_onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,15 +17,6 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    // Initialize screenutil
-    ScreenUtil.init(
-      context,
-      designSize: const Size(
-          360, 690), // Standard design size (e.g., based on Figma design)
-      minTextAdapt: true,
-      splitScreenMode: true,
-    );
-
     return Scaffold(
       body: Stack(
         children: [
@@ -42,53 +34,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
           ),
 
           if (_currentPage != pages.length - 1)
-            Positioned(
-              bottom: 80.h,
-              left: 0,
-              right: 0,
-              child: Center(
-                child: SmoothPageIndicator(
-                  controller: _pageController,
-                  count: pages.length,
-                  effect: ExpandingDotsEffect(
-                    activeDotColor: const Color(0xFF2A7DBC),
-                    dotColor: Colors.grey,
-                    dotHeight: 8.h,
-                    dotWidth: 8.w,
-                    spacing: 8.w,
-                  ),
-                ),
-              ),
-            ),
+            DotsIndicator(pageController: _pageController),
 
           // Get Started Button (only on last page)
-          if (_currentPage == pages.length - 1)
-            Positioned(
-              bottom: 30.h,
-              left: 24.w,
-              right: 24.w,
-              child: ElevatedButton(
-                onPressed: () {
-                  // Navigate to main app
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF2A7DBC),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.r),
-                  ),
-                  padding: EdgeInsets.symmetric(vertical: 16.h),
-                  minimumSize: Size(double.infinity, 56.h),
-                ),
-                child: Text(
-                  "Get Started",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ),
+          if (_currentPage == pages.length - 1) GetStartedButton(),
 
           // Skip Button
           Positioned(
@@ -115,6 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     );
   }
 }
+
 
 class OnboardingPage {
   final String title;
