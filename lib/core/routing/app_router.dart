@@ -7,7 +7,7 @@ class AppRouter {
     routes: [
       GoRoute(
         path: Routes.onBoardingScreen,
-        builder: (context, state) => const OnboadringScreen(),
+        builder: (context, state) => const OnboardingScreen(),
       ),
     ],
     initialLocation: Routes.onBoardingScreen,
