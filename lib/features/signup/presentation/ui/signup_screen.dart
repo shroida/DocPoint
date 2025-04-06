@@ -29,7 +29,7 @@ class SignupScreenState extends State<SignupScreen> {
   double latitude = 0.0;
   double longitude = 0.0;
   XFile? _imageFile;
-  
+
   final Location _location = Location();
   bool _isLoading = false;
   bool _obscureText = true;
@@ -147,6 +147,38 @@ class SignupScreenState extends State<SignupScreen> {
                   ),
                   AppTextFormField(
                       hintText: 'Email',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {}
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AppTextFormField(
+                      hintText: 'Password',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {}
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AppTextFormField(
+                      hintText: 'First name',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {}
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AppTextFormField(
+                      hintText: 'Last name',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {}
+                      }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AppTextFormField(
+                      hintText: 'Phone number',
                       validator: (value) {
                         if (value == null || value.isEmpty) {}
                       }),
