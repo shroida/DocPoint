@@ -1,280 +1,126 @@
 import 'dart:io';
-import 'package:docpoint/core/widgets/app_dropdown_form_field.dart';
-import 'package:docpoint/core/widgets/app_text_form_field.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:location/location.dart';
 
-class SignupScreen extends StatefulWidget {
+import 'package:docpoint/core/widgets/app_dropdown_form_field.dart';
+import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
+import 'package:docpoint/features/signup/presentation/ui/widgets/patient_form.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+
+class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
 
   @override
-  SignupScreenState createState() => SignupScreenState();
-}
-
-class SignupScreenState extends State<SignupScreen> {
-  String userType = 'Patient';
-  String city = 'Giza';
-  String category = 'Dentist';
-
-  XFile? _imageFile;
-  bool isPasswordObscureText = true;
-  final List<String> cities = [
-    'Giza',
-    'Cairo',
-    'Alexandria',
-    'hurghada',
-    'Suez'
-  ];
-  final List<String> categories = [
-    'Dentist',
-    'Cardiologist',
-    'General Physician',
-    'Pediatrician',
-    'Orthopedist',
-    'Internist',
-    'Surgeon',
-    'ENT Specialist',
-    'Dermatologist'
-  ];
-
-  final Location _location = Location();
-
-  Future<void> _pickImage() async {
-    try {
-      final XFile? pickedFile = await ImagePicker().pickImage(
-        source: ImageSource.gallery,
-      );
-
-      if (pickedFile != null) {
-        setState(() {
-          _imageFile = pickedFile;
-        });
-      }
-    } catch (e) {
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to pick image: ${e.toString()}')),
-        );
-      }
-    }
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return BlocProvider(
+      create: (context) => SignupCubit(),
+      child: Scaffold(
         appBar: AppBar(
-          title: const Text(
-            'Register',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
-          ),
+          title: const Text('Register'),
         ),
         body: SafeArea(
-            child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Center(
-                    child: GestureDetector(
-                      onTap: _pickImage,
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(100),
-                        child: _imageFile != null
-                            ? Image.file(
-                                File(_imageFile!.path),
-                                width: 100,
-                                height: 100,
-                                fit: BoxFit.cover,
-                              )
-                            : Container(
-                                color: const Color(0xffF0EFFF),
-                                width: 100,
-                                height: 100,
-                                child: Center(
-                                  child: Icon(
-                                    Icons.add_a_photo,
-                                    color: Colors.grey.shade600,
-                                    size: 30,
-                                  ),
-                                ),
-                              ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.all(16.0.w),
+              child: BlocBuilder<SignupCubit, SignupState>(
+                builder: (context, state) {
+                  final cubit = context.read<SignupCubit>();
+                  return Form(
+                    key: cubit.formKey,
                     child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        const Text(
-                          'Select User Type',
-                          style: TextStyle(fontSize: 14, color: Colors.grey),
+                        // Profile image picker
+                        Center(
+                          child: GestureDetector(
+                            onTap: cubit.pickImage,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: cubit.imageFile != null
+                                  ? Image.file(
+                                      File(cubit.imageFile!.path),
+                                      width: 100.w,
+                                      height: 100.h,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Container(
+                                      color: const Color(0xffF0EFFF),
+                                      width: 100.w,
+                                      height: 100.h,
+                                      child: Center(
+                                        child: Icon(
+                                          Icons.add_a_photo,
+                                          color: Colors.grey.shade600,
+                                          size: 30.sp,
+                                        ),
+                                      ),
+                                    ),
+                            ),
+                          ),
                         ),
-                        Wrap(
-                          spacing: 8.0,
-                          children: ['Patient', 'Doctor'].map((String type) {
-                            final isSelected = userType == type;
-                            return ChoiceChip(
-                              checkmarkColor: Colors.white,
-                              label: Text(type),
-                              selected: isSelected,
-                              selectedColor: const Color(0xff0064FA),
-                              backgroundColor: const Color(0xffF0EFFF),
-                              labelStyle: TextStyle(
-                                color: isSelected
-                                    ? Colors.white
-                                    : const Color(0xff0064FA),
-                                fontFamily: 'Poppins',
+                        SizedBox(height: 16.h),
+                        // User type selection
+                        SizedBox(
+                          width: double.infinity,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text('Select User Type'),
+                              Wrap(
+                                spacing: 8.0,
+                                children: ['Patient', 'Doctor'].map((type) {
+                                  final isSelected = cubit.userType == type;
+                                  return ChoiceChip(
+                                    label: Text(type),
+                                    selected: isSelected,
+                                    onSelected: (_) => cubit.setUserType(type),
+                                  );
+                                }).toList(),
                               ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                side: BorderSide(
-                                  color: isSelected
-                                      ? const Color(0xff0064FA)
-                                      : const Color(0xff0064FA),
-                                  width: 2.0,
-                                ),
-                              ),
-                              onSelected: (bool selected) {
-                                setState(() {
-                                  userType = selected ? type : 'Patient';
-                                });
-                              },
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: 16.h),
+                        // City dropdown (common for both)
+                        AppDropdownFormField<String>(
+                          hintText: 'Select your city',
+                          value: cubit.city,
+                          items: cubit.cities.map((value) {
+                            return DropdownMenuItem<String>(
+                              value: value,
+                              child: Text(value),
                             );
                           }).toList(),
+                          onChanged: (value) => cubit.setCity(value!),
+                          validator: (value) {
+                            if (value == null) return 'Please select your city';
+                            return null;
+                          },
+                        ),
+                        SizedBox(height: 10.h),
+                        // Show appropriate form based on user type
+                        cubit.userType == 'Patient'
+                            ? const PatientForm()
+                            : const DoctorForm(),
+                        SizedBox(height: 20.h),
+                        ElevatedButton(
+                          onPressed: () {
+                            if (cubit.formKey.currentState!.validate()) {
+                              // Handle registration
+                            }
+                          },
+                          child: const Text('Register'),
                         ),
                       ],
                     ),
-                  ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
-                  AppTextFormField(
-                      hintText: 'Email',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a valid name';
-                        }
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AppTextFormField(
-                      hintText: 'Password',
-                      isObscureText: isPasswordObscureText,
-                      suffixIcon: GestureDetector(
-                        onTap: () {
-                          setState(() {
-                            isPasswordObscureText = !isPasswordObscureText;
-                          });
-                        },
-                        child: Icon(
-                          isPasswordObscureText
-                              ? Icons.visibility_off
-                              : Icons.visibility,
-                        ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a valid Password';
-                        }
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AppTextFormField(
-                      hintText: 'First name',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a valid first name';
-                        }
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AppTextFormField(
-                      hintText: 'Last name',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a valid last name';
-                        }
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AppTextFormField(
-                      hintText: 'Phone number',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Please enter a valid phone number';
-                        }
-                      }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  AppDropdownFormField<String>(
-                    hintText: 'Select your city',
-                    value: city,
-                    items: cities.map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    onChanged: (value) {
-                      setState(() {
-                        city = value!;
-                      });
-                    },
-                    validator: (value) {
-                      if (value == null) {
-                        return 'Please select your city';
-                      }
-                      return null;
-                    },
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  if (userType == 'Doctor')
-                    AppDropdownFormField<String>(
-                      hintText: 'Select your category',
-                      value: category,
-                      items: categories.map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          category = value!;
-                        });
-                      },
-                      validator: (value) {
-                        if (value == null) {
-                          return 'Please select your category';
-                        }
-                        return null;
-                      },
-                    ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  if (userType == 'Doctor')
-                    AppTextFormField(
-                        hintText: 'Experience',
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {}
-                        }),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                ]),
+                  );
+                },
+              ),
+            ),
           ),
-        )));
+        ),
+      ),
+    );
   }
 }
