@@ -2,6 +2,7 @@ import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.d
 import 'package:docpoint/features/signup/presentation/ui/widgets/doctor_form.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/patient_form.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/pick_image.dart';
+import 'package:docpoint/features/signup/presentation/ui/widgets/user_type_selector.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,8 +40,6 @@ class SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cubitSignup = context.read<SignupCubit>();
-
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -52,63 +51,22 @@ class SignupScreenState extends State<SignupScreen> {
             child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const PickImage(),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text(
-                          'Select User Type',
-                          style: TextStyle(fontSize: 14, color: Colors.grey),
-                        ),
-                        Wrap(
-                          spacing: 8.0,
-                          children: ['Patient', 'Doctor'].map((String type) {
-                            final isSelected = cubitSignup.userType == type;
-                            return ChoiceChip(
-                              checkmarkColor: Colors.white,
-                              label: Text(type),
-                              selected: isSelected,
-                              selectedColor: const Color(0xff0064FA),
-                              backgroundColor: const Color(0xffF0EFFF),
-                              labelStyle: TextStyle(
-                                color: isSelected
-                                    ? Colors.white
-                                    : const Color(0xff0064FA),
-                                fontFamily: 'Poppins',
-                              ),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(20.0),
-                                side: BorderSide(
-                                  color: isSelected
-                                      ? const Color(0xff0064FA)
-                                      : const Color(0xff0064FA),
-                                  width: 2.0,
-                                ),
-                              ),
-                              onSelected: (bool selected) {
-                                setState(() {
-                                  cubitSignup.userType =
-                                      selected ? type : 'Patient';
-                                });
-                              },
-                            );
-                          }).toList(),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
-                  cubitSignup.userType == 'Patient'
-                      ? const PatientForm()
-                      : const DoctorForm()
-                ]),
+            child: BlocBuilder<SignupCubit, SignupState>(
+              builder: (context, state) {
+                final cubitSignup = context.read<SignupCubit>();
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const PickImage(),
+                    const UserTypeSelector(),
+                    SizedBox(height: 16.h),
+                    cubitSignup.userType == 'Patient'
+                        ? const PatientForm()
+                        : const DoctorForm(),
+                  ],
+                );
+              },
+            ),
           ),
         )));
   }

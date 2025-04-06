@@ -25,9 +25,6 @@ class SignupCubit extends Cubit<SignupState> {
 
   // Image file
   XFile? imageFile;
-  void setUserType(String type) {
-    userType = type;
-  }
 
   void setCity(String selectedCity) {
     city = selectedCity;
@@ -35,6 +32,11 @@ class SignupCubit extends Cubit<SignupState> {
 
   void setCategory(String selectedCategory) {
     category = selectedCategory;
+  }
+
+  void setUserType(String type) {
+    userType = type;
+    emit(SignupUserTypeUpdated(userType)); // Make sure you have this state
   }
 
   Future<void> pickImage() async {
