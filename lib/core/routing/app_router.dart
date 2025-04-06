@@ -1,7 +1,7 @@
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/features/login/ui/login_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
-import 'package:docpoint/features/signup/ui/signup_screen.dart';
+import 'package:docpoint/features/signup/presentation/ui/signup_screen.dart';
 import 'package:go_router/go_router.dart';
 
 class AppRouter {
