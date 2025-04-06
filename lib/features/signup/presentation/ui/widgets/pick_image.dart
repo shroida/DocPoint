@@ -1,18 +1,16 @@
 import 'dart:io';
 
-import 'package:docpoint/core/routing/app_router.dart';
-import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
-class PickImage extends StatelessWidget {
-  const PickImage({
-    super.key,
-    required XFile? imageFile,
-  }) : _imageFile = imageFile;
+import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 
-  final XFile? _imageFile;
+class PickImage extends StatelessWidget {
+  PickImage({
+    super.key,
+  });
+  XFile? imageFile;
 
   @override
   Widget build(BuildContext context) {
@@ -23,9 +21,9 @@ class PickImage extends StatelessWidget {
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
-          child: _imageFile != null
+          child: imageFile != null
               ? Image.file(
-                  File(_imageFile!.path),
+                  File(imageFile!.path),
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,

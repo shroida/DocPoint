@@ -1,11 +1,6 @@
-import 'dart:io';
-import 'package:docpoint/core/widgets/app_dropdown_form_field.dart';
-import 'package:docpoint/core/widgets/app_text_form_field.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/pick_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:location/location.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -19,7 +14,6 @@ class SignupScreenState extends State<SignupScreen> {
   String city = 'Giza';
   String category = 'Dentist';
 
-  XFile? _imageFile;
   bool isPasswordObscureText = true;
   final List<String> cities = [
     'Giza',
@@ -40,8 +34,6 @@ class SignupScreenState extends State<SignupScreen> {
     'Dermatologist'
   ];
 
-  final Location _location = Location();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +50,7 @@ class SignupScreenState extends State<SignupScreen> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  PickImage(imageFile: _imageFile),
+                  PickImage(),
                   SizedBox(
                     width: double.infinity,
                     child: Column(
