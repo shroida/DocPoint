@@ -1,5 +1,5 @@
+import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AppTextFormField extends StatelessWidget {
   final EdgeInsetsGeometry? contentPadding;
@@ -13,6 +13,7 @@ class AppTextFormField extends StatelessWidget {
   final Color? backgroundColor;
   final TextEditingController? controller;
   final Function(String?) validator;
+
   const AppTextFormField({
     super.key,
     this.contentPadding,
@@ -32,60 +33,19 @@ class AppTextFormField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
-      decoration: InputDecoration(
-        isDense: true,
-        contentPadding: contentPadding ??
-            EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-        focusedBorder: focusedBorder ??
-            OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Color(0xFF0064FA),
-                width: 1.3,
-              ),
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-        enabledBorder: enabledBorder ??
-            OutlineInputBorder(
-              borderSide: const BorderSide(
-                color: Color(0xFF9E9E9E),
-                width: 1.3,
-              ),
-              borderRadius: BorderRadius.circular(16.0),
-            ),
-        errorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1.3,
-          ),
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        focusedErrorBorder: OutlineInputBorder(
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1.3,
-          ),
-          borderRadius: BorderRadius.circular(16.0),
-        ),
-        hintStyle: hintStyle ??
-            const TextStyle(
-              fontSize: 14,
-              color: Color(0xFF9E9E9E),
-              fontWeight: FontWeight.normal,
-            ),
+      decoration: AppStyle.inputDecoration(
         hintText: hintText,
         suffixIcon: suffixIcon,
-        fillColor: backgroundColor ?? const Color(0xFFF5F5F5),
-        filled: true,
+        contentPadding: contentPadding,
+      ).copyWith(
+        focusedBorder: focusedBorder,
+        enabledBorder: enabledBorder,
+        hintStyle: hintStyle,
+        fillColor: backgroundColor,
       ),
       obscureText: isObscureText ?? false,
-      style: const TextStyle(
-        fontSize: 14,
-        color: Color(0xFF0D1F3C),
-        fontWeight: FontWeight.w500,
-      ),
-      validator: (value) {
-        return validator(value);
-      },
+      style: inputTextStyle ?? AppStyle.body2,
+      validator: (value) => validator(value),
     );
   }
 }
