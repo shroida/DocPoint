@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:docpoint/core/widgets/app_dropdown_form_field.dart';
 import 'package:docpoint/core/widgets/app_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -21,7 +22,7 @@ class SignupScreenState extends State<SignupScreen> {
   String phoneNumber = '';
   String firstName = '';
   String lastName = '';
-  String city = 'Guwahati';
+  String city = 'Giza';
   String profileImageUrl = '';
   String category = 'Dentist';
   String qualification = '';
@@ -29,6 +30,24 @@ class SignupScreenState extends State<SignupScreen> {
   double latitude = 0.0;
   double longitude = 0.0;
   XFile? _imageFile;
+  final List<String> cities = [
+    'Giza',
+    'Cairo',
+    'Alexandria',
+    'hurghada',
+    'Suez'
+  ];
+  final List<String> categories = [
+    'Dentist',
+    'Cardiologist',
+    'General Physician',
+    'Pediatrician',
+    'Orthopedist',
+    'Internist',
+    'Surgeon',
+    'ENT Specialist',
+    'Dermatologist'
+  ];
 
   final Location _location = Location();
   bool _isLoading = false;
@@ -107,7 +126,7 @@ class SignupScreenState extends State<SignupScreen> {
                           style: TextStyle(fontSize: 14, color: Colors.grey),
                         ),
                         Wrap(
-                          spacing: 8.0, // Spacing between chips
+                          spacing: 8.0,
                           children: ['Patient', 'Doctor'].map((String type) {
                             final isSelected = userType == type;
                             return ChoiceChip(
@@ -182,6 +201,64 @@ class SignupScreenState extends State<SignupScreen> {
                       validator: (value) {
                         if (value == null || value.isEmpty) {}
                       }),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  AppDropdownFormField<String>(
+                    hintText: 'Select your city',
+                    value: city,
+                    items: cities.map((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(value),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        city = value!;
+                      });
+                    },
+                    validator: (value) {
+                      if (value == null) {
+                        return 'Please select your city';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  if (userType == 'Doctor')
+                    AppDropdownFormField<String>(
+                      hintText: 'Select your category',
+                      value: category,
+                      items: categories.map((String value) {
+                        return DropdownMenuItem<String>(
+                          value: value,
+                          child: Text(value),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          category = value!;
+                        });
+                      },
+                      validator: (value) {
+                        if (value == null) {
+                          return 'Please select your category';
+                        }
+                        return null;
+                      },
+                    ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  if (userType == 'Doctor')
+                    AppTextFormField(
+                        hintText: 'Experience',
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {}
+                        }),
                   const SizedBox(
                     height: 10,
                   ),
