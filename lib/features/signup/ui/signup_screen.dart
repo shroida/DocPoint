@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:docpoint/core/widgets/app_text_form_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:image_picker/image_picker.dart';
@@ -144,50 +145,13 @@ class SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 16.h,
                   ),
-                  SizedBox(
-                    height: 44,
-                    child: TextFormField(
-                      style: const TextStyle(
-                          fontSize: 13, fontWeight: FontWeight.w500),
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: const Color(0xffF0EFFF),
-                        contentPadding:
-                            const EdgeInsets.only(left: 10, right: 10),
-                        labelText: 'Email',
-                        labelStyle: TextStyle(
-                            fontSize: 13, color: Colors.grey.shade400),
-                        border: OutlineInputBorder(
-                          borderRadius:
-                              BorderRadius.circular(10.0), // Rounded corners
-                          borderSide: const BorderSide(
-                            color: Color(0xff0064FA), // Blue border color
-                            width: 1.0, // Border width
-                          ),
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Color(
-                                0xff0064FA), // Blue border color when focused
-                            width: 1.0, // Border width
-                          ),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          borderSide: const BorderSide(
-                            color: Color(
-                                0xff0064FA), // Blue border color when not focused
-                            width: 1.0, // Border width
-                          ),
-                        ),
-                      ),
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: (val) => email = val,
-                      validator: (val) =>
-                          val!.isEmpty ? 'Enter an email' : null,
-                    ),
-                  ),
+                  AppTextFormField(
+                      hintText: 'Email',
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          
+                        }
+                      }),
                   const SizedBox(
                     height: 10,
                   ),
