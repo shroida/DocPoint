@@ -167,7 +167,9 @@ class SignupScreenState extends State<SignupScreen> {
                   AppTextFormField(
                       hintText: 'Email',
                       validator: (value) {
-                        if (value == null || value.isEmpty) {}
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a valid name';
+                        }
                       }),
                   const SizedBox(
                     height: 10,
@@ -175,7 +177,9 @@ class SignupScreenState extends State<SignupScreen> {
                   AppTextFormField(
                       hintText: 'Password',
                       validator: (value) {
-                        if (value == null || value.isEmpty) {}
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a valid Password';
+                        }
                       }),
                   const SizedBox(
                     height: 10,
@@ -183,7 +187,9 @@ class SignupScreenState extends State<SignupScreen> {
                   AppTextFormField(
                       hintText: 'First name',
                       validator: (value) {
-                        if (value == null || value.isEmpty) {}
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a valid first name';
+                        }
                       }),
                   const SizedBox(
                     height: 10,
@@ -191,7 +197,9 @@ class SignupScreenState extends State<SignupScreen> {
                   AppTextFormField(
                       hintText: 'Last name',
                       validator: (value) {
-                        if (value == null || value.isEmpty) {}
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a valid last name';
+                        }
                       }),
                   const SizedBox(
                     height: 10,
@@ -199,7 +207,9 @@ class SignupScreenState extends State<SignupScreen> {
                   AppTextFormField(
                       hintText: 'Phone number',
                       validator: (value) {
-                        if (value == null || value.isEmpty) {}
+                        if (value == null || value.isEmpty) {
+                          return 'Please enter a valid phone number';
+                        }
                       }),
                   const SizedBox(
                     height: 10,
