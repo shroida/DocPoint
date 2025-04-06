@@ -2,28 +2,32 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 
-class PickImage extends StatelessWidget {
-  PickImage({
+class PickImage extends StatefulWidget {
+  const PickImage({
     super.key,
   });
-  XFile? imageFile;
 
   @override
+  State<PickImage> createState() => _PickImageState();
+}
+
+class _PickImageState extends State<PickImage> {
+  @override
   Widget build(BuildContext context) {
+    final imageFile = context.watch<SignupCubit>().imageFile;
     return Center(
       child: GestureDetector(
-        onTap: () {
-          context.read<SignupCubit>().pickImage();
+        onTap: () async {
+          await context.read<SignupCubit>().pickImage();
         },
         child: ClipRRect(
           borderRadius: BorderRadius.circular(100),
           child: imageFile != null
               ? Image.file(
-                  File(imageFile!.path),
+                  File(imageFile.path),
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,

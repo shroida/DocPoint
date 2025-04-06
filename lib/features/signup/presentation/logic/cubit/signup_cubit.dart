@@ -44,6 +44,7 @@ class SignupCubit extends Cubit<SignupState> {
       if (pickedFile != null) {
         imageFile = pickedFile;
       }
+      emit(ImageUpdated(imageFile));
     } catch (e) {
       throw e.toString();
     }
