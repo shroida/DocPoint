@@ -1,5 +1,9 @@
+import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
+import 'package:docpoint/features/signup/presentation/ui/widgets/doctor_form.dart';
+import 'package:docpoint/features/signup/presentation/ui/widgets/patient_form.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/pick_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -10,7 +14,6 @@ class SignupScreen extends StatefulWidget {
 }
 
 class SignupScreenState extends State<SignupScreen> {
-  String userType = 'Patient';
   String city = 'Giza';
   String category = 'Dentist';
 
@@ -36,6 +39,8 @@ class SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cubitSignup = context.read<SignupCubit>();
+
     return Scaffold(
         appBar: AppBar(
           title: const Text(
@@ -50,7 +55,7 @@ class SignupScreenState extends State<SignupScreen> {
             child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  PickImage(),
+                  const PickImage(),
                   SizedBox(
                     width: double.infinity,
                     child: Column(
@@ -63,7 +68,7 @@ class SignupScreenState extends State<SignupScreen> {
                         Wrap(
                           spacing: 8.0,
                           children: ['Patient', 'Doctor'].map((String type) {
-                            final isSelected = userType == type;
+                            final isSelected = cubitSignup.userType == type;
                             return ChoiceChip(
                               checkmarkColor: Colors.white,
                               label: Text(type),
@@ -87,7 +92,8 @@ class SignupScreenState extends State<SignupScreen> {
                               ),
                               onSelected: (bool selected) {
                                 setState(() {
-                                  userType = selected ? type : 'Patient';
+                                  cubitSignup.userType =
+                                      selected ? type : 'Patient';
                                 });
                               },
                             );
@@ -99,6 +105,9 @@ class SignupScreenState extends State<SignupScreen> {
                   SizedBox(
                     height: 16.h,
                   ),
+                  cubitSignup.userType == 'Patient'
+                      ? const PatientForm()
+                      : const DoctorForm()
                 ]),
           ),
         )));
