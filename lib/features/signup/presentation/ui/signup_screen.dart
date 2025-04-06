@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:docpoint/core/widgets/app_dropdown_form_field.dart';
 import 'package:docpoint/core/widgets/app_text_form_field.dart';
 import 'package:flutter/material.dart';
@@ -15,21 +14,12 @@ class SignupScreen extends StatefulWidget {
 }
 
 class SignupScreenState extends State<SignupScreen> {
-  final _formKey = GlobalKey<FormState>();
   String userType = 'Patient';
-  String email = '';
-  String password = '';
-  String phoneNumber = '';
-  String firstName = '';
-  String lastName = '';
   String city = 'Giza';
-  String profileImageUrl = '';
   String category = 'Dentist';
-  String qualification = '';
-  String yearsOfExperience = '';
-  double latitude = 0.0;
-  double longitude = 0.0;
+
   XFile? _imageFile;
+  bool isPasswordObscureText = true;
   final List<String> cities = [
     'Giza',
     'Cairo',
@@ -50,8 +40,6 @@ class SignupScreenState extends State<SignupScreen> {
   ];
 
   final Location _location = Location();
-  bool _isLoading = false;
-  bool _obscureText = true;
 
   Future<void> _pickImage() async {
     try {
@@ -176,6 +164,19 @@ class SignupScreenState extends State<SignupScreen> {
                   ),
                   AppTextFormField(
                       hintText: 'Password',
+                      isObscureText: isPasswordObscureText,
+                      suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isPasswordObscureText = !isPasswordObscureText;
+                          });
+                        },
+                        child: Icon(
+                          isPasswordObscureText
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                        ),
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter a valid Password';
