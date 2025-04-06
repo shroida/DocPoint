@@ -37,6 +37,18 @@ class SignupCubit extends Cubit<SignupState> {
     category = selectedCategory;
   }
 
+  Future<void> pickImage() async {
+    try {
+      final pickedFile =
+          await ImagePicker().pickImage(source: ImageSource.gallery);
+      if (pickedFile != null) {
+        imageFile = pickedFile;
+      }
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
   // Lists
   final List<String> cities = [
     'Giza',
