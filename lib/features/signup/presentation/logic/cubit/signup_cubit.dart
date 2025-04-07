@@ -28,7 +28,7 @@ class SignupCubit extends Cubit<SignupState> {
 
   // Image file
   XFile? imageFile;
-  Future<void> sighUp() async {
+  Future<void> signUp() async {
     try {
       final response = await _signUpRepoUsecase.call(UserSignUpParams(
           email: emailController.text,
@@ -38,8 +38,18 @@ class SignupCubit extends Cubit<SignupState> {
           phoneNumber: phoneController.text,
           city: city));
       response.fold(
-          (failure) => emit(SignupFailure()), (user) => SignupSuccess(user));
-    } catch (e) {
+        (failure) {
+          debugPrint('Signup failed: ${failure.toString()}');
+          emit(SignupFailure());
+        },
+        (user) {
+          debugPrint('Signup success for user: ${user.email}');
+          emit(SignupSuccess(user));
+        },
+      );
+    } catch (e, stackTrace) {
+      debugPrint('Signup error: $e');
+      debugPrint('Stack trace: $stackTrace');
       emit(SignupFailure());
     }
   }
