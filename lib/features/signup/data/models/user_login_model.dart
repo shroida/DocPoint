@@ -1,4 +1,4 @@
-import 'package:docpoint/features/login/domain/entities/user_login.dart';
+import 'package:docpoint/features/signup/domain/entities/user_login.dart';
 
 class UserLoginModel extends UserLogin {
   UserLoginModel(

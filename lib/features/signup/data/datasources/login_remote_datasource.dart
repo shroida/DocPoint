@@ -1,5 +1,5 @@
 import 'package:docpoint/core/error/failure.dart';
-import 'package:docpoint/features/login/data/models/user_login_model.dart';
+import 'package:docpoint/features/signup/data/models/user_login_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class LoginRemoteDatasource {
