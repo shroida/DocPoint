@@ -16,6 +16,6 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
   @override
   Future<CurrentUserModel> getCurrentUserData() {
     // TODO: implement getCurrentUserData
-    throw UnimplementedError(); 
+    throw UnimplementedError();
   }
 }
