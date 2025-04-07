@@ -1,9 +1,8 @@
-import 'package:docpoint/core/error/failure.dart';
-import 'package:docpoint/features/signup/data/models/user_login_model.dart';
+import 'package:docpoint/features/signup/data/models/user_sign_up_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-abstract interface class LoginRemoteDatasource {
-  Future<UserLoginModel> login(
+abstract interface class SignUpRemoteDatasource {
+  Future<UserSignUpModel> signUp(
       {required String email,
       required String password,
       required String firstName,
@@ -12,12 +11,12 @@ abstract interface class LoginRemoteDatasource {
       required String city});
 }
 
-class LoginRemoteDatasourceImpl implements LoginRemoteDatasource {
+class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
   final SupabaseClient supabaseClient;
 
-  LoginRemoteDatasourceImpl(this.supabaseClient);
+  SignUpRemoteDatasourceImpl(this.supabaseClient);
   @override
-  Future<UserLoginModel> login(
+  Future<UserSignUpModel> signUp(
       {required String email,
       required String password,
       required String firstName,
@@ -32,7 +31,7 @@ class LoginRemoteDatasourceImpl implements LoginRemoteDatasource {
       'city': city,
     });
     if (resppnse.user == null) {
-      throw Failure('error');
+      // throw Failure('error');
     }
   }
 }

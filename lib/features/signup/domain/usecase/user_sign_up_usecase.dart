@@ -1,16 +1,16 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/error/failure.dart';
 import 'package:docpoint/core/usecase/usecase.dart';
-import 'package:docpoint/features/signup/domain/repository/login_repo.dart';
+import 'package:docpoint/features/signup/domain/repository/sign_up_repo.dart';
 import 'package:fpdart/fpdart.dart';
 
-class UserLoginUsecase implements UseCase<User, UserLogiParams> {
-  final LoginRepo _loginRepo;
+class UserSignUpRepoUsecase implements UseCase<User, UserSignUpParams> {
+  final SignUpRepo _signUpRepo;
 
-  UserLoginUsecase(this._loginRepo);
+  UserSignUpRepoUsecase(this._signUpRepo);
   @override
-  Future<Either<Failure, User>> call(UserLogiParams params) async {
-    return _loginRepo.login(
+  Future<Either<Failure, User>> call(UserSignUpParams params) async {
+    return _signUpRepo.signUp(
         email: params.email,
         password: params.password,
         firstName: params.firstName,
@@ -20,7 +20,7 @@ class UserLoginUsecase implements UseCase<User, UserLogiParams> {
   }
 }
 
-class UserLogiParams {
+class UserSignUpParams {
   final String email;
   final String password;
   final String firstName;
@@ -28,7 +28,7 @@ class UserLogiParams {
   final String phoneNumber;
   final String city;
 
-  UserLogiParams(
+  UserSignUpParams(
       {required this.email,
       required this.password,
       required this.firstName,

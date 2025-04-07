@@ -1,7 +1,7 @@
-import 'package:docpoint/features/signup/domain/entities/user_login.dart';
+import 'package:docpoint/features/signup/domain/entities/user_sign_up.dart';
 
-class UserLoginModel extends UserLogin {
-  UserLoginModel(
+class UserSignUpModel extends UserSignUp {
+  UserSignUpModel(
       {required super.email,
       required super.password,
       required super.firstName,
@@ -9,8 +9,8 @@ class UserLoginModel extends UserLogin {
       required super.phoneNumber,
       required super.city});
 
-  factory UserLoginModel.fromJson(Map<String, dynamic> json) {
-    return UserLoginModel(
+  factory UserSignUpModel.fromJson(Map<String, dynamic> json) {
+    return UserSignUpModel(
         email: json['email'],
         password: json['password'],
         firstName: json['firstName'],
