@@ -1,3 +1,4 @@
+import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/features/signup/data/models/user_sign_up_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -31,7 +32,8 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       'city': city,
     });
     if (resppnse.user == null) {
-      // throw Failure('error');
+      throw const ServerExceptions('User is null');
     }
+    return UserSignUpModel.fromJson(resppnse.user!.toJson());
   }
 }
