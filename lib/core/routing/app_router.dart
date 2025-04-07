@@ -1,3 +1,4 @@
+import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/features/login/ui/login_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
@@ -19,7 +20,7 @@ class AppRouter {
       GoRoute(
           path: Routes.signupScreen,
           builder: (context, state) => BlocProvider(
-                create: (context) => SignupCubit(),
+                create: (context) => getIt<SignupCubit>(),
                 child: const SignupScreen(),
               )),
     ],

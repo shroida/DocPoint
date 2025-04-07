@@ -4,10 +4,10 @@ import 'package:docpoint/core/usecase/usecase.dart';
 import 'package:docpoint/features/signup/domain/repository/sign_up_repo.dart';
 import 'package:fpdart/fpdart.dart';
 
-class UserSignUpRepoUsecase implements UseCase<User, UserSignUpParams> {
+class UserSignUpUsecase implements UseCase<User, UserSignUpParams> {
   final SignUpRepo _signUpRepo;
 
-  UserSignUpRepoUsecase(this._signUpRepo);
+  UserSignUpUsecase(this._signUpRepo);
   @override
   Future<Either<Failure, User>> call(UserSignUpParams params) async {
     return _signUpRepo.signUp(

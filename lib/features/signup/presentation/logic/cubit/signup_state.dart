@@ -4,7 +4,11 @@ class SignupState {}
 
 class SignupInit extends SignupState {}
 
-class SignupSuccess extends SignupState {}
+class SignupSuccess extends SignupState {
+  final User user;
+
+  SignupSuccess(this.user);
+}
 
 class SignupFailure extends SignupState {}
 

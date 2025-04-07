@@ -1,3 +1,5 @@
+import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/features/signup/domain/usecase/user_sign_up_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -5,7 +7,8 @@ import 'package:image_picker/image_picker.dart';
 part 'signup_state.dart';
 
 class SignupCubit extends Cubit<SignupState> {
-  SignupCubit() : super(SignupInit());
+  final UserSignUpUsecase _signUpRepoUsecase;
+  SignupCubit(this._signUpRepoUsecase) : super(SignupInit());
   final formKey = GlobalKey<FormState>();
 
   // Common controllers
@@ -25,6 +28,21 @@ class SignupCubit extends Cubit<SignupState> {
 
   // Image file
   XFile? imageFile;
+  Future<void> sighUp() async {
+    try {
+      final response = await _signUpRepoUsecase.call(UserSignUpParams(
+          email: emailController.text,
+          password: emailController.text,
+          firstName: firstNameController.text,
+          lastName: lastNameController.text,
+          phoneNumber: phoneController.text,
+          city: city));
+      response.fold(
+          (failure) => emit(SignupFailure()), (user) => SignupSuccess(user));
+    } catch (e) {
+      emit(SignupFailure());
+    }
+  }
 
   void setCity(String selectedCity) {
     city = selectedCity;
