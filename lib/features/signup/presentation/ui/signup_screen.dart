@@ -69,7 +69,8 @@ class SignupScreenState extends State<SignupScreen> {
                     SizedBox(height: 24.h),
                     AppTextButton(
                       buttonText: "Create Account",
-                      textStyle: AppStyle.body2,
+                      textStyle:
+                          AppStyle.heading2.copyWith(color: Colors.white),
                       onPressed: () {
                         debugPrint(
                             'Signup button pressed'); // Debug button press
