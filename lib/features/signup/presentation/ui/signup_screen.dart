@@ -1,4 +1,5 @@
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
+import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/doctor_form.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/patient_form.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/pick_image.dart';
@@ -15,28 +16,7 @@ class SignupScreen extends StatefulWidget {
 }
 
 class SignupScreenState extends State<SignupScreen> {
-  String city = 'Giza';
-  String category = 'Dentist';
-
   bool isPasswordObscureText = true;
-  final List<String> cities = [
-    'Giza',
-    'Cairo',
-    'Alexandria',
-    'hurghada',
-    'Suez'
-  ];
-  final List<String> categories = [
-    'Dentist',
-    'Cardiologist',
-    'General Physician',
-    'Pediatrician',
-    'Orthopedist',
-    'Internist',
-    'Surgeon',
-    'ENT Specialist',
-    'Dermatologist'
-  ];
 
   @override
   Widget build(BuildContext context) {

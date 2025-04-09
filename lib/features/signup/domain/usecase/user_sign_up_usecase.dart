@@ -36,6 +36,6 @@ class UserSignUpParams {
       required this.firstName,
       required this.lastName,
       required this.phoneNumber,
-      required this.imageUrl,
+      this.imageUrl = '',
       required this.city});
 }

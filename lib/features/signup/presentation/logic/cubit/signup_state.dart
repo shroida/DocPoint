@@ -1,4 +1,6 @@
-part of 'signup_cubit.dart';
+import 'package:image_picker/image_picker.dart';
+
+import '../../../../../core/common/domain/entites/user.dart';
 
 class SignupState {}
 

@@ -26,7 +26,7 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       required String lastName,
       required String phoneNumber,
       required String city}) async {
-    final resppnse = await supabaseClient.auth
+    final response = await supabaseClient.auth
         .signUp(email: email, password: password, data: {
       'first_name': firstName,
       'last_name': lastName,
@@ -34,9 +34,20 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       'city': city,
       'avatar_url': imageUrl ?? '',
     });
-    if (resppnse.user == null) {
+    final userId = response.user!.id;
+
+    // 2. Insert into patient_profiles table
+    await supabaseClient.from('patient_profiles').insert({
+      'id': userId,
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone_number': phoneNumber,
+      'city': city,
+      'avatar_url': imageUrl,
+    });
+    if (response.user == null) {
       throw const ServerExceptions('User is null');
     }
-    return UserSignUpModel.fromJson(resppnse.user!.toJson());
+    return UserSignUpModel.fromJson(response.user!.toJson());
   }
 }

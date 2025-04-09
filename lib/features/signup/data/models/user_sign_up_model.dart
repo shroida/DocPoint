@@ -8,25 +8,28 @@ class UserSignUpModel extends UserSignUp {
     required String super.lastName,
     required String super.phoneNumber,
     required String super.city,
+    super.imageUrl,
   });
 
   factory UserSignUpModel.fromJson(Map<String, dynamic> json) {
     return UserSignUpModel(
       email: json['email'] as String? ?? '',
       password: json['password'] as String? ?? '',
-      firstName: json['firstName'] as String? ?? '',
-      lastName: json['lastName'] as String? ?? '',
-      phoneNumber: json['phoneNumber'] as String? ?? '',
+      firstName: json['first_name'] as String? ?? '',
+      lastName: json['last_name'] as String? ?? '',
+      phoneNumber: json['phone_number'] as String? ?? '',
       city: json['city'] as String? ?? '',
+      imageUrl: json['avatar_url'] as String? ?? '',
     );
   }
 
   Map<String, dynamic> toJson() => {
         'email': email,
         'password': password,
-        'firstName': firstName,
-        'lastName': lastName,
-        'phoneNumber': phoneNumber,
+        'first_name': firstName,
+        'last_name': lastName,
+        'phone_number': phoneNumber,
         'city': city,
+        'avatar_url': imageUrl,
       };
 }

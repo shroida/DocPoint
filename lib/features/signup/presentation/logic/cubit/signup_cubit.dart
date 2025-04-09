@@ -1,15 +1,16 @@
-import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/features/signup/domain/usecase/user_sign_up_usecase.dart';
+import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 
-part 'signup_state.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignupCubit extends Cubit<SignupState> {
   final UserSignUpUsecase _signUpRepoUsecase;
-  SignupCubit(this._signUpRepoUsecase) : super(SignupInit());
+  final SupabaseClient supabase; // Add this
+
+  SignupCubit(this._signUpRepoUsecase, this.supabase) : super(SignupInit());
   final formKey = GlobalKey<FormState>();
 
   // Common controllers
@@ -31,29 +32,57 @@ class SignupCubit extends Cubit<SignupState> {
   File? imageFile;
 
   Future<void> signUp() async {
+    emit(SignupLoading());
     try {
+      String? imageUrl;
+
+      // Upload image if exists
+      if (imageFile != null) {
+        imageUrl = await _uploadProfileImage();
+      }
+
       final response = await _signUpRepoUsecase.call(UserSignUpParams(
-          email: emailController.text,
-          imageUrl: imageFile!.path,
-          password: emailController.text,
-          firstName: firstNameController.text,
-          lastName: lastNameController.text,
-          phoneNumber: phoneController.text,
-          city: city));
+        email: emailController.text,
+        imageUrl: imageUrl!,
+        password: passwordController.text, // Fixed: using passwordController
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        phoneNumber: phoneController.text,
+        city: city,
+      ));
+
       response.fold(
-        (failure) {
-          debugPrint('Signup failed: ${failure.toString()}');
-          emit(SignupFailure());
-        },
-        (user) {
-          debugPrint('Signup success for user: ${user.email}');
-          emit(SignupSuccess(user));
-        },
+        (failure) => emit(SignupFailure()),
+        (user) => emit(SignupSuccess(user)),
       );
     } catch (e, stackTrace) {
-      debugPrint('Signup error: $e');
-      debugPrint('Stack trace: $stackTrace');
+      debugPrint('Signup error: $e\n$stackTrace');
       emit(SignupFailure());
+    }
+  }
+
+  Future<String> _uploadProfileImage() async {
+    try {
+      final filePath = imageFile!.path;
+      final fileExtension = filePath.split('.').last;
+      final fileName =
+          '${DateTime.now().millisecondsSinceEpoch}.$fileExtension';
+
+      // Upload the file directly using the path
+      await supabase.storage.from('profile-images').upload(
+            fileName,
+            imageFile!, // Pass the File object directly
+            fileOptions: FileOptions(
+              contentType: 'image/$fileExtension',
+              upsert: true,
+            ),
+          );
+
+      // Get public URL
+      return supabase.storage.from('profile-images').getPublicUrl(fileName);
+    } catch (e) {
+      debugPrint('Image upload error: $e');
+      throw Exception('Failed to upload profile image');
     }
   }
 
