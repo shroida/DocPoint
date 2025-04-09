@@ -5,6 +5,7 @@ class User {
   final String? lastName;
   final String? phoneNumber;
   final String? city;
+  final String? imageUrl;
 
   User({
     required this.email,
@@ -13,5 +14,6 @@ class User {
     this.lastName,
     this.phoneNumber,
     this.city,
+    this.imageUrl,
   });
 }

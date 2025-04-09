@@ -3,6 +3,7 @@ import 'package:docpoint/features/signup/domain/usecase/user_sign_up_usecase.dar
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'dart:io';
 
 part 'signup_state.dart';
 
@@ -27,11 +28,12 @@ class SignupCubit extends Cubit<SignupState> {
   String category = 'Dentist';
 
   // Image file
-  XFile? imageFile;
+  File? imageFile;
   Future<void> signUp() async {
     try {
       final response = await _signUpRepoUsecase.call(UserSignUpParams(
           email: emailController.text,
+          imageUrl: ,
           password: emailController.text,
           firstName: firstNameController.text,
           lastName: lastNameController.text,
@@ -67,18 +69,6 @@ class SignupCubit extends Cubit<SignupState> {
     emit(SignupUserTypeUpdated(userType)); // Make sure you have this state
   }
 
-  Future<void> pickImage() async {
-    try {
-      final pickedFile =
-          await ImagePicker().pickImage(source: ImageSource.gallery);
-      if (pickedFile != null) {
-        imageFile = pickedFile;
-      }
-      emit(ImageUpdated(imageFile));
-    } catch (e) {
-      throw e.toString();
-    }
-  }
 
   // Lists
   final List<String> cities = [
