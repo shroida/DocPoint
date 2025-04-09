@@ -29,11 +29,12 @@ class SignupCubit extends Cubit<SignupState> {
 
   // Image file
   File? imageFile;
+
   Future<void> signUp() async {
     try {
       final response = await _signUpRepoUsecase.call(UserSignUpParams(
           email: emailController.text,
-          imageUrl: ,
+          imageUrl: imageFile!.path,
           password: emailController.text,
           firstName: firstNameController.text,
           lastName: lastNameController.text,
@@ -68,7 +69,6 @@ class SignupCubit extends Cubit<SignupState> {
     userType = type;
     emit(SignupUserTypeUpdated(userType)); // Make sure you have this state
   }
-
 
   // Lists
   final List<String> cities = [

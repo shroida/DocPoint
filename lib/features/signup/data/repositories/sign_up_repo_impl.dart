@@ -12,6 +12,7 @@ class SignUpRepoImpl implements SignUpRepo {
   @override
   Future<Either<Failure, User>> signUp(
       {required String email,
+      String? imageUrl,
       required String password,
       required String firstName,
       required String lastName,
@@ -24,6 +25,7 @@ class SignUpRepoImpl implements SignUpRepo {
           firstName: firstName,
           lastName: lastName,
           phoneNumber: phoneNumber,
+          imageUrl: imageUrl,
           city: city);
 
       return right(user);
