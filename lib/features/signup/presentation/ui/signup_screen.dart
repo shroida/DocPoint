@@ -1,3 +1,5 @@
+import 'package:docpoint/core/styles/app_styles.dart';
+import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/doctor_form.dart';
@@ -65,7 +67,23 @@ class SignupScreenState extends State<SignupScreen> {
                         ? const PatientForm()
                         : const DoctorForm(),
                     SizedBox(height: 24.h),
-                    _buildSignupButton(cubitSignup, state),
+                    AppTextButton(
+                      buttonText: "Create Account",
+                      textStyle: AppStyle.body2,
+                      onPressed: () {
+                        debugPrint(
+                            'Signup button pressed'); // Debug button press
+                        debugPrint(
+                            'Form valid: ${cubitSignup.formKey.currentState?.validate()}');
+                        if (cubitSignup.formKey.currentState?.validate() ??
+                            false) {
+                          debugPrint('Calling signUp() in cubitSignup');
+                          cubitSignup.signUp();
+                        } else {
+                          debugPrint('Form validation failed');
+                        }
+                      },
+                    ),
                     if (state is SignupLoading)
                       const Padding(
                         padding: EdgeInsets.only(top: 16),
@@ -84,37 +102,6 @@ class SignupScreenState extends State<SignupScreen> {
               },
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildSignupButton(SignupCubit cubit, SignupState state) {
-    return SizedBox(
-      width: double.infinity,
-      child: ElevatedButton(
-        onPressed: state is SignupLoading
-            ? null
-            : () {
-                debugPrint('Signup button pressed'); // Debug button press
-                debugPrint(
-                    'Form valid: ${cubit.formKey.currentState?.validate()}');
-                if (cubit.formKey.currentState?.validate() ?? false) {
-                  debugPrint('Calling signUp() in cubit');
-                  cubit.signUp();
-                } else {
-                  debugPrint('Form validation failed');
-                }
-              },
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(vertical: 16.h),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-        ),
-        child: const Text(
-          'Sign Up',
-          style: TextStyle(fontSize: 16),
         ),
       ),
     );
