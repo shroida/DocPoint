@@ -14,8 +14,42 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
   Session? get currentUserSession => supabaseClient.auth.currentSession;
 
   @override
-  Future<CurrentUserModel> getCurrentUserData() {
-    // TODO: implement getCurrentUserData
-    throw UnimplementedError();
+  Future<CurrentUserModel> getCurrentUserData() async {
+    try {
+      final session = currentUserSession;
+
+      if (session == null) {
+        throw Exception('No active session');
+      }
+      final userId = session.user.id;
+
+      // First check if user is a doctor
+      final doctorResponse = await supabaseClient
+          .from('doctor_profiles')
+          .select()
+          .eq('id', userId)
+          .maybeSingle();
+      if (doctorResponse != null) {
+        return CurrentUserModel.fromJson({
+          ...doctorResponse,
+          'user_type': 'doctor',
+          'email': session.user.email,
+        });
+      }
+      // If not a doctor, check if patient
+      final patientResponse = await supabaseClient
+          .from('patient_profiles')
+          .select()
+          .eq('id', userId)
+          .single();
+
+      return CurrentUserModel.fromJson({
+        ...patientResponse,
+        'user_type': 'patient',
+        'email': session.user.email,
+      });
+    } catch (e) {
+      throw Exception('Failed to fetch user data: $e');
+    }
   }
 }
