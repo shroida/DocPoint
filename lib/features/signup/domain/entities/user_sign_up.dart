@@ -8,6 +8,8 @@ class UserSignUp extends User {
       super.category,
       super.experience,
       required super.imageUrl,
+      required super.userType,
+      required super.id,
       required super.lastName,
       required super.phoneNumber,
       required super.city});

@@ -4,7 +4,11 @@ class CurrentUserState {}
 
 final class CurrentUserInitial extends CurrentUserState {}
 
-final class CurrentUserLoggedIn extends CurrentUserState {
+final class CurrentUserLoading extends CurrentUserState {}
+
+final class CurrentUserUnauthenticated extends CurrentUserState {}
+
+final class CurrentUserAuthenticated extends CurrentUserState {
   final User user;
-  CurrentUserLoggedIn(this.user);
+  CurrentUserAuthenticated(this.user);
 }

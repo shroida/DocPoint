@@ -3,13 +3,16 @@ import 'package:docpoint/core/common/domain/usecase/current_user_usecase.dart';
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/usecase/usecase.dart';
 
-class CurrentuserCubit extends Cubit<CurrentUserState> {
+class CurrentUserCubit extends Cubit<CurrentUserState> {
   final CurrentUserUsecase _currentUserUsecase;
-  CurrentuserCubit(this._currentUserUsecase) : super(CurrentUserInitial());
+  CurrentUserCubit(this._currentUserUsecase) : super(CurrentUserInitial());
 
-  Future<void> isUserLoggedIn() async {
+  Future<void> checkAuthStatus() async {
+    emit(CurrentUserLoading());
     final res = await _currentUserUsecase.call(NoParams());
-    res.fold((failure) => emit(CurrentUserInitial()),
-        (user) => emit(CurrentUserLoggedIn(user)));
+    res.fold(
+      (failure) => emit(CurrentUserUnauthenticated()),
+      (user) => emit(CurrentUserAuthenticated(user)),
+    );
   }
 }

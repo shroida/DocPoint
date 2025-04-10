@@ -24,6 +24,5 @@ class AppRouter {
                 child: const SignupScreen(),
               )),
     ],
-    initialLocation: Routes.onBoardingScreen,
   );
 }

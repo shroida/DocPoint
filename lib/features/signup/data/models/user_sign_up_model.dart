@@ -3,6 +3,8 @@ import 'package:docpoint/features/signup/domain/entities/user_sign_up.dart';
 class UserSignUpModel extends UserSignUp {
   UserSignUpModel({
     required super.email,
+    required super.id,
+    required super.userType,
     required super.password,
     required super.firstName,
     required String super.lastName,
@@ -15,6 +17,7 @@ class UserSignUpModel extends UserSignUp {
 
   factory UserSignUpModel.fromJson(Map<String, dynamic> json) {
     return UserSignUpModel(
+      id: json['id'] as String? ?? '',
       email: json['email'] as String? ?? '',
       password: json['password'] as String? ?? '',
       firstName: json['first_name'] as String? ?? '',
@@ -23,6 +26,7 @@ class UserSignUpModel extends UserSignUp {
       city: json['city'] as String? ?? '',
       imageUrl: json['avatar_url'] as String? ?? '',
       category: json['category'] as String? ?? '',
+      userType: json['userType'] as String? ?? '',
       experience: json['experience'] as int? ?? 0,
     );
   }
