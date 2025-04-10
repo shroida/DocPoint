@@ -16,7 +16,7 @@ class GetStartedButton extends StatelessWidget {
       right: 24.w,
       child: ElevatedButton(
         onPressed: () {
-          context.go(Routes.loginScreen);
+          context.go(Routes.signupScreen);
         },
         style: ElevatedButton.styleFrom(
           backgroundColor: const Color(0xFF2A7DBC),
