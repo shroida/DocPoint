@@ -40,14 +40,14 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       'city': city,
       'avatar_url': imageUrl,
       'user_type': userType,
-      if (userType == 'doctor') ...{
+      if (userType == 'Doctor') ...{
         'experience': experience ?? 0,
         'category': category ?? '',
       },
     });
     final userId = response.user!.id;
 
-    if (userType == 'doctor') {
+    if (userType == 'Doctor') {
       await supabaseClient.from('doctor_profiles').insert({
         'id': userId,
         'first_name': firstName,
