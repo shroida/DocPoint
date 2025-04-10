@@ -11,6 +11,7 @@ abstract interface class SignUpRepo {
     required String phoneNumber,
     required String city,
     required String imageUrl,
+    required String userType,
     int experience,
     String category,
   });

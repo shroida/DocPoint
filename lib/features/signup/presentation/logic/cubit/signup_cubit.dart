@@ -44,11 +44,14 @@ class SignupCubit extends Cubit<SignupState> {
       final response = await _signUpRepoUsecase.call(UserSignUpParams(
         email: emailController.text,
         imageUrl: imageUrl!,
-        password: passwordController.text, // Fixed: using passwordController
+        password: passwordController.text,
         firstName: firstNameController.text,
         lastName: lastNameController.text,
         phoneNumber: phoneController.text,
         city: city,
+        category: category,
+        experience: int.tryParse(experienceController.text) ?? 0,
+        userType: userType,
       ));
 
       response.fold(

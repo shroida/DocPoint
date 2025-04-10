@@ -16,6 +16,7 @@ class SignUpRepoImpl implements SignUpRepo {
       required String password,
       int? experience,
       String? category,
+      required String userType,
       required String firstName,
       required String lastName,
       required String phoneNumber,
@@ -30,7 +31,8 @@ class SignUpRepoImpl implements SignUpRepo {
           imageUrl: imageUrl,
           experience: experience ?? 0,
           category: category ?? '',
-          city: city);
+          city: city,
+          userType: userType);
 
       return right(user);
     } on ServerExceptions catch (e) {

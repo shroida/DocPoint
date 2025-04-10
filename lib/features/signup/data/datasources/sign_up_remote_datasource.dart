@@ -11,6 +11,7 @@ abstract interface class SignUpRemoteDatasource {
       required String password,
       required String firstName,
       required String lastName,
+      required String userType,
       required String phoneNumber,
       required String city});
 }
@@ -26,6 +27,7 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       int? experience,
       String? category,
       required String password,
+      required String userType,
       required String firstName,
       required String lastName,
       required String phoneNumber,
@@ -36,23 +38,36 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       'last_name': lastName,
       'phone_number': phoneNumber,
       'city': city,
-      'experience': experience ?? 0,
-      'category': category ?? '',
       'avatar_url': imageUrl,
+      'user_type': userType,
+      if (userType == 'doctor') ...{
+        'experience': experience ?? 0,
+        'category': category ?? '',
+      },
     });
     final userId = response.user!.id;
 
-    // 2. Insert into patient_profiles table
-    await supabaseClient.from('patient_profiles').insert({
-      'id': userId,
-      'first_name': firstName,
-      'last_name': lastName,
-      'phone_number': phoneNumber,
-      'city': city,
-      'avatar_url': imageUrl,
-      'experience': experience,
-      'category': category ?? '',
-    });
+    if (userType == 'doctor') {
+      await supabaseClient.from('doctor_profiles').insert({
+        'id': userId,
+        'first_name': firstName,
+        'last_name': lastName,
+        'phone_number': phoneNumber,
+        'city': city,
+        'avatar_url': imageUrl,
+        'category': category ?? '',
+        'experience': experience ?? 0,
+      });
+    } else {
+      await supabaseClient.from('patient_profiles').insert({
+        'id': userId,
+        'first_name': firstName,
+        'last_name': lastName,
+        'phone_number': phoneNumber,
+        'city': city,
+        'avatar_url': imageUrl,
+      });
+    }
     if (response.user == null) {
       throw const ServerExceptions('User is null');
     }
