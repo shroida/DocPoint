@@ -15,9 +15,9 @@ class User {
     this.category,
     required this.password,
     required this.firstName,
-    this.lastName,
-    this.phoneNumber,
-    this.city,
-    this.imageUrl,
+    required this.lastName,
+    required this.phoneNumber,
+    required this.city,
+    required this.imageUrl,
   });
 }

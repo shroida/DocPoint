@@ -5,7 +5,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract interface class SignUpRemoteDatasource {
   Future<UserSignUpModel> signUp(
       {required String email,
-      String? imageUrl,
+      required String imageUrl,
+      String? category,
+      int? experience,
       required String password,
       required String firstName,
       required String lastName,
@@ -20,7 +22,9 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
   @override
   Future<UserSignUpModel> signUp(
       {required String email,
-      String? imageUrl,
+      required String imageUrl,
+      int? experience,
+      String? category,
       required String password,
       required String firstName,
       required String lastName,
@@ -32,7 +36,9 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       'last_name': lastName,
       'phone_number': phoneNumber,
       'city': city,
-      'avatar_url': imageUrl ?? '',
+      'experience': experience ?? 0,
+      'category': category ?? '',
+      'avatar_url': imageUrl,
     });
     final userId = response.user!.id;
 
@@ -44,6 +50,8 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       'phone_number': phoneNumber,
       'city': city,
       'avatar_url': imageUrl,
+      'experience': experience,
+      'category': category ?? '',
     });
     if (response.user == null) {
       throw const ServerExceptions('User is null');
