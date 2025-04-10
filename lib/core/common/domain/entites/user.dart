@@ -6,9 +6,13 @@ class User {
   final String? phoneNumber;
   final String? city;
   final String? imageUrl;
+  final int? experience;
+  final String? category;
 
   User({
     required this.email,
+    this.experience,
+    this.category,
     required this.password,
     required this.firstName,
     this.lastName,
