@@ -9,6 +9,8 @@ class UserSignUpModel extends UserSignUp {
     required String super.phoneNumber,
     required String super.city,
     super.imageUrl,
+    required super.category,
+    required super.experience,
   });
 
   factory UserSignUpModel.fromJson(Map<String, dynamic> json) {
@@ -20,6 +22,8 @@ class UserSignUpModel extends UserSignUp {
       phoneNumber: json['phone_number'] as String? ?? '',
       city: json['city'] as String? ?? '',
       imageUrl: json['avatar_url'] as String? ?? '',
+      category: json['category'] ?? '',
+      experience: json['experience'] ?? '',
     );
   }
 
@@ -31,5 +35,7 @@ class UserSignUpModel extends UserSignUp {
         'phone_number': phoneNumber,
         'city': city,
         'avatar_url': imageUrl,
+        'experience': experience,
+        'category': category,
       };
 }
