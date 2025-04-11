@@ -4,8 +4,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DocPoint extends StatelessWidget {
   const DocPoint({super.key, required this.appRouter});
-
   final GoRouter appRouter;
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(

@@ -9,11 +9,16 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await setUpGetIt();
 
-  final appRouter = AppRouter().router;
-  runApp(BlocProvider(
-    create: (context) => getIt<CurrentUserCubit>()..checkAuthStatus(),
-    child: DocPoint(
-      appRouter: appRouter,
+  // Initialize auth cubit before creating router
+  final authCubit = getIt<CurrentUserCubit>();
+  await authCubit.checkAuthStatus();
+
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider.value(value: authCubit),
+      ],
+      child: DocPoint(appRouter: AppRouter().router),
     ),
-  ));
+  );
 }
