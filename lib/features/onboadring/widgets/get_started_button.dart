@@ -21,10 +21,11 @@ class GetStartedButton extends StatelessWidget {
           return ElevatedButton(
             onPressed: () {
               Future.delayed(const Duration(seconds: 3), () {
-                isLoggedInUser
-                    ? context.go(Routes.homePage) 
-                    : context
-                        .go(Routes.onBoardingScreen); 
+                if (context.mounted) {
+                  isLoggedInUser
+                      ? context.go(Routes.homePage)
+                      : context.go(Routes.onBoardingScreen);
+                }
               });
             },
             style: ElevatedButton.styleFrom(
