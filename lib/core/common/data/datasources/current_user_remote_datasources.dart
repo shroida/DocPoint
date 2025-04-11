@@ -1,4 +1,5 @@
 import 'package:docpoint/core/common/data/models/current_user_model.dart';
+import 'package:docpoint/core/constants/constants.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class CurrentUserRemoteDatasources {
@@ -30,6 +31,7 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
           .eq('id', userId)
           .maybeSingle();
       if (doctorResponse != null) {
+        isLoggedInUser = true;
         return CurrentUserModel.fromJson({
           ...doctorResponse,
           'user_type': 'doctor',
@@ -42,6 +44,7 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
           .select()
           .eq('id', userId)
           .single();
+      isLoggedInUser = true;
 
       return CurrentUserModel.fromJson({
         ...patientResponse,

@@ -1,5 +1,4 @@
 import 'package:docpoint/core/common/data/datasources/current_user_remote_datasources.dart';
-import 'package:docpoint/core/common/data/models/current_user_model.dart';
 import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/common/domain/repository/current_user_repo.dart';
 import 'package:docpoint/core/error/failure.dart';

@@ -1,14 +1,19 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
 
-class CurrentUserState {}
+abstract class CurrentUserState {}
 
-final class CurrentUserInitial extends CurrentUserState {}
+class CurrentUserInitial extends CurrentUserState {}
 
-final class CurrentUserLoading extends CurrentUserState {}
+class CurrentUserLoading extends CurrentUserState {}
 
-final class CurrentUserUnauthenticated extends CurrentUserState {}
-
-final class CurrentUserAuthenticated extends CurrentUserState {
+class CurrentUserAuthenticated extends CurrentUserState {
   final User user;
   CurrentUserAuthenticated(this.user);
+}
+
+class CurrentUserUnauthenticated extends CurrentUserState {}
+
+class CurrentUserError extends CurrentUserState {
+  final String message;
+  CurrentUserError(this.message);
 }
