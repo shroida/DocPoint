@@ -1,3 +1,4 @@
+import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
@@ -32,22 +33,27 @@ class LoginScreenState extends State<LoginScreen> {
         child: SingleChildScrollView(
           child: Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  const LogoLogin(),
-                  SizedBox(height: 10.h),
-                  const UserTypeSelectorLogin(),
-                  SizedBox(height: 10.h),
-                  const LoginForm(),
-                  SizedBox(height: 10.h),
-                  AppTextButton(
-                    buttonText: 'Login',
-                    textStyle: AppStyle.heading2.copyWith(color: Colors.white),
-                    onPressed: () {
-                      debugPrint(cubit.userType);
-                    },
-                  )
-                ],
+              child: BlocBuilder<CurrentUserCubit, CurrentUserState>(
+                builder: (context, state) {
+                  return Column(
+                    children: [
+                      const LogoLogin(),
+                      SizedBox(height: 10.h),
+                      const UserTypeSelectorLogin(),
+                      SizedBox(height: 10.h),
+                      const LoginForm(),
+                      SizedBox(height: 10.h),
+                      AppTextButton(
+                        buttonText: 'Login',
+                        textStyle:
+                            AppStyle.heading2.copyWith(color: Colors.white),
+                        onPressed: () {
+                          debugPrint(cubit.userType);
+                        },
+                      )
+                    ],
+                  );
+                },
               )),
         ),
       ),
