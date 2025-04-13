@@ -31,5 +31,5 @@ class AppRouter {
               create: (context) => getIt<SignupCubit>(),
               child: const SignupScreen(),
             )),
-  ], initialLocation: Routes.signupScreen);
+  ], initialLocation: Routes.loginScreen);
 }

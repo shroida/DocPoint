@@ -21,7 +21,6 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CurrentUserCubit>().currentUser;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -48,7 +47,7 @@ class LoginScreenState extends State<LoginScreen> {
                         textStyle:
                             AppStyle.heading2.copyWith(color: Colors.white),
                         onPressed: () {
-                          debugPrint(cubit.userType);
+                          debugPrint(state.userType);
                         },
                       )
                     ],
