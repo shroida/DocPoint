@@ -1,3 +1,4 @@
+import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/features/signup/domain/usecase/user_sign_up_usecase.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
 import 'package:flutter/material.dart';
@@ -8,9 +9,11 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SignupCubit extends Cubit<SignupState> {
   final UserSignUpUsecase _signUpRepoUsecase;
-  final SupabaseClient supabase; // Add this
+  final SupabaseClient supabase;
+  final CurrentUserCubit currentUserCubit;
 
-  SignupCubit(this._signUpRepoUsecase, this.supabase) : super(SignupInit());
+  SignupCubit(this._signUpRepoUsecase, this.supabase, this.currentUserCubit)
+      : super(SignupInit());
   final formKey = GlobalKey<FormState>();
 
   // Common controllers
@@ -24,7 +27,6 @@ class SignupCubit extends Cubit<SignupState> {
   final experienceController = TextEditingController();
 
   // Dropdown values
-  String userType = 'Patient';
   String city = 'Giza';
   String category = 'Dentist';
 
