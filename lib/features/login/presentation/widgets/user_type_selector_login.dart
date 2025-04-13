@@ -1,20 +1,15 @@
+import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 
-class UserTypeSelector<T extends Cubit<U>, U> extends StatelessWidget {
-  final String Function(U state) getUserType;
-  final void Function(String) setUserType;
-  final List<String> userTypes;
-
-  const UserTypeSelector({
-    super.key,
-    required this.getUserType,
-    required this.setUserType,
-    this.userTypes = const ['Patient', 'Doctor'],
-  });
+class UserTypeSelectorLogin extends StatelessWidget {
+  const UserTypeSelectorLogin({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final cubitSignup = context.read<SignupCubit>();
+
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -24,13 +19,12 @@ class UserTypeSelector<T extends Cubit<U>, U> extends StatelessWidget {
             'Select User Type',
             style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
-          BlocBuilder<T, U>(
+          BlocBuilder<SignupCubit, SignupState>(
             builder: (context, state) {
-              final currentType = getUserType(state);
               return Wrap(
                 spacing: 8.0,
-                children: userTypes.map((String type) {
-                  final isSelected = currentType == type;
+                children: ['Patient', 'Doctor'].map((String type) {
+                  final isSelected = cubitSignup.userType == type;
                   return ChoiceChip(
                     checkmarkColor: Colors.white,
                     label: Text(type),
@@ -52,7 +46,7 @@ class UserTypeSelector<T extends Cubit<U>, U> extends StatelessWidget {
                       ),
                     ),
                     onSelected: (bool selected) {
-                      setUserType(selected ? type : userTypes.first);
+                      cubitSignup.setUserType(selected ? type : 'Patient');
                     },
                   );
                 }).toList(),
