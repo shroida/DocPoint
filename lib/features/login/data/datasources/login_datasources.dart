@@ -1,4 +1,4 @@
-import 'package:docpoint/core/common/domain/entites/user.dart' as current_user;
+import 'package:docpoint/core/common/data/models/current_user_model.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/features/login/data/models/user_login_model.dart';
@@ -27,26 +27,22 @@ class LoginDatasourcesImpl implements LoginDatasources {
 
       // 3. Update CurrentUserCubit
       if (currentUserCubit.userType == 'Doctor') {
-        currentUserCubit.updateUser(current_user.User(
-          id: userId,
-          password: '',
-          email: user.email ?? email,
-          firstName: profileData['first_name'] ?? '',
-          lastName: profileData['last_name'],
-          phoneNumber: profileData['phone_number'],
-          city: profileData['city'],
-          imageUrl: profileData['avatar_url'],
-          experience: profileData['experience']?.toInt(),
-          category: profileData['category'],
-          userType: profileData['user_type'] ?? 'Patient',
-        ));
-        
+        // 3. Create and update user
+        final currentUser = CurrentUserModel.fromJson({
+          ...profileData,
+          'id': user.id,
+          'email': user.email ?? email,
+        }).toUserEntity();
+        currentUserCubit.updateUser(currentUser);
       }
+      return UserLoginModel(email, password);
     } catch (e) {
       throw const ServerExceptions('Error Login');
     }
   }
-    Future<Map<String, dynamic>> _fetchUserProfile(String userId, String email) async {
+
+  Future<Map<String, dynamic>> _fetchUserProfile(
+      String userId, String email) async {
     // Check if user exists in profiles table
     final profileResponse = await _supabaseClient
         .from('user_profiles')
@@ -70,5 +66,4 @@ class LoginDatasourcesImpl implements LoginDatasources {
       'user_type': 'Patient',
     };
   }
-
 }
