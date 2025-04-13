@@ -38,32 +38,35 @@ class SignupCubit extends Cubit<SignupState> {
   File? imageFile;
 
   Future<void> signUp() async {
-    emit(SignupLoading());
+    // emit(SignupLoading());
     try {
-      String? imageUrl;
+      debugPrint('=======================================');
+      debugPrint(currentUserCubit.userType);
+      debugPrint('=======================================');
+      // String? imageUrl;
 
-      // Upload image if exists
-      if (imageFile != null) {
-        imageUrl = await _uploadProfileImage();
-      }
+      // // Upload image if exists
+      // if (imageFile != null) {
+      //   imageUrl = await _uploadProfileImage();
+      // }
 
-      final response = await _signUpRepoUsecase.call(UserSignUpParams(
-        email: emailController.text,
-        imageUrl: imageUrl!,
-        password: passwordController.text,
-        firstName: firstNameController.text,
-        lastName: lastNameController.text,
-        phoneNumber: phoneController.text,
-        city: city,
-        category: category,
-        experience: int.tryParse(experienceController.text) ?? 0,
-        userType: currentUserCubit.userType,
-      ));
+      // final response = await _signUpRepoUsecase.call(UserSignUpParams(
+      //   email: emailController.text,
+      //   imageUrl: imageUrl!,
+      //   password: passwordController.text,
+      //   firstName: firstNameController.text,
+      //   lastName: lastNameController.text,
+      //   phoneNumber: phoneController.text,
+      //   city: city,
+      //   category: category,
+      //   experience: int.tryParse(experienceController.text) ?? 0,
+      //   userType: currentUserCubit.userType,
+      // ));
 
-      response.fold(
-        (failure) => emit(SignupFailure()),
-        (user) => emit(SignupSuccess(user)),
-      );
+      // response.fold(
+      //   (failure) => emit(SignupFailure()),
+      //   (user) => emit(SignupSuccess(user)),
+      // );
     } catch (e, stackTrace) {
       debugPrint('Signup error: $e\n$stackTrace');
       emit(SignupFailure());
