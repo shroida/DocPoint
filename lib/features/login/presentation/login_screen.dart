@@ -22,14 +22,13 @@ class LoginScreenState extends State<LoginScreen> {
           style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
         ),
       ),
-      body: SafeArea(
+      body: const SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: EdgeInsets.all(16.0),
               child: Column(
-                children: [LogoLogin(),
-                
-                
+                children: [
+                 LogoLogin(),
                 ],
               )),
         ),
