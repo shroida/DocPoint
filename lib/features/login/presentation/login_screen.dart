@@ -32,34 +32,8 @@ class LoginScreenState extends State<LoginScreen> {
               child: Column(
                 children: [
                   const LogoLogin(),
-                  Form(
-                      key: loginCubit.formKey,
-                      child: Column(
-                        children: [
-                          AppTextFormField(
-                            controller: loginCubit.emailController,
-                            hintText: 'Email',
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your email';
-                              }
-                              return null;
-                            },
-                          ),
-                          SizedBox(height: 10.h),
-                          AppTextFormField(
-                            hintText: 'Password',
-                            controller: loginCubit.passwordController,
-                            isObscureText: true,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Please enter your password';
-                              }
-                              return null;
-                            },
-                          ),
-                        ],
-                      ))
+                  SizedBox(height: 10.h),
+                  LoginForm(loginCubit: loginCubit)
                 ],
               )),
         ),
