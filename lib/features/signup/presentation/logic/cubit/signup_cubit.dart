@@ -1,4 +1,3 @@
-import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/features/signup/domain/usecase/user_sign_up_usecase.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
