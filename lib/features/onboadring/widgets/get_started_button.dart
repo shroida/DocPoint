@@ -1,6 +1,9 @@
+<<<<<<< HEAD
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/constants/constants.dart';
+=======
+>>>>>>> 98f46959e38356ca3fd2b213809369a8e2f46c55
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,6 +19,7 @@ class GetStartedButton extends StatelessWidget {
       bottom: 30.h,
       left: 24.w,
       right: 24.w,
+<<<<<<< HEAD
       child: BlocBuilder<CurrentUserCubit, CurrentUserState>(
         builder: (context, state) {
           return ElevatedButton(
@@ -55,6 +59,11 @@ class GetStartedButton extends StatelessWidget {
                     ),
                   ),
           );
+=======
+      child: ElevatedButton(
+        onPressed: () {
+          context.go(Routes.loginScreen);
+>>>>>>> 98f46959e38356ca3fd2b213809369a8e2f46c55
         },
       ),
     );
