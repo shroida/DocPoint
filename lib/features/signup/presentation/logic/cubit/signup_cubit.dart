@@ -53,7 +53,7 @@ class SignupCubit extends Cubit<SignupState> {
         city: city,
         category: category,
         experience: int.tryParse(experienceController.text) ?? 0,
-        userType: userType,
+        userType: currentUserCubit.userType,
       ));
 
       response.fold(
@@ -100,8 +100,9 @@ class SignupCubit extends Cubit<SignupState> {
   }
 
   void setUserType(String type) {
-    userType = type;
-    emit(SignupUserTypeUpdated(userType)); // Make sure you have this state
+    currentUserCubit.userType = type;
+    emit(SignupUserTypeUpdated(
+        currentUserCubit.userType)); // Make sure you have this state
   }
 
   // Lists
