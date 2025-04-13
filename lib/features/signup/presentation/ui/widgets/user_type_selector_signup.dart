@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 
-class UserTypeSelector extends StatelessWidget {
-  const UserTypeSelector({super.key});
+class UserTypeSelectorSignup extends StatelessWidget {
+  const UserTypeSelectorSignup({super.key});
 
   @override
   Widget build(BuildContext context) {
