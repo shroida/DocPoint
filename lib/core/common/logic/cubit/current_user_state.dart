@@ -1,6 +1,11 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
 
-abstract class CurrentUserState {}
+// current_user_state.dart
+abstract class CurrentUserState {
+  final String? userType;
+
+  const CurrentUserState({this.userType});
+}
 
 class CurrentUserInitial extends CurrentUserState {}
 

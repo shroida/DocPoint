@@ -1,16 +1,13 @@
+import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
-import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 
 class UserTypeSelectorSignup extends StatelessWidget {
   const UserTypeSelectorSignup({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final currentUserCubit = context.read<CurrentUserCubit>();
-
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -20,12 +17,12 @@ class UserTypeSelectorSignup extends StatelessWidget {
             'Select User Type',
             style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
-          BlocBuilder<SignupCubit, SignupState>(
-            builder: (context, state) {
+          BlocBuilder<CurrentUserCubit, CurrentUserState>(
+            builder: (context, currentUserState) {
               return Wrap(
                 spacing: 8.0,
                 children: ['Patient', 'Doctor'].map((String type) {
-                  final isSelected = currentUserCubit.userType == type;
+                  final isSelected = currentUserState.userType == type;
                   return ChoiceChip(
                     checkmarkColor: Colors.white,
                     label: Text(type),
@@ -47,7 +44,7 @@ class UserTypeSelectorSignup extends StatelessWidget {
                       ),
                     ),
                     onSelected: (bool selected) {
-                      currentUserCubit.setUserType(selected ? type : 'Patient');
+                      context.read<CurrentUserCubit>().setUserType(type);
                     },
                   );
                 }).toList(),
