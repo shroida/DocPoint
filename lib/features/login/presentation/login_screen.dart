@@ -1,9 +1,11 @@
+import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/features/login/presentation/widgets/user_type_selector_signup.dart';
 import 'package:docpoint/features/login/presentation/widgets/login_form.dart';
 import 'package:docpoint/features/login/presentation/widgets/logo_login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,6 +20,7 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<CurrentUserCubit>().currentUser;
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -40,7 +43,9 @@ class LoginScreenState extends State<LoginScreen> {
                   AppTextButton(
                     buttonText: 'Login',
                     textStyle: AppStyle.heading2.copyWith(color: Colors.white),
-                    onPressed: () {},
+                    onPressed: () {
+                      debugPrint(cubit.userType);
+                    },
                   )
                 ],
               )),
