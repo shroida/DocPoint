@@ -1,7 +1,5 @@
-import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/features/login/presentation/widgets/logo_login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
