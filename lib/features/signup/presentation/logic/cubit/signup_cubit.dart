@@ -37,36 +37,36 @@ class SignupCubit extends Cubit<SignupState> {
   // Image file
   File? imageFile;
 
-  Future<void> signUp() async {
+  Future<void> signUp({required String userType}) async {
     // emit(SignupLoading());
     try {
       debugPrint('=======================================');
-      debugPrint(currentUserCubit.userType);
+      debugPrint(userType);
       debugPrint('=======================================');
-      // String? imageUrl;
+      String? imageUrl;
 
-      // // Upload image if exists
-      // if (imageFile != null) {
-      //   imageUrl = await _uploadProfileImage();
-      // }
+      // Upload image if exists
+      if (imageFile != null) {
+        imageUrl = await _uploadProfileImage();
+      }
 
-      // final response = await _signUpRepoUsecase.call(UserSignUpParams(
-      //   email: emailController.text,
-      //   imageUrl: imageUrl!,
-      //   password: passwordController.text,
-      //   firstName: firstNameController.text,
-      //   lastName: lastNameController.text,
-      //   phoneNumber: phoneController.text,
-      //   city: city,
-      //   category: category,
-      //   experience: int.tryParse(experienceController.text) ?? 0,
-      //   userType: currentUserCubit.userType,
-      // ));
+      final response = await _signUpRepoUsecase.call(UserSignUpParams(
+        email: emailController.text,
+        imageUrl: imageUrl!,
+        password: passwordController.text,
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        phoneNumber: phoneController.text,
+        city: city,
+        category: category,
+        experience: int.tryParse(experienceController.text) ?? 0,
+        userType: userType,
+      ));
 
-      // response.fold(
-      //   (failure) => emit(SignupFailure()),
-      //   (user) => emit(SignupSuccess(user)),
-      // );
+      response.fold(
+        (failure) => emit(SignupFailure()),
+        (user) => emit(SignupSuccess(user)),
+      );
     } catch (e, stackTrace) {
       debugPrint('Signup error: $e\n$stackTrace');
       emit(SignupFailure());

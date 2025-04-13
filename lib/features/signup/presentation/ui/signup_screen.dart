@@ -76,17 +76,19 @@ class SignupScreenState extends State<SignupScreen> {
                           textStyle:
                               AppStyle.heading2.copyWith(color: Colors.white),
                           onPressed: () {
-                            // debugPrint(
-                            //     'Signup button pressed'); // Debug button press
-                            // debugPrint(
-                            //     'Form valid: ${cubitSignup.formKey.currentState?.validate()}');
-                            // if (cubitSignup.formKey.currentState?.validate() ??
-                            //     false) {
-                            //   debugPrint('Calling signUp() in cubitSignup');
-                            //   cubitSignup.signUp();
-                            // } else {
-                            //   debugPrint('Form validation failed');
-                            // }
+                            debugPrint(
+                                'Signup button pressed'); // Debug button press
+                            debugPrint(
+                                'Form valid: ${cubitSignup.formKey.currentState?.validate()}');
+                            if (cubitSignup.formKey.currentState?.validate() ??
+                                false) {
+                              debugPrint('Calling signUp() in cubitSignup');
+                              cubitSignup.signUp(
+                                  userType:
+                                      currentUserState.userType ?? 'Patient');
+                            } else {
+                              debugPrint('Form validation failed');
+                            }
                           },
                         ),
                         if (state is SignupLoading)

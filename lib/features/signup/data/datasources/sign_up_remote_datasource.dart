@@ -1,7 +1,6 @@
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/features/signup/data/models/user_sign_up_model.dart';
-import 'package:flutter/material.dart';
 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -39,7 +38,6 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
     required String city,
   }) async {
     try {
-      debugPrint(currentUserCubit.state.userType);
       // 1. Sign up with Supabase Auth
       final response = await supabaseClient.auth.signUp(
         email: email,
@@ -80,21 +78,18 @@ class SignUpRemoteDatasourceImpl implements SignUpRemoteDatasource {
       );
 
       // 3. Update current user cubit
-      currentUserCubit.updateUser(
-        UserSignUpModel(
-          password: '',
-          id: userId,
-          email: email,
-          firstName: firstName,
-          lastName: lastName,
-          phoneNumber: phoneNumber,
-          city: city,
-          imageUrl: imageUrl,
-          experience: experience,
-          category: category,
-          userType: userType,
-        ),
-      );
+      currentUserCubit.updateUser(UserSignUpModel(
+        id: userId,
+        email: email,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phoneNumber,
+        city: city,
+        imageUrl: imageUrl,
+        experience: experience,
+        category: category,
+        userType: userType,
+      ));
 
       return UserSignUpModel.fromJson(response.user!.toJson());
     } catch (e) {
