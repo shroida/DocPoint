@@ -1,6 +1,14 @@
-class UserLogin {
-  final String email;
-  final String password;
+import 'package:docpoint/core/common/domain/entites/user.dart';
 
-  UserLogin(this.email, this.password);
+class UserLogin extends User {
+  UserLogin(
+      {required super.email,
+      required super.password,
+      required super.id,
+      super.firstName = '',
+      super.lastName,
+      super.phoneNumber,
+      super.city,
+      super.imageUrl,
+      super.userType});
 }
