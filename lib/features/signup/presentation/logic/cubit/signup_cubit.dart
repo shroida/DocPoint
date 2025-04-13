@@ -99,12 +99,7 @@ class SignupCubit extends Cubit<SignupState> {
     category = selectedCategory;
   }
 
-  void setUserType(String type) {
-    currentUserCubit.userType = type;
-    emit(SignupUserTypeUpdated(
-        currentUserCubit.userType)); // Make sure you have this state
-  }
-
+  
   // Lists
   final List<String> cities = [
     'Giza',
