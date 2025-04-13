@@ -21,7 +21,7 @@ final getIt = GetIt.instance;
 
 Future<void> setUpGetIt() async {
   // Signup related dependencies
-  supabaseDI();
+  await supabaseDI();
   // Auth related dependencies
   authDI();
   // Signup related dependencies
@@ -30,7 +30,7 @@ Future<void> setUpGetIt() async {
   loginDI();
 }
 
-void supabaseDI() async {
+Future<void> supabaseDI() async {
   final supabase = await Supabase.initialize(url: projectURL, anonKey: anonKey);
   getIt.registerFactory(() => supabase.client);
 }

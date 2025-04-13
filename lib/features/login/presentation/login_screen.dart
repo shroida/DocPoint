@@ -40,7 +40,9 @@ class LoginScreenState extends State<LoginScreen> {
                   AppTextButton(
                     buttonText: 'Login',
                     textStyle: AppStyle.heading2.copyWith(color: Colors.white),
-                    onPressed: () {},
+                    onPressed: () {
+                      
+                    },
                   )
                 ],
               )),
