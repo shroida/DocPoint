@@ -4,6 +4,10 @@ import 'package:docpoint/core/common/domain/repository/current_user_repo.dart';
 import 'package:docpoint/core/common/domain/usecase/current_user_usecase.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/constants/constants.dart';
+import 'package:docpoint/features/login/data/datasources/login_datasources.dart';
+import 'package:docpoint/features/login/data/repositories/login_repo_impl.dart';
+import 'package:docpoint/features/login/domain/repository/login_repo.dart';
+import 'package:docpoint/features/login/domain/usecase/user_login_usecase.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/signup/data/datasources/sign_up_remote_datasource.dart';
 import 'package:docpoint/features/signup/data/repositories/sign_up_repo_impl.dart';
@@ -39,9 +43,15 @@ void signUpDI() {
   getIt.registerLazySingleton<SignupCubit>(
       () => SignupCubit((getIt<UserSignUpUsecase>()), getIt(), getIt()));
 }
-void loginDI(){
-   getIt.resetLazySingleton<LoginCubit>(()=>LoginCubit());
+
+void loginDI() {
+  getIt.registerFactory<LoginDatasources>(
+      () => LoginDatasourcesImpl(getIt(), getIt()));
+  getIt.registerFactory<LoginRepo>(() => LoginRepoImpl(getIt()));
+  getIt.registerFactory<UserLoginUsecase>(() => UserLoginUsecase(getIt()));
+  getIt.registerLazySingleton<LoginCubit>(() => LoginCubit(getIt(), getIt()));
 }
+
 void authDI() {
   getIt.registerFactory<CurrentUserRemoteDatasources>(
     () => CurrentUserRemoteDatasourcesImpl(getIt()),
