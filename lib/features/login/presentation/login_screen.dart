@@ -1,8 +1,6 @@
-import 'package:docpoint/core/widgets/app_text_form_field.dart';
-import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
+import 'package:docpoint/features/login/presentation/widgets/login_form.dart';
 import 'package:docpoint/features/login/presentation/widgets/logo_login.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -32,7 +30,7 @@ class LoginScreenState extends State<LoginScreen> {
                 children: [
                   const LogoLogin(),
                   SizedBox(height: 10.h),
-                  LoginForm()
+                  const LoginForm()
                 ],
               )),
         ),
