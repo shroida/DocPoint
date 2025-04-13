@@ -1,6 +1,6 @@
+import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
-import 'package:docpoint/core/widgets/user_type_selector.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/doctor_form.dart';
@@ -57,13 +57,13 @@ class SignupScreenState extends State<SignupScreen> {
               builder: (context, state) {
                 debugPrint('Current State: $state'); // Debug state changes
                 final cubitSignup = context.read<SignupCubit>();
+                final currentSignup = context.read<CurrentUserCubit>();
                 return Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const PickImage(),
-                  
                     SizedBox(height: 16.h),
-                    cubitSignup.userType == 'Patient'
+                    currentSignup.userType == 'Patient'
                         ? const PatientForm()
                         : const DoctorForm(),
                     SizedBox(height: 24.h),

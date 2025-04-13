@@ -17,3 +17,8 @@ class CurrentUserError extends CurrentUserState {
   final String message;
   CurrentUserError(this.message);
 }
+
+class CurrentUserTypeUpdated extends CurrentUserState {
+  final String? userType;
+  CurrentUserTypeUpdated(this.userType);
+}

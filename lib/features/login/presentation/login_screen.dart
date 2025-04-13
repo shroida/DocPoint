@@ -1,8 +1,8 @@
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
+import 'package:docpoint/core/widgets/user_type_selector.dart';
 import 'package:docpoint/features/login/presentation/widgets/login_form.dart';
 import 'package:docpoint/features/login/presentation/widgets/logo_login.dart';
-import 'package:docpoint/features/login/presentation/widgets/user_type_selector_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -33,7 +33,7 @@ class LoginScreenState extends State<LoginScreen> {
                 children: [
                   const LogoLogin(),
                   SizedBox(height: 10.h),
-                  const UserTypeSelectorLogin(),
+                  const UserTypeSelector(),
                   SizedBox(height: 10.h),
                   const LoginForm(),
                   SizedBox(height: 10.h),

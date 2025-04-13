@@ -23,7 +23,7 @@ Future<void> setUpGetIt() async {
   getIt.registerFactory<SignUpRepo>(() => SignUpRepoImpl(getIt()));
   getIt.registerFactory<UserSignUpUsecase>(() => UserSignUpUsecase(getIt()));
   getIt.registerLazySingleton<SignupCubit>(
-      () => SignupCubit((getIt<UserSignUpUsecase>()), getIt()));
+      () => SignupCubit((getIt<UserSignUpUsecase>()), getIt(), getIt()));
 
   // Auth related dependencies
   getIt.registerFactory<CurrentUserRemoteDatasources>(
