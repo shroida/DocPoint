@@ -27,5 +27,5 @@ class AppRouter {
               create: (context) => getIt<SignupCubit>(),
               child: const SignupScreen(),
             )),
-  ], initialLocation: Routes.onBoardingScreen);
+  ], initialLocation: Routes.loginScreen);
 }
