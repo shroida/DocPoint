@@ -33,7 +33,7 @@ class LoginScreenState extends State<LoginScreen> {
                 children: [
                   const LogoLogin(),
                   SizedBox(height: 10.h),
-                  const UserTypeSelector(),
+                  const UserTypeSelectorLogin(),
                   SizedBox(height: 10.h),
                   const LoginForm(),
                   SizedBox(height: 10.h),
