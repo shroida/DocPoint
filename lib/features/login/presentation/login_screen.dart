@@ -17,7 +17,6 @@ class LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final loginCubit = context.read<LoginCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -33,7 +32,7 @@ class LoginScreenState extends State<LoginScreen> {
                 children: [
                   const LogoLogin(),
                   SizedBox(height: 10.h),
-                  LoginForm(loginCubit: loginCubit)
+                  LoginForm()
                 ],
               )),
         ),
