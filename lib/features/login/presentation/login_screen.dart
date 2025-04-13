@@ -1,3 +1,5 @@
+import 'package:docpoint/core/styles/app_styles.dart';
+import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/features/login/presentation/widgets/login_form.dart';
 import 'package:docpoint/features/login/presentation/widgets/logo_login.dart';
 import 'package:flutter/material.dart';
@@ -30,7 +32,13 @@ class LoginScreenState extends State<LoginScreen> {
                 children: [
                   const LogoLogin(),
                   SizedBox(height: 10.h),
-                  const LoginForm()
+                  const LoginForm(),
+                  SizedBox(height: 10.h),
+                  AppTextButton(
+                    buttonText: 'Login',
+                    textStyle: AppStyle.heading2.copyWith(color: Colors.white),
+                    onPressed: () {},
+                  )
                 ],
               )),
         ),
