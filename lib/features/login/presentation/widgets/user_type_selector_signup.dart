@@ -1,8 +1,8 @@
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
-import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
+import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
+import 'package:docpoint/features/login/presentation/logic/login_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 
 class UserTypeSelectorLogin extends StatelessWidget {
   const UserTypeSelectorLogin({super.key});
@@ -20,7 +20,7 @@ class UserTypeSelectorLogin extends StatelessWidget {
             'Select User Type',
             style: TextStyle(fontSize: 14, color: Colors.grey),
           ),
-          BlocBuilder<SignupCubit, SignupState>(
+          BlocBuilder<LoginCubit, LoginState>(
             builder: (context, state) {
               return Wrap(
                 spacing: 8.0,
