@@ -37,7 +37,7 @@ Future<void> supabaseDI() async {
 
 void signUpDI() {
   getIt.registerFactory<SignUpRemoteDatasource>(
-      () => SignUpRemoteDatasourceImpl(getIt()));
+      () => SignUpRemoteDatasourceImpl(getIt(), getIt()));
   getIt.registerFactory<SignUpRepo>(() => SignUpRepoImpl(getIt()));
   getIt.registerFactory<UserSignUpUsecase>(() => UserSignUpUsecase(getIt()));
   getIt.registerLazySingleton<SignupCubit>(
