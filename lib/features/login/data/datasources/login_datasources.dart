@@ -35,7 +35,7 @@ class LoginDatasourcesImpl implements LoginDatasources {
         }).toUserEntity();
         currentUserCubit.updateUser(currentUser);
       }
-      return UserLoginModel(email, password);
+      return UserLoginModel(email: email, password: password, id: userId);
     } catch (e) {
       throw const ServerExceptions('Error Login');
     }

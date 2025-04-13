@@ -1,5 +1,6 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/error/failure.dart';
+import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/features/login/data/datasources/login_datasources.dart';
 import 'package:docpoint/features/login/domain/repository/login_repo.dart';
 import 'package:fpdart/fpdart.dart';
@@ -16,6 +17,8 @@ class LoginRepoImpl implements LoginRepo {
           await _loginDatasources.login(email: email, password: password);
 
       return right(user);
-    } catch (e) {}
+    } catch (e) {
+      throw const ServerExceptions('Error occurred');
+    }
   }
 }
