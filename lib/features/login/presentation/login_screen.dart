@@ -1,9 +1,9 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/routing/routes.dart';
-import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
+import 'package:docpoint/core/widgets/navigate_signup_or_login.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/logic/login_state.dart';
 import 'package:docpoint/features/login/presentation/widgets/user_type_selector_login.dart';
