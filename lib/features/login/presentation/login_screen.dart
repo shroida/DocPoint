@@ -1,6 +1,7 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/routing/routes.dart';
+import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
@@ -83,6 +84,7 @@ class LoginScreenState extends State<LoginScreen> {
                               }
                             },
                           ),
+                        const NavigateSignupOrLogin(login: true)
                       ],
                     );
                   },
