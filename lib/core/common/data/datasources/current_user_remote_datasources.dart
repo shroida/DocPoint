@@ -57,7 +57,18 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
     }
   }
 
+  @override
   Future<void> logout() async {
-    await supabaseClient.auth.signOut();
+    try {
+      await supabaseClient.auth.signOut();
+
+      await supabaseClient.removeAllChannels();
+
+      if (supabaseClient.auth.currentSession != null) {
+        throw Exception('Session still exists after logout');
+      }
+    } catch (e) {
+      throw Exception('Failed to logout: $e');
+    }
   }
 }

@@ -106,7 +106,8 @@ class CustomDrawer extends StatelessWidget {
                       color: Colors.red), // Red icon for logout
                   title:
                       const Text('Logout', style: TextStyle(color: Colors.red)),
-                  onTap: () {
+                  onTap: () async {
+                    await currentUserCubit.logout();
                     FocusManager.instance.primaryFocus?.unfocus();
                   },
                 ),
