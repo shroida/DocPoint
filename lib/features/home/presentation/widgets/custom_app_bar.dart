@@ -5,16 +5,28 @@ import 'package:flutter/material.dart';
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
+  final ScaffoldState? scaffoldState; // Changed from GlobalKey<ScaffoldState>
 
   const CustomAppBar({
     super.key,
     required this.title,
     this.actions,
+    this.scaffoldState, // Changed parameter
   });
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      leading: IconButton(
+        icon: const Icon(Icons.menu, color: Colors.white),
+        onPressed: () {
+          if (scaffoldState != null) {
+            scaffoldState!.openDrawer();
+          } else {
+            Scaffold.of(context).openDrawer();
+          }
+        },
+      ),
       title: Text(
         title,
         style: AppStyle.heading2.copyWith(color: Colors.white),
