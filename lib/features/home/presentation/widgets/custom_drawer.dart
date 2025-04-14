@@ -33,11 +33,11 @@ class CustomDrawer extends StatelessWidget {
                       CircleAvatar(
                         radius: 40,
                         backgroundImage: NetworkImage(
-                            currentUserCubit.currentUser.imageUrl ?? ''),
+                            currentUserCubit.currentUser!.imageUrl ?? ''),
                       ),
                       const SizedBox(height: 16),
                       Text(
-                        '${currentUserCubit.userType == 'Doctor' ? 'Doc' : ''} ${currentUserCubit.currentUser.firstName} ${currentUserCubit.currentUser.lastName}', // Replace with user's name
+                        '${currentUserCubit.userType == 'Doctor' ? 'Doc' : ''} ${currentUserCubit.currentUser!.firstName} ${currentUserCubit.currentUser!.lastName}', // Replace with user's name
                         style: const TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -46,7 +46,7 @@ class CustomDrawer extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        currentUserCubit.currentUser.email,
+                        currentUserCubit.currentUser!.email,
                         style: const TextStyle(
                           fontSize: 14,
                           color: Colors.white70,

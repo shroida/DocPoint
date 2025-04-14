@@ -21,7 +21,7 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
     emit(CurrentUserAuthenticated(user));
   }
 
-  late User currentUser;
+  User? currentUser; // Change from late to nullable
   Future<void> checkAuthStatus() async {
     emit(const CurrentUserLoading());
     final res = await _currentUserUsecase.call(NoParams());
