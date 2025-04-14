@@ -26,4 +26,18 @@ class DoctorModel extends DoctorEntity {
       category: json['category'] as String,
     );
   }
+  DoctorEntity toEntity() {
+    return DoctorEntity(
+      userType: "Doctor",
+      id: id,
+      email: email,
+      firstName: firstName,
+      lastName: lastName,
+      phoneNumber: phoneNumber,
+      city: city,
+      imageUrl: imageUrl,
+      experience: experience,
+      category: category,
+    );
+  }
 }
