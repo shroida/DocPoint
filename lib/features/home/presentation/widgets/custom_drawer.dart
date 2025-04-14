@@ -1,4 +1,7 @@
+import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
+import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -7,65 +10,83 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currentUserCubit = context.read<CurrentUserCubit>();
+
     return Drawer(
       surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       shadowColor: Colors.white,
       child: Container(
-        color: Colors.white, // Set drawer background to white
+        color: Colors.white,
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              // User profile section
+              // User Profile Section
               Container(
                 padding: const EdgeInsets.fromLTRB(16, 40, 16, 20),
-                color: Colors.blue[50], // Optional: light background for header
+                color: AppColors.primary,
                 child: Column(
                   children: [
-                    const CircleAvatar(
+                    CircleAvatar(
                       radius: 40,
                       backgroundImage: NetworkImage(
-                          'https://example.com/path/to/user/image.jpg'), // Replace with your image
-                      child:
-                          Icon(Icons.person, size: 40), // Fallback if no image
+                          currentUserCubit.currentUser.imageUrl ?? ''),
                     ),
                     const SizedBox(height: 16),
-                    const Text(
-                      'John Doe', // Replace with user's name
-                      style: TextStyle(
+                    Text(
+                      '${currentUserCubit.userType == 'Doctor' ? 'Doc' : ''} ${currentUserCubit.currentUser.firstName} ${currentUserCubit.currentUser.lastName}', // Replace with user's name
+                      style: const TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
+                        color: Colors.white,
                       ),
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      'john.doe@example.com', // Replace with user's email
-                      style: TextStyle(
+                      currentUserCubit.currentUser.email,
+                      style: const TextStyle(
                         fontSize: 14,
-                        color: Colors.grey[600],
+                        color: Colors.white70,
                       ),
                     ),
                   ],
                 ),
               ),
 
-              // Menu items
+              // Menu Items
               Column(
                 children: [
                   ListTile(
                     leading: const Icon(Icons.home_outlined,
-                        color: Colors.black), // Set icon color
+                        color: AppColors.primary), // Set icon color
                     title: const Text('Home',
                         style:
                             TextStyle(color: Colors.black)), // Set text color
                     onTap: () {
                       // Add navigation logic here
                     },
-                  ),
-                  // Add more menu items as needed
+                  ), // Profile and Logout Section
                   ListTile(
-                    leading: const Icon(Icons.settings, color: Colors.black),
+                    leading: const Icon(Icons.person, color: AppColors.primary),
+                    title: const Text('Profile',
+                        style: TextStyle(color: Colors.black)),
+                    onTap: () {
+                      // Add navigation to profile
+                    },
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.notifications,
+                        color: AppColors.primary),
+                    title: const Text('Notifications',
+                        style: TextStyle(color: Colors.black)),
+                    onTap: () {
+                      // Add navigation to profile
+                    },
+                  ),
+                  ListTile(
+                    leading:
+                        const Icon(Icons.settings, color: AppColors.primary),
                     title: const Text('Settings',
                         style: TextStyle(color: Colors.black)),
                     onTap: () {
@@ -73,7 +94,19 @@ class CustomDrawer extends StatelessWidget {
                     },
                   ),
                 ],
-              )
+              ),
+
+              // Divider
+              Divider(thickness: 1, color: Colors.grey[300]),
+              ListTile(
+                leading: const Icon(Icons.logout,
+                    color: Colors.red), // Red icon for logout
+                title:
+                    const Text('Logout', style: TextStyle(color: Colors.red)),
+                onTap: () {
+                  // Add logout logic here
+                },
+              ),
             ],
           ),
         ),
