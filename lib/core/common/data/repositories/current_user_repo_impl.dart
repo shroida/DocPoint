@@ -19,4 +19,9 @@ class CurrentUserRepoImpl implements CurrentUserRepo {
       return left(ServerFailure(e.toString()));
     }
   }
+
+  @override
+  Future<void> logout() async {
+    await _currentUserRemoteDatasources.logout();
+  }
 }
