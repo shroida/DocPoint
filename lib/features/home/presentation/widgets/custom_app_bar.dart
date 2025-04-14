@@ -19,7 +19,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       leading: IconButton(
         icon: const Icon(Icons.menu, color: Colors.white),
-        onPressed: () => scaffoldKey?.currentState?.openDrawer(),
+        onPressed: () {
+          FocusManager.instance.primaryFocus?.unfocus();
+          scaffoldKey?.currentState?.openDrawer();
+        },
       ),
       title: Text(
         title,
