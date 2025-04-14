@@ -1,5 +1,6 @@
 import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';
+import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/ui/home_page.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
@@ -16,9 +17,11 @@ class AppRouter {
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
-      path: Routes.homePage,
-      builder: (context, state) => const HomePage(),
-    ),
+        path: Routes.signupScreen,
+        builder: (context, state) => BlocProvider(
+              create: (context) => getIt<HomePageCubit>(),
+              child: const HomePage(),
+            )),
     GoRoute(
         path: Routes.loginScreen,
         builder: (context, state) => BlocProvider(
