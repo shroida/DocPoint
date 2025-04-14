@@ -5,7 +5,7 @@ import 'package:docpoint/features/home/domain/repositories/doctors_repo.dart';
 import 'package:fpdart/fpdart.dart';
 
 class GetAllDoctors implements UseCase<List<DoctorEntity>, NoParams> {
-  final DoctorsRepo _doctorsRepo;
+  final GetAllDoctorsRepo _doctorsRepo;
 
   GetAllDoctors(this._doctorsRepo);
   @override
