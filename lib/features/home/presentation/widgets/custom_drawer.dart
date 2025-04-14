@@ -1,6 +1,5 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
-import 'package:docpoint/core/routing/app_router.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -121,7 +120,9 @@ class CustomDrawer extends StatelessWidget {
                           style: TextStyle(color: Colors.red)),
                       onTap: () async {
                         await currentUserCubit.logout();
-                        context.go(Routes.loginScreen);
+                        if (context.mounted) {
+                          context.go(Routes.loginScreen);
+                        }
                         // FocusManager.instance.primaryFocus?.unfocus();
                       },
                     ),

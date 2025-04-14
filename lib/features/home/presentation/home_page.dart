@@ -1,6 +1,5 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
-import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/features/home/presentation/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/widgets/custom_drawer.dart';
@@ -35,7 +34,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final cubitCurrent = context.read<CurrentUserCubit>();
     return Scaffold(
       key: scaffoldKey,
       appBar: CustomAppBar(

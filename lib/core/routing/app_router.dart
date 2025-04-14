@@ -17,7 +17,7 @@ class AppRouter {
     ),
     GoRoute(
       path: Routes.homePage,
-      builder: (context, state) => HomePage(),
+      builder: (context, state) => const HomePage(),
     ),
     GoRoute(
         path: Routes.loginScreen,
