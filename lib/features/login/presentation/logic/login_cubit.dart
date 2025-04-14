@@ -16,11 +16,18 @@ class LoginCubit extends Cubit<LoginState> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   Future<void> login() async {
+    emit(LoginLoading());
     final response = await _loginUsecase.call(LoginParams(
-        email: emailController.text, password: passwordController.text));
-    return response.fold(
-      (failure) => LoginFailure(),
-      (user) => LoginSuccess(user),
+      email: emailController.text,
+      password: passwordController.text,
+    ));
+
+    response.fold(
+      (failure) => emit(LoginFailure(failure.message)),
+      (user) {
+        emit(LoginSuccess(user));
+        currentUserCubit.updateUser(user); // optionally set the current user
+      },
     );
   }
 }

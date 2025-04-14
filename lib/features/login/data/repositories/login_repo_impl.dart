@@ -17,8 +17,8 @@ class LoginRepoImpl implements LoginRepo {
           await _loginDatasources.login(email: email, password: password);
 
       return right(user);
-    } catch (e) {
-      throw const ServerExceptions('Error occurred');
+    } on ServerExceptions catch (e) {
+      return left(ServerFailure(e.message));
     }
   }
 }
