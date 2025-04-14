@@ -2,6 +2,7 @@ import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
+import 'package:docpoint/core/widgets/navigate_signup_or_login.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_state.dart';
 import 'package:docpoint/features/signup/presentation/ui/widgets/doctor_form.dart';
@@ -104,6 +105,8 @@ class SignupScreenState extends State<SignupScreen> {
                               fontSize: 14.sp,
                             ),
                           ),
+                        SizedBox(height: 10.h),
+                        const NavigateSignupOrLogin(login: false)
                       ],
                     );
                   },
