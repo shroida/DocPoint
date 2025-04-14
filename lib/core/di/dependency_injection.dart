@@ -2,6 +2,7 @@ import 'package:docpoint/core/common/data/datasources/current_user_remote_dataso
 import 'package:docpoint/core/common/data/repositories/current_user_repo_impl.dart';
 import 'package:docpoint/core/common/domain/repository/current_user_repo.dart';
 import 'package:docpoint/core/common/domain/usecase/current_user_usecase.dart';
+import 'package:docpoint/core/common/domain/usecase/logout_usecase.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/constants/constants.dart';
 import 'package:docpoint/features/login/data/datasources/login_datasources.dart';
@@ -62,7 +63,10 @@ void authDI() {
   getIt.registerFactory<CurrentUserUsecase>(
     () => CurrentUserUsecase(getIt()),
   );
+  getIt.registerFactory<LogoutUsecase>(
+    () => LogoutUsecase(getIt()),
+  );
   getIt.registerFactory<CurrentUserCubit>(
-    () => CurrentUserCubit(getIt()),
+    () => CurrentUserCubit(getIt(), getIt()),
   );
 }
