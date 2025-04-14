@@ -1,12 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/common/domain/usecase/current_user_usecase.dart';
+import 'package:docpoint/core/common/domain/usecase/logout_usecase.dart';
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/usecase/usecase.dart';
 
 class CurrentUserCubit extends Cubit<CurrentUserState> {
   final CurrentUserUsecase _currentUserUsecase;
-  CurrentUserCubit(this._currentUserUsecase)
+  final LogoutUsecase _logoutUsecase;
+  CurrentUserCubit(this._currentUserUsecase, this._logoutUsecase)
       : super(const CurrentUserInitial());
   String userType = 'Patient';
   void setUserType(String type) {
@@ -31,5 +33,16 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
         emit(CurrentUserAuthenticated(user));
       },
     );
+  }
+
+  Future<void> logout() async {
+    try {
+      emit(const CurrentUserLoading());
+      await _logoutUsecase.call();
+
+      emit(const CurrentUserUnauthenticated());
+    } catch (e) {
+      emit(CurrentUserError(e.toString()));
+    }
   }
 }
