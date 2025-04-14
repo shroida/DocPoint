@@ -16,9 +16,19 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
     emit(CurrentUserTypeUpdated(userType)); // Make sure you have this state
   }
 
-  void updateUser(User user) {
-    userType = user.userType ?? 'Patient';
-    emit(CurrentUserAuthenticated(user));
+  Future<void> updateUser(User user) async {
+    emit(const CurrentUserLoading());
+    try {
+      currentUser = user;
+      userType = user.userType ?? 'Patient';
+      emit(CurrentUserAuthenticated(user));
+    } catch (e) {
+      emit(CurrentUserError(e.toString()));
+    }
+  }
+
+  Future<void> getCurrentUser() async {
+    await _currentUserUsecase.call(NoParams());
   }
 
   User? currentUser; // Change from late to nullable
@@ -39,6 +49,7 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
     try {
       emit(const CurrentUserLoading());
       await _logoutUsecase.call();
+      currentUser = null;
 
       emit(const CurrentUserUnauthenticated());
     } catch (e) {

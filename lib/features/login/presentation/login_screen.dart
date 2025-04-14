@@ -4,6 +4,7 @@ import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/core/widgets/navigate_signup_or_login.dart';
+import 'package:docpoint/features/home/presentation/home_page.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/logic/login_state.dart';
 import 'package:docpoint/features/login/presentation/widgets/user_type_selector_login.dart';
@@ -45,10 +46,13 @@ class LoginScreenState extends State<LoginScreen> {
                       backgroundColor: Colors.green,
                     ),
                   );
-                  context.go(Routes.homePage); // Navigate to home page
+
+                  // Safe way to navigate after current build frame
+                  Future.microtask(() {
+                    context.go(Routes.homePage);
+                  });
                 } else if (state is LoginFailure) {
-                  debugPrint(
-                      'Login failed: ${state.errorMessage}'); // Print the error
+                  debugPrint('Login failed: ${state.errorMessage}');
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Login failed: ${state.errorMessage}'),

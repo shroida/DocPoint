@@ -50,7 +50,8 @@ void loginDI() {
       () => LoginDatasourcesImpl(getIt(), getIt()));
   getIt.registerFactory<LoginRepo>(() => LoginRepoImpl(getIt()));
   getIt.registerFactory<UserLoginUsecase>(() => UserLoginUsecase(getIt()));
-  getIt.registerLazySingleton<LoginCubit>(() => LoginCubit(getIt(), getIt()));
+  getIt.registerLazySingleton<LoginCubit>(
+      () => LoginCubit(getIt(), getIt(), getIt()));
 }
 
 void authDI() {
