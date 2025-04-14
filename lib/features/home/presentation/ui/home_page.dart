@@ -1,10 +1,10 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
-import 'package:docpoint/features/home/presentation/widgets/custom_app_bar.dart';
-import 'package:docpoint/features/home/presentation/widgets/custom_drawer.dart';
-import 'package:docpoint/features/home/presentation/widgets/doctor_list_screen.dart';
-import 'package:docpoint/features/home/presentation/widgets/user_info_card.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/doctor_list_screen.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/user_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
