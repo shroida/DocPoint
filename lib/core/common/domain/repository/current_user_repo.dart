@@ -4,4 +4,5 @@ import 'package:fpdart/fpdart.dart';
 
 abstract interface class CurrentUserRepo {
   Future<Either<Failure, User>> currentUser();
+  Future<void> logout();
 }
