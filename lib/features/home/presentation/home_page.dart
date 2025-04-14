@@ -3,10 +3,15 @@ import 'package:docpoint/features/home/presentation/widgets/custom_app_bar.dart'
 import 'package:docpoint/features/home/presentation/widgets/custom_drawer.dart';
 import 'package:flutter/material.dart';
 
-class HomePage extends StatelessWidget {
-  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+class HomePage extends StatefulWidget {
+  const HomePage({super.key});
 
-  HomePage({super.key});
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,5 +38,12 @@ class HomePage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    // Clear focus when widget is disposed
+    FocusManager.instance.primaryFocus?.unfocus();
+    super.dispose();
   }
 }
