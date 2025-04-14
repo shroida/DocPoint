@@ -31,7 +31,5 @@ class CurrentUserError extends CurrentUserState {
 }
 
 class CurrentUserTypeUpdated extends CurrentUserState {
-  final String userType;
-
-  CurrentUserTypeUpdated(this.userType) : super(userType: userType);
+  CurrentUserTypeUpdated(String userType) : super(userType: userType);
 }
