@@ -22,6 +22,6 @@ class CurrentUserRepoImpl implements CurrentUserRepo {
 
   @override
   Future<void> logout() async {
-    await _currentUserRemoteDatasources.logout();
+    await _currentUserRemoteDatasources.();
   }
 }

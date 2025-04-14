@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract interface class CurrentUserRemoteDatasources {
   Session? get currentUserSession;
   Future<CurrentUserModel> getCurrentUserData();
+  Future<void> logout();
 }
 
 class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
