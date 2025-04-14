@@ -55,4 +55,8 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
       throw Exception('Failed to fetch user data: $e');
     }
   }
+
+  Future<void> logout() async {
+    await supabaseClient.auth.signOut();
+  }
 }
