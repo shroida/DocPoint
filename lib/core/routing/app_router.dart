@@ -22,7 +22,7 @@ class AppRouter {
     GoRoute(
         path: Routes.loginScreen,
         builder: (context, state) => BlocProvider(
-              create: (context) => getIt<LoginCubit>(),
+              create: (_) => getIt<LoginCubit>(),
               child: const LoginScreen(),
             )),
     GoRoute(

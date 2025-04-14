@@ -121,9 +121,12 @@ class CustomDrawer extends StatelessWidget {
                       onTap: () async {
                         await currentUserCubit.logout();
                         if (context.mounted) {
-                          context.go(Routes.loginScreen);
+                          Future.microtask(() {
+                            context
+                                .go(Routes.loginScreen); // or pushReplacement
+                          });
                         }
-                        // FocusManager.instance.primaryFocus?.unfocus();
+                        FocusManager.instance.primaryFocus?.unfocus();
                       },
                     ),
                   ],
