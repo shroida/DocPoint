@@ -17,7 +17,7 @@ class AppRouter {
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
-        path: Routes.signupScreen,
+        path: Routes.homePage,
         builder: (context, state) => BlocProvider(
               create: (context) => getIt<HomePageCubit>(),
               child: const HomePage(),

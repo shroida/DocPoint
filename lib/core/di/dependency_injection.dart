@@ -34,6 +34,8 @@ Future<void> setUpGetIt() async {
   signUpDI();
   // login related dependencies
   loginDI();
+  // Home page related dependencies
+  homePageDI();
 }
 
 Future<void> supabaseDI() async {

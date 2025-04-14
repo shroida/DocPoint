@@ -1,66 +1,56 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
+import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
 import 'package:flutter/material.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DoctorsListScreen extends StatelessWidget {
-  final List<User> doctors = [
-    User(
-      id: '1',
-      email: 'dr.smith@example.com',
-      firstName: 'John',
-      lastName: 'Smith',
-      phoneNumber: '+1234567890',
-      city: 'New York',
-      imageUrl: 'https://example.com/doctor1.jpg',
-      experience: 10,
-      category: 'Cardiologist',
-      userType: 'Doctor',
-    ),
-    User(
-      id: '1',
-      email: 'dr.smith@example.com',
-      firstName: 'John',
-      lastName: 'Smith',
-      phoneNumber: '+1234567890',
-      city: 'New York',
-      imageUrl: 'https://example.com/doctor1.jpg',
-      experience: 10,
-      category: 'Cardiologist',
-      userType: 'Doctor',
-    ),
-    User(
-      id: '1',
-      email: 'dr.smith@example.com',
-      firstName: 'John',
-      lastName: 'Smith',
-      phoneNumber: '+1234567890',
-      city: 'New York',
-      imageUrl: 'https://example.com/doctor1.jpg',
-      experience: 10,
-      category: 'Cardiologist',
-      userType: 'Doctor',
-    ),
-    User(
-      id: '1',
-      email: 'dr.smith@example.com',
-      firstName: 'John',
-      lastName: 'Smith',
-      phoneNumber: '+1234567890',
-      city: 'New York',
-      imageUrl: 'https://example.com/doctor1.jpg',
-      experience: 10,
-      category: 'Cardiologist',
-      userType: 'Doctor',
-    ),
+class DoctorsListScreen extends StatefulWidget {
+  const DoctorsListScreen({super.key});
 
-    // Add more doctors...
-  ];
+  @override
+  State<DoctorsListScreen> createState() => _DoctorsListScreenState();
+}
+
+class _DoctorsListScreenState extends State<DoctorsListScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch doctors when screen initializes
+    context.read<HomePageCubit>().getAllDoctors();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: doctors.map((doctor) => DoctorCard(doctor: doctor)).toList(),
+    return BlocBuilder<HomePageCubit, HomePageState>(
+      builder: (context, state) {
+        if (state is HomePageLoading) {
+          return const Center(child: CircularProgressIndicator());
+        }
+
+        if (state is HomePageError) {
+          return Center(child: Text(state.message));
+        }
+
+        if (state is HomePageLoaded) {
+          return Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Text(
+                  'Our Doctors',
+                  style:
+                      AppStyle.heading2.copyWith(color: AppColors.primaryDark),
+                ),
+              ),
+              ...state.doctors.map((doctor) => DoctorCard(doctor: doctor)),
+            ],
+          );
+        }
+
+        return const Center(child: Text('No doctors available'));
+      },
     );
   }
 }
