@@ -8,6 +8,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUser = context.read<CurrentUserCubit>().currentUser;
-    return Scaffold(body: Center(child: Text(currentUser.email)));
+    return Scaffold(body: SafeArea(child: Column(
+      children: [
+        
+      ],
+    )));
   }
 }

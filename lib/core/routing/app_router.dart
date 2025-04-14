@@ -1,6 +1,6 @@
 import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';
-import 'package:docpoint/features/home/home_page.dart';
+import 'package:docpoint/features/home/presentation/home_page.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
