@@ -3,6 +3,7 @@ import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/features/home/presentation/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/widgets/custom_drawer.dart';
+import 'package:docpoint/features/home/presentation/widgets/doctor_list_screen.dart';
 import 'package:docpoint/features/home/presentation/widgets/user_info_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -66,16 +67,23 @@ class _HomePageState extends State<HomePage> {
             }
 
             return SafeArea(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 20.h,
-                  ),
-                  UserInfoCard(),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    UserInfoCard(),
+                    SizedBox(
+                      height: 20.h,
+                    ),
+                    // Adjust height as needed
+                    DoctorsListScreen(),
 
-                  Text(currentUser.email),
-                  // Add other user data here
-                ],
+                    Text(currentUser.email),
+                    // Add other user data here
+                  ],
+                ),
               ),
             );
           }
