@@ -16,98 +16,102 @@ class CustomDrawer extends StatelessWidget {
       surfaceTintColor: Colors.white,
       backgroundColor: Colors.white,
       shadowColor: Colors.white,
-      child: Container(
-        color: Colors.white,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              // User Profile Section
-              Container(
-                padding: const EdgeInsets.fromLTRB(16, 40, 16, 20),
-                color: AppColors.primary,
-                child: Column(
+      child: FocusScope(
+        canRequestFocus: false,
+        child: Container(
+          color: Colors.white,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: <Widget>[
+                // User Profile Section
+                Container(
+                  padding: const EdgeInsets.fromLTRB(16, 40, 16, 20),
+                  color: AppColors.primary,
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(
+                            currentUserCubit.currentUser.imageUrl ?? ''),
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        '${currentUserCubit.userType == 'Doctor' ? 'Doc' : ''} ${currentUserCubit.currentUser.firstName} ${currentUserCubit.currentUser.lastName}', // Replace with user's name
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        currentUserCubit.currentUser.email,
+                        style: const TextStyle(
+                          fontSize: 14,
+                          color: Colors.white70,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+
+                // Menu Items
+                Column(
                   children: [
-                    CircleAvatar(
-                      radius: 40,
-                      backgroundImage: NetworkImage(
-                          currentUserCubit.currentUser.imageUrl ?? ''),
+                    ListTile(
+                      leading: const Icon(Icons.home_outlined,
+                          color: AppColors.primary), // Set icon color
+                      title: const Text('Home',
+                          style:
+                              TextStyle(color: Colors.black)), // Set text color
+                      onTap: () {
+                        // Add navigation logic here
+                      },
+                    ), // Profile and Logout Section
+                    ListTile(
+                      leading:
+                          const Icon(Icons.person, color: AppColors.primary),
+                      title: const Text('Profile',
+                          style: TextStyle(color: Colors.black)),
+                      onTap: () {
+                        // Add navigation to profile
+                      },
                     ),
-                    const SizedBox(height: 16),
-                    Text(
-                      '${currentUserCubit.userType == 'Doctor' ? 'Doc' : ''} ${currentUserCubit.currentUser.firstName} ${currentUserCubit.currentUser.lastName}', // Replace with user's name
-                      style: const TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
+                    ListTile(
+                      leading: const Icon(Icons.notifications,
+                          color: AppColors.primary),
+                      title: const Text('Notifications',
+                          style: TextStyle(color: Colors.black)),
+                      onTap: () {
+                        // Add navigation to profile
+                      },
                     ),
-                    const SizedBox(height: 4),
-                    Text(
-                      currentUserCubit.currentUser.email,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        color: Colors.white70,
-                      ),
+                    ListTile(
+                      leading:
+                          const Icon(Icons.settings, color: AppColors.primary),
+                      title: const Text('Settings',
+                          style: TextStyle(color: Colors.black)),
+                      onTap: () {
+                        // Add navigation logic here
+                      },
                     ),
                   ],
                 ),
-              ),
 
-              // Menu Items
-              Column(
-                children: [
-                  ListTile(
-                    leading: const Icon(Icons.home_outlined,
-                        color: AppColors.primary), // Set icon color
-                    title: const Text('Home',
-                        style:
-                            TextStyle(color: Colors.black)), // Set text color
-                    onTap: () {
-                      // Add navigation logic here
-                    },
-                  ), // Profile and Logout Section
-                  ListTile(
-                    leading: const Icon(Icons.person, color: AppColors.primary),
-                    title: const Text('Profile',
-                        style: TextStyle(color: Colors.black)),
-                    onTap: () {
-                      // Add navigation to profile
-                    },
-                  ),
-                  ListTile(
-                    leading: const Icon(Icons.notifications,
-                        color: AppColors.primary),
-                    title: const Text('Notifications',
-                        style: TextStyle(color: Colors.black)),
-                    onTap: () {
-                      // Add navigation to profile
-                    },
-                  ),
-                  ListTile(
-                    leading:
-                        const Icon(Icons.settings, color: AppColors.primary),
-                    title: const Text('Settings',
-                        style: TextStyle(color: Colors.black)),
-                    onTap: () {
-                      // Add navigation logic here
-                    },
-                  ),
-                ],
-              ),
-
-              // Divider
-              Divider(thickness: 1, color: Colors.grey[300]),
-              ListTile(
-                leading: const Icon(Icons.logout,
-                    color: Colors.red), // Red icon for logout
-                title:
-                    const Text('Logout', style: TextStyle(color: Colors.red)),
-                onTap: () {
-                  // Add logout logic here
-                },
-              ),
-            ],
+                // Divider
+                Divider(thickness: 1, color: Colors.grey[300]),
+                ListTile(
+                  leading: const Icon(Icons.logout,
+                      color: Colors.red), // Red icon for logout
+                  title:
+                      const Text('Logout', style: TextStyle(color: Colors.red)),
+                  onTap: () {
+                    FocusManager.instance.primaryFocus?.unfocus();
+                  },
+                ),
+              ],
+            ),
           ),
         ),
       ),
