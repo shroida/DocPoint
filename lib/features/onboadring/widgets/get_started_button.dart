@@ -24,7 +24,7 @@ class GetStartedButton extends StatelessWidget {
                 if (context.mounted) {
                   isLoggedInUser
                       ? context.go(Routes.homePage)
-                      : context.go(Routes.onBoardingScreen);
+                      : context.go(Routes.loginScreen);
                 }
               });
             },
