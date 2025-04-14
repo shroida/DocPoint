@@ -5,7 +5,7 @@ class UserSignUpModel extends UserSignUp {
     required super.email,
     required super.id,
     required super.userType,
-    required super.password,
+    super.password,
     required super.firstName,
     required String super.lastName,
     required String super.phoneNumber,

@@ -20,8 +20,3 @@ class ImageUpdated extends SignupState {
   final XFile? imageFile;
   ImageUpdated(this.imageFile);
 }
-
-class SignupUserTypeUpdated extends SignupState {
-  final String? userType;
-  SignupUserTypeUpdated(this.userType);
-}

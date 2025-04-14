@@ -1,19 +1,35 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
 
-abstract class CurrentUserState {}
+abstract class CurrentUserState {
+  final String? userType;
 
-class CurrentUserInitial extends CurrentUserState {}
+  const CurrentUserState({this.userType});
+}
 
-class CurrentUserLoading extends CurrentUserState {}
+class CurrentUserInitial extends CurrentUserState {
+  const CurrentUserInitial() : super(userType: 'Patient');
+}
+
+class CurrentUserLoading extends CurrentUserState {
+  const CurrentUserLoading({super.userType});
+}
 
 class CurrentUserAuthenticated extends CurrentUserState {
   final User user;
-  CurrentUserAuthenticated(this.user);
+
+  CurrentUserAuthenticated(this.user) : super(userType: user.userType);
 }
 
-class CurrentUserUnauthenticated extends CurrentUserState {}
+class CurrentUserUnauthenticated extends CurrentUserState {
+  const CurrentUserUnauthenticated({super.userType});
+}
 
 class CurrentUserError extends CurrentUserState {
   final String message;
-  CurrentUserError(this.message);
+
+  CurrentUserError(this.message) : super();
+}
+
+class CurrentUserTypeUpdated extends CurrentUserState {
+  CurrentUserTypeUpdated(String userType) : super(userType: userType);
 }

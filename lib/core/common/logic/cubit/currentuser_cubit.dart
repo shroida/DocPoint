@@ -6,14 +6,26 @@ import 'package:docpoint/core/usecase/usecase.dart';
 
 class CurrentUserCubit extends Cubit<CurrentUserState> {
   final CurrentUserUsecase _currentUserUsecase;
-  CurrentUserCubit(this._currentUserUsecase) : super(CurrentUserInitial());
+  CurrentUserCubit(this._currentUserUsecase)
+      : super(const CurrentUserInitial());
+  String userType = 'Patient';
+  void setUserType(String type) {
+    userType = type;
+    emit(CurrentUserTypeUpdated(userType)); // Make sure you have this state
+  }
+
+  void updateUser(User user) {
+    userType = user.userType ?? 'Patient';
+    emit(CurrentUserAuthenticated(user));
+  }
+
   late User currentUser;
   Future<void> checkAuthStatus() async {
-    emit(CurrentUserLoading());
+    emit(const CurrentUserLoading());
     final res = await _currentUserUsecase.call(NoParams());
 
     res.fold(
-      (failure) => emit(CurrentUserUnauthenticated()),
+      (failure) => emit(const CurrentUserUnauthenticated()),
       (user) {
         currentUser = user;
         emit(CurrentUserAuthenticated(user));
