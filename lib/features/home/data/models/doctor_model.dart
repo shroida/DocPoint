@@ -12,4 +12,18 @@ class DoctorModel extends DoctorEntity {
       required super.lastName,
       required super.phoneNumber,
       required super.city});
+  factory DoctorModel.fromJson(Map<String, dynamic> json) {
+    return DoctorModel(
+      userType: "Doctor",
+      id: json['id'] as String,
+      email: json['email'] as String,
+      firstName: json['first_name'] as String,
+      lastName: json['last_name'] as String,
+      phoneNumber: json['phone_number'] as String,
+      city: json['city'] as String,
+      imageUrl: json['avatar_url'] as String?,
+      experience: json['experience'] as int,
+      category: json['category'] as String,
+    );
+  }
 }
