@@ -13,26 +13,23 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
   @override
   Future<List<DoctorModel>> getAllDoctors() async {
     try {
-      final response = await _supabaseClient.from('doctor_profiles').select('''
-            id,
-            email,
-            first_name,
-            last_name,
-            phone_number,
-            city,
-            avatar_url,
-            experience,
-            category
-          ''');
+      final response =
+          await _supabaseClient.from('doctor_profiles').select('*');
+      print('Response: $response'); // Log response
 
       if (response.isEmpty) {
+        print('Response: $response'); // Log the response
         throw Exception('No doctors found');
       }
-
-      return response
+      List<DoctorModel> listDocs = response
           .map<DoctorModel>((doctor) => DoctorModel.fromJson(doctor))
           .toList();
+      print('lenght: ${listDocs.length}'); // Log response
+      print('Response: ${listDocs.first.firstName}'); // Log response
+      return listDocs;
     } catch (e) {
+      print('Error fetching doctors: $e'); // Log error
+
       throw Exception('Failed to fetch doctors: $e');
     }
   }

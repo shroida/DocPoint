@@ -9,11 +9,13 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
   final GetAllDoctorsDatasources _getAllDoctorsDatasources;
 
   GetAllDoctorsRepoImpl(this._getAllDoctorsDatasources);
-
   @override
   Future<Either<Failure, List<DoctorEntity>>> fetchDoctors() async {
     try {
       final doctors = await _getAllDoctorsDatasources.getAllDoctors();
+      if (doctors.isEmpty) {
+        return Left(ServerFailure('No doctors found'));
+      }
       return Right(doctors.map((model) => model.toEntity()).toList());
     } on ServerExceptions catch (e) {
       return Left(ServerFailure(e.message));
