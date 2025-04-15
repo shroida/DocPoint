@@ -7,7 +7,8 @@ class UpdateStatusUsecase implements UseCase<void, UpdateStatusParams> {
   late final GetAllDoctorsRepo _getAllDoctorsRepo;
   @override
   Future<Either<Failure, void>> call(UpdateStatusParams params) async {
-    return await _getAllDoctorsRepo.updateStatusAppointment();
+    return await _getAllDoctorsRepo.updateStatusAppointment(
+        appointmentId: params.appointmentId, status: params.status);
   }
 }
 
