@@ -2,7 +2,6 @@ import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
-import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_list_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -116,6 +115,38 @@ class DoctorDetails extends StatelessWidget {
             ),
         ],
       ),
+    );
+  }
+}
+
+class InfoRow extends StatelessWidget {
+  final IconData icon;
+  final String text;
+
+  const InfoRow({
+    super.key,
+    required this.icon,
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 16,
+          color: AppColors.primary,
+        ),
+        const SizedBox(width: 8),
+        Expanded(
+          child: Text(
+            text,
+            style: AppStyle.body2,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ],
     );
   }
 }
