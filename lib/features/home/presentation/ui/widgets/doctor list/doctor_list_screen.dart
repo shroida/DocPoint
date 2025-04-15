@@ -63,20 +63,20 @@ class DoctorCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 4,
+      elevation: 6,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      margin: const EdgeInsets.only(bottom: 16),
+      margin: const EdgeInsets.only(bottom: 20),
       child: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
+            colors: [
+              AppColors.primaryLight,
+              AppColors.primary.withOpacity(0.1),
+            ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              AppColors.primary.withOpacity(0.1),
-              AppColors.primary.withOpacity(0.05),
-            ],
           ),
           borderRadius: BorderRadius.circular(12),
         ),
@@ -124,10 +124,13 @@ class DoctorCard extends StatelessWidget {
                     // Name and Category
                     Row(
                       children: [
-                        Text(
-                          'Dr. ${doctor.firstName} ${doctor.lastName}',
-                          style: AppStyle.heading3.copyWith(
-                            color: AppColors.primaryDark,
+                        Expanded(
+                          child: Text(
+                            'Dr. ${doctor.firstName} ${doctor.lastName}',
+                            style: AppStyle.heading2.copyWith(
+                              color: AppColors.textPrimary,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                         const SizedBox(width: 8),
@@ -161,7 +164,7 @@ class DoctorCard extends StatelessWidget {
                         const SizedBox(width: 4),
                         Text(
                           '${doctor.experience ?? 0}+ years experience',
-                          style: AppStyle.body2,
+                          style: AppStyle.body1,
                         ),
                       ],
                     ),
@@ -186,16 +189,7 @@ class DoctorCard extends StatelessWidget {
                     Align(
                       alignment: Alignment.centerRight,
                       child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 24,
-                            vertical: 8,
-                          ),
-                        ),
+                        style: AppStyle.primaryButton,
                         onPressed: () {
                           // Handle booking
                         },
