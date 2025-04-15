@@ -88,13 +88,21 @@ class DoctorDetails extends StatelessWidget {
             child: ElevatedButton(
               style: AppStyle.primaryButton,
               onPressed: () {
-                // Handle booking
+                // Navigator.pushNamed(context, '/book-appointment',
+                //     arguments: doctor);
               },
-              child: Text(
-                'Book Appointment',
-                style: AppStyle.button.copyWith(
-                  color: Colors.white,
-                ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.calendar_today, color: Colors.white),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Book Appointment',
+                    style: AppStyle.button.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
               ),
             ),
           ),
