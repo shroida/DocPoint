@@ -12,6 +12,8 @@ abstract interface class GetAllDoctorsRepo {
   Future<Either<Failure, void>> scheduleAppointment({
     required String doctorId,
     required String patientId,
+    required String doctorName,
+    required String category,
     required DateTime appointmentTime,
     required String status,
     String? notes,
