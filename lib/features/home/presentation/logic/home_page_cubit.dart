@@ -29,9 +29,9 @@ class HomePageCubit extends Cubit<HomePageState> {
 
   String _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
-      case ServerFailure:
+      case ServerFailure _:
         return 'Server error: ${failure.message}';
-      case NetworkFailure:
+      case NetworkFailure _:
         return 'Network error: ${failure.message}';
       default:
         return 'Unexpected error: ${failure.message}';

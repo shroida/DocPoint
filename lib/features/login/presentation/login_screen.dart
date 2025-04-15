@@ -47,6 +47,7 @@ class LoginScreenState extends State<LoginScreen> {
 
                   // Safe way to navigate after current build frame
                   Future.microtask(() {
+                    if (!context.mounted) return;
                     context.go(Routes.homePage);
                   });
                 } else if (state is LoginFailure) {
