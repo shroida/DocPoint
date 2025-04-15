@@ -21,4 +21,29 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
       return Left(ServerFailure('Failed to fetch doctors: ${e.toString()}'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> scheduleAppointment({
+    required String doctorId,
+    required String patientId,
+    required DateTime appointmentTime,
+    required String status,
+    String? notes,
+  }) async {
+    try {
+      await _getAllDoctorsDatasources.scheduleAppointment(
+        doctorId: doctorId,
+        patientId: patientId,
+        appointmentTime: appointmentTime,
+        status: status,
+        notes: notes,
+      );
+      return const Right(null); // indicate success
+    } on ServerExceptions catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(
+          ServerFailure('Failed to schedule appointment: ${e.toString()}'));
+    }
+  }
 }
