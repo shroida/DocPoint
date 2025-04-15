@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 
 class DoctorCard extends StatelessWidget {
   final User doctor;
-
-  const DoctorCard({super.key, required this.doctor});
+  final bool? showButton;
+  const DoctorCard({super.key, required this.doctor, this.showButton});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,10 @@ class DoctorCard extends StatelessWidget {
               DoctorImage(doctor: doctor),
               const SizedBox(width: 16),
               // Doctor Details
-              DoctorDetails(doctor: doctor),
+              DoctorDetails(
+                doctor: doctor,
+                showButton: showButton,
+              ),
             ],
           ),
         ),

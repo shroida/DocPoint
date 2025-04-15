@@ -1,3 +1,4 @@
+import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';
@@ -21,11 +22,11 @@ class AppRouter {
     GoRoute(
       path: Routes.makeAppointment,
       builder: (context, state) {
-        final doctorId = state.extra as String; // Pass doctorId via .extra
+        final doctor = state.extra as User; // Pass doctorId via .extra
         return BlocProvider.value(
           value: getIt<HomePageCubit>(),
           child: MakeAppointmentScreen(
-            doctorId: doctorId,
+            doctor: doctor,
             patientId: context.read<CurrentUserCubit>().userType == 'Patient'
                 ? context.read<CurrentUserCubit>().currentUser!.id
                 : '',

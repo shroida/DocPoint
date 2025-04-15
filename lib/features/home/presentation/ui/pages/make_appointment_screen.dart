@@ -1,7 +1,9 @@
+import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/features/home/domain/usecase/make_appointment.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
@@ -10,12 +12,12 @@ import 'package:go_router/go_router.dart';
 import 'package:table_calendar/table_calendar.dart';
 
 class MakeAppointmentScreen extends StatefulWidget {
-  final String doctorId;
+  final User doctor;
   final String patientId;
 
   const MakeAppointmentScreen({
     super.key,
-    required this.doctorId,
+    required this.doctor,
     required this.patientId,
   });
 
@@ -55,7 +57,7 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
     );
 
     final appointment = AppointmentParams(
-      doctorId: widget.doctorId,
+      doctorId: widget.doctor.id,
       patientId: widget.patientId,
       appointmentTime: finalDateTime,
       status: 'pending',
@@ -93,6 +95,11 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
             padding: const EdgeInsets.all(16.0),
             child: ListView(
               children: [
+                DoctorCard(
+                  showButton: false,
+                  doctor: widget.doctor,
+                ),
+                const SizedBox(height: 10),
                 const Text(
                   "Choose Date",
                   style: AppStyle.heading2,

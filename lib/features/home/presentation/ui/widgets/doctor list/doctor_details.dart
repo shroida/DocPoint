@@ -10,9 +10,11 @@ class DoctorDetails extends StatelessWidget {
   const DoctorDetails({
     super.key,
     required this.doctor,
+    this.showButton,
   });
 
   final User doctor;
+  final bool? showButton;
 
   @override
   Widget build(BuildContext context) {
@@ -84,32 +86,34 @@ class DoctorDetails extends StatelessWidget {
             text: doctor.city ?? 'Location not specified',
           ),
           const SizedBox(height: 12),
-          // Book Button
-          Align(
-            alignment: Alignment.centerRight,
-            child: ElevatedButton(
-              style: AppStyle.primaryButton,
-              onPressed: () {
-                context.push(
-                  Routes.makeAppointment,
-                  extra: doctor.id,
-                );
-              },
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  const Icon(Icons.calendar_today, color: Colors.white),
-                  const SizedBox(width: 8),
-                  Text(
-                    'Book Appointment',
-                    style: AppStyle.button.copyWith(
-                      color: Colors.white,
+          if (showButton != false && showButton == null)
+
+            // Book Button
+            Align(
+              alignment: Alignment.centerRight,
+              child: ElevatedButton(
+                style: AppStyle.primaryButton,
+                onPressed: () {
+                  context.push(
+                    Routes.makeAppointment,
+                    extra: doctor,
+                  );
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Icon(Icons.calendar_today, color: Colors.white),
+                    const SizedBox(width: 8),
+                    Text(
+                      'Book Appointment',
+                      style: AppStyle.button.copyWith(
+                        color: Colors.white,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
         ],
       ),
     );
