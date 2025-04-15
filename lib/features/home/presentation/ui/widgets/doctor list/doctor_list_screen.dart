@@ -59,11 +59,17 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
         }
 
         if (state is HomePageLoaded) {
-          if (_cities.isEmpty && _categories.isEmpty) {
-            _extractFilterOptions(state.doctors);
+          // Handle null case for doctors list
+          if (state.doctors == null) {
+            return const Center(child: Text('No doctors available'));
           }
 
-          final filteredDoctors = _filterDoctors(state.doctors);
+          if (_cities.isEmpty && _categories.isEmpty) {
+            _extractFilterOptions(state.doctors!); // Use ! to assert non-null
+          }
+
+          final filteredDoctors =
+              _filterDoctors(state.doctors!); // Use ! to assert non-null
 
           return Column(
             children: [

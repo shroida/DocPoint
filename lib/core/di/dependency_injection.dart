@@ -8,6 +8,7 @@ import 'package:docpoint/core/constants/constants.dart';
 import 'package:docpoint/features/home/data/datasources/get_all_doctors_datasources.dart';
 import 'package:docpoint/features/home/data/repositories/get_all_doctors_repo_impl.dart';
 import 'package:docpoint/features/home/domain/repositories/doctors_repo.dart';
+import 'package:docpoint/features/home/domain/usecase/get_all_appointments.dart';
 import 'package:docpoint/features/home/domain/usecase/get_all_doctors.dart';
 import 'package:docpoint/features/home/domain/usecase/make_appointment.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
@@ -96,11 +97,16 @@ void homePageDI() {
       getIt(),
     ),
   );
+  getIt.registerFactory<GetAllAppointments>(
+    () => GetAllAppointments(
+      getIt(),
+    ),
+  );
   getIt.registerFactory<MakeAppointment>(
     () => MakeAppointment(
       getIt(),
     ),
   );
   getIt.registerLazySingleton<HomePageCubit>(
-      () => HomePageCubit(getIt(), getIt()));
+      () => HomePageCubit(getIt(), getIt(), getIt()));
 }

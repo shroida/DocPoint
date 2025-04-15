@@ -8,9 +8,13 @@ final class HomePageInitial extends HomePageState {}
 final class HomePageLoading extends HomePageState {}
 
 final class HomePageLoaded extends HomePageState {
-  final List<DoctorEntity> doctors;
+  final List<DoctorEntity>? doctors;
+  final List<AppointmentEntity>? appointments;
 
-  HomePageLoaded(this.doctors);
+  HomePageLoaded({
+    this.doctors,
+    this.appointments,
+  });
 }
 
 final class HomePageError extends HomePageState {
