@@ -1,5 +1,6 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
+import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
@@ -31,7 +32,7 @@ class _HomePageState extends State<HomePage> {
     try {
       await context.read<CurrentUserCubit>().checkAuthStatus();
     } catch (e) {
-      debugPrint('Error loading user data: $e');
+      ServerExceptions('Error loading user data: $e');
     }
   }
 

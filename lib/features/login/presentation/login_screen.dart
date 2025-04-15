@@ -38,7 +38,6 @@ class LoginScreenState extends State<LoginScreen> {
             child: BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state is LoginSuccess) {
-                  debugPrint('Login successful for user: ${state.user.email}');
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Login successful!'),
@@ -51,7 +50,6 @@ class LoginScreenState extends State<LoginScreen> {
                     context.go(Routes.homePage);
                   });
                 } else if (state is LoginFailure) {
-                  debugPrint('Login failed: ${state.errorMessage}');
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Login failed: ${state.errorMessage}'),

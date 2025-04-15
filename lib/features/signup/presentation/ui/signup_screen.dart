@@ -55,8 +55,6 @@ class SignupScreenState extends State<SignupScreen> {
                 }
               },
               builder: (context, state) {
-                debugPrint('Current State: $state');
-
                 return BlocBuilder<CurrentUserCubit, CurrentUserState>(
                   builder: (context, currentUserState) {
                     final cubitSignup = context.read<SignupCubit>();
@@ -77,18 +75,11 @@ class SignupScreenState extends State<SignupScreen> {
                           textStyle:
                               AppStyle.heading2.copyWith(color: Colors.white),
                           onPressed: () {
-                            debugPrint(
-                                'Signup button pressed'); // Debug button press
-                            debugPrint(
-                                'Form valid: ${cubitSignup.formKey.currentState?.validate()}');
                             if (cubitSignup.formKey.currentState?.validate() ??
                                 false) {
-                              debugPrint('Calling signUp() in cubitSignup');
                               cubitSignup.signUp(
                                   userType:
                                       currentUserState.userType ?? 'Patient');
-                            } else {
-                              debugPrint('Form validation failed');
                             }
                           },
                         ),
