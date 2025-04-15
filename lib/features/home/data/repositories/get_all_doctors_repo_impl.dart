@@ -72,4 +72,9 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
           ServerFailure('Failed to fetch appointments: ${e.toString()}'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> updateStatusAppointment() {
+ _getAllDoctorsDatasources.
+  }
 }

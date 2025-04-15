@@ -4,6 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class GetAllDoctorsDatasources {
   Future<List<DoctorModel>> getAllDoctors();
+  Future<void> updateStautsAppointment(
+      {required String appointmentId, required String status});
   Future<List<AppointmentModel>> getAllAppointments(
       {required String userType, required String id});
   Future<void> scheduleAppointment({
@@ -113,5 +115,15 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
       print('[ERROR] Failed to fetch appointments: $e');
       throw Exception('Failed to fetch appointments: $e');
     }
+  }
+
+  @override
+  Future<void> updateStautsAppointment({
+    required String appointmentId,
+    required String status,
+  }) async {
+    await _supabaseClient
+        .from('appointments')
+        .update({'status': status}).eq('id', appointmentId);
   }
 }
