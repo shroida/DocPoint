@@ -39,21 +39,23 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'My Appointments',
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        elevation: 0,
-        backgroundColor: AppColors.primary,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh),
-            onPressed: _loadAppointments,
-          ),
-        ],
-      ),
+      appBar: widget.userType == "Patient"
+          ? AppBar(
+              title: const Text(
+                'My Appointments',
+                style: TextStyle(color: Colors.white),
+              ),
+              centerTitle: true,
+              elevation: 0,
+              backgroundColor: AppColors.primary,
+              actions: [
+                IconButton(
+                  icon: const Icon(Icons.refresh),
+                  onPressed: _loadAppointments,
+                ),
+              ],
+            )
+          : null,
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
