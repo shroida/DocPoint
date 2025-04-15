@@ -102,7 +102,7 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
 
         final profileResponse = await _supabaseClient
             .from(profileTable)
-            .select('first_name, last_name, ${isDoctor ? 'category' : ''}')
+            .select('first_name, last_name, category')
             .eq('id', profileId)
             .maybeSingle();
 

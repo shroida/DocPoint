@@ -58,7 +58,7 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
 
     final appointment = AppointmentParams(
       category: widget.doctor.category ?? 'General',
-      doctorName: '${widget.doctor.lastName} ${widget.doctor.lastName}',
+      doctorName: '${widget.doctor.firstName} ${widget.doctor.lastName}',
       doctorId: widget.doctor.id,
       patientId: widget.patientId,
       appointmentTime: finalDateTime,

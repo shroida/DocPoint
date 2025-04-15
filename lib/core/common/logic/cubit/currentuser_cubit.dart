@@ -10,7 +10,7 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
   final LogoutUsecase _logoutUsecase;
   CurrentUserCubit(this._currentUserUsecase, this._logoutUsecase)
       : super(const CurrentUserInitial());
-  String userType = 'Patient';
+  String userType = '';
   void setUserType(String type) {
     userType = type;
     emit(CurrentUserTypeUpdated(userType)); // Make sure you have this state
@@ -20,8 +20,15 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
     emit(const CurrentUserLoading());
     try {
       currentUser = user;
-      userType = user.userType ?? 'Patient';
+
+      if (user.userType?.toLowerCase() == 'doctor') {
+        userType = 'Doctor';
+      } else {
+        userType = 'Patient';
+      }
+
       emit(CurrentUserAuthenticated(user));
+      emit(CurrentUserTypeUpdated(userType));
     } catch (e) {
       emit(CurrentUserError(e.toString()));
     }
@@ -35,11 +42,15 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
   Future<void> checkAuthStatus() async {
     emit(const CurrentUserLoading());
     final res = await _currentUserUsecase.call(NoParams());
-
     res.fold(
-      (failure) => emit(const CurrentUserUnauthenticated()),
+      (failure) {
+        userType = '';
+        emit(const CurrentUserUnauthenticated());
+      },
       (user) {
         currentUser = user;
+        userType =
+            user.userType?.toLowerCase() == 'doctor' ? 'Doctor' : 'Patient';
         emit(CurrentUserAuthenticated(user));
       },
     );
