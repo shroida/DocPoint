@@ -49,7 +49,21 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
   }
 
   @override
-  Future<Either<Failure, List<AppointmentEntity>>> getAllAppointments({required String id}) {
-   return await _getAllDoctorsDatasources.
+  Future<Either<Failure, List<AppointmentEntity>>> getAllAppointments({
+    required String id,
+    required String userType,
+  }) async {
+    try {
+      final appointments = await _getAllDoctorsDatasources.getAllAppointments(
+        id: id,
+        userType: userType,
+      );
+      return Right(appointments);
+    } on ServerExceptions catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(
+          ServerFailure('Failed to fetch appointments: ${e.toString()}'));
+    }
   }
 }
