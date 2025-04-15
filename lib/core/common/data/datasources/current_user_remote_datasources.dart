@@ -23,15 +23,17 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
       if (session == null) {
         throw Exception('No active session');
       }
+
       final userId = session.user.id;
 
       // First check if user is a doctor
-      final doctorResponse = await supabaseClient
+      final doctorQuery = await supabaseClient
           .from('doctor_profiles')
           .select()
-          .eq('id', userId)
-          .maybeSingle();
-      if (doctorResponse != null) {
+          .eq('id', userId);
+
+      if (doctorQuery.isNotEmpty) {
+        final doctorResponse = doctorQuery.first;
         isLoggedInUser = true;
         return CurrentUserModel.fromJson({
           ...doctorResponse,
@@ -40,18 +42,23 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
         });
       }
       // If not a doctor, check if patient
-      final patientResponse = await supabaseClient
+      final patientQuery = await supabaseClient
           .from('patient_profiles')
           .select()
-          .eq('id', userId)
-          .single();
-      isLoggedInUser = true;
+          .eq('id', userId);
 
-      return CurrentUserModel.fromJson({
-        ...patientResponse,
-        'user_type': 'patient',
-        'email': session.user.email,
-      });
+      if (patientQuery.isNotEmpty) {
+        final patientResponse = patientQuery.first;
+        isLoggedInUser = true;
+        return CurrentUserModel.fromJson({
+          ...patientResponse,
+          'user_type': 'patient',
+          'email': session.user.email,
+        });
+      } else {
+        throw Exception(
+            'User not found in either doctor_profiles or patient_profiles');
+      }
     } catch (e) {
       throw Exception('Failed to fetch user data: $e');
     }

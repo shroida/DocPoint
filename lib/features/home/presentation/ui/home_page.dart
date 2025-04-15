@@ -2,6 +2,7 @@ import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
+import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_list_screen.dart';
@@ -66,28 +67,30 @@ class _HomePageState extends State<HomePage> {
             if (currentUserCubit.currentUser == null) {
               return const Center(child: Text('User data not available'));
             }
+            return currentUserCubit.userType == "Patient"
+                ? SafeArea(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          SizedBox(
+                            height: 20.h,
+                          ),
+                          const UserInfoCard(),
+                          SizedBox(
+                            height: 20.h,
+                          ),
 
-            return SafeArea(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 20.h,
+                          const DoctorsListScreen(),
+
+                          Text(currentUserCubit.currentUser!.email),
+                          // Add other user data here
+                        ],
+                      ),
                     ),
-                    const UserInfoCard(),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    currentUserCubit.userType == "Patient"
-                        ? const DoctorsListScreen()
-                        : Text('zebbi'),
-                        
-                    Text(currentUserCubit.currentUser!.email),
-                    // Add other user data here
-                  ],
-                ),
-              ),
-            );
+                  )
+                : AppointmentsScreen(
+                    userId: currentUserCubit.currentUser!.id,
+                    userType: "Doctor");
           }
 
           if (state is CurrentUserError) {

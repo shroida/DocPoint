@@ -65,7 +65,7 @@ class AppRouter {
               create: (context) => getIt<SignupCubit>(),
               child: const SignupScreen(),
             )),
-  ], initialLocation: Routes.homePage);
+  ], initialLocation: Routes.onBoardingScreen);
 }
 
 class AppointmentPageArgs {

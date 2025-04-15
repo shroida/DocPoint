@@ -89,19 +89,30 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
       for (final appointment in response) {
         final model = AppointmentModel.fromJson(appointment);
 
-        final doctorResponse = await _supabaseClient
-            .from('doctor_profiles')
-            .select('first_name, last_name, category')
-            .eq('id', model.doctorId)
+        // 🔁 Determine the profile to fetch (opposite of userType)
+        final isDoctor = userType == 'Doctor';
+        final profileTable = isDoctor ? 'patient_profiles' : 'doctor_profiles';
+        final profileId = isDoctor ? model.patientId : model.doctorId;
+
+        final profileResponse = await _supabaseClient
+            .from(profileTable)
+            .select('first_name, last_name, ${!isDoctor ? 'category' : ''}')
+            .eq('id', profileId)
             .maybeSingle();
 
-        final fullName = doctorResponse != null
-            ? '${doctorResponse['first_name']} ${doctorResponse['last_name']}'
-            : 'Unknown Doctor';
-        final category = doctorResponse?['category'] ?? 'General';
+        final fullName = profileResponse != null
+            ? '${profileResponse['first_name']} ${profileResponse['last_name']}'
+            : 'Unknown';
+
+        final category = !isDoctor
+            ? (profileResponse?['category'] ?? 'General')
+            : 'N/A'; // you can hide it in UI if needed
 
         appointments.add(
-          model.copyWith(doctorName: fullName, category: category),
+          model.copyWith(
+            doctorName: fullName,
+            category: category,
+          ),
         );
       }
 
