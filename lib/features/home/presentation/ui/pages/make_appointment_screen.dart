@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:go_router/go_router.dart';
+import 'package:table_calendar/table_calendar.dart';
 
 class MakeAppointmentScreen extends StatefulWidget {
   final String doctorId;
@@ -26,20 +27,6 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
   DateTime? _selectedDate;
   TimeOfDay? _selectedTime;
   final TextEditingController _notesController = TextEditingController();
-
-  void _pickDate() async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(const Duration(days: 365)),
-      initialDate: DateTime.now(),
-    );
-    if (picked != null) {
-      setState(() {
-        _selectedDate = picked;
-      });
-    }
-  }
 
   void _pickTime() async {
     final TimeOfDay? picked =
@@ -82,7 +69,10 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Make Appointment"),
+        title: const Text(
+          "Make Appointment",
+          style: TextStyle(color: Colors.white),
+        ),
         backgroundColor: AppColors.primary,
       ),
       body: BlocConsumer<HomePageCubit, HomePageState>(
@@ -108,17 +98,38 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
                   style: AppStyle.heading2,
                 ),
                 const SizedBox(height: 10),
-                ElevatedButton.icon(
-                  onPressed: _pickDate,
-                  icon: const Icon(Icons.calendar_today),
-                  label: Text(_selectedDate == null
-                      ? "Select Date"
-                      : "${_selectedDate!.toLocal()}".split(' ')[0]),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.primary,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                TableCalendar(
+                  firstDay: DateTime.now(),
+                  lastDay: DateTime.now().add(const Duration(days: 365)),
+                  focusedDay: _selectedDate ?? DateTime.now(),
+                  onDaySelected: (selectedDay, focusedDay) {
+                    setState(() {
+                      _selectedDate = selectedDay;
+                    });
+                  },
+                  selectedDayPredicate: (day) {
+                    return isSameDay(_selectedDate, day);
+                  },
+                  calendarStyle: const CalendarStyle(
+                    selectedDecoration: BoxDecoration(
+                      color: AppColors.primary,
+                      shape: BoxShape.circle,
+                    ),
+                    todayDecoration: BoxDecoration(
+                      color: AppColors.primaryLight,
+                      shape: BoxShape.circle,
+                    ),
+                  ),
+                  headerStyle: const HeaderStyle(
+                    formatButtonVisible: false,
+                    titleCentered: true,
+                    leftChevronIcon: Icon(
+                      Icons.chevron_left,
+                      color: AppColors.primary,
+                    ),
+                    rightChevronIcon: Icon(
+                      Icons.chevron_right,
+                      color: AppColors.primary,
                     ),
                   ),
                 ),
@@ -135,6 +146,10 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
                       ? "Select Time"
                       : _selectedTime!.format(context)),
                   style: ElevatedButton.styleFrom(
+                    foregroundColor:
+                        Colors.white, // 👈 this makes the text/icon color white
+
+                    textStyle: const TextStyle(color: Colors.white),
                     backgroundColor: AppColors.primary,
                     padding: const EdgeInsets.symmetric(vertical: 14),
                     shape: RoundedRectangleBorder(
@@ -163,7 +178,7 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
                   child: state is AppointmentLoading
                       ? const CircularProgressIndicator(color: Colors.white)
                       : const Text("Book Appointment",
-                          style: TextStyle(fontSize: 16)),
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                 ),
               ],
             ),
