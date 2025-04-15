@@ -24,9 +24,13 @@ class AppRouter {
       path: Routes.makeAppointment,
       builder: (context, state) {
         final doctor = state.extra as User;
-        return MakeAppointmentScreen(
-          doctor: doctor,
-          patientId: context.read<CurrentUserCubit>().currentUser!.id,
+        return BlocProvider<HomePageCubit>(
+          create: (context) =>
+              getIt<HomePageCubit>(), // Create the provider here
+          child: MakeAppointmentScreen(
+            doctor: doctor,
+            patientId: context.read<CurrentUserCubit>().currentUser!.id,
+          ),
         );
       },
     ),

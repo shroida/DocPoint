@@ -62,8 +62,8 @@ class _HomePageState extends State<HomePage> {
           }
 
           if (state is CurrentUserAuthenticated) {
-            final currentUser = context.read<CurrentUserCubit>().currentUser;
-            if (currentUser == null) {
+            final currentUserCubit = context.read<CurrentUserCubit>();
+            if (currentUserCubit.currentUser == null) {
               return const Center(child: Text('User data not available'));
             }
 
@@ -78,10 +78,11 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    // Adjust height as needed
-                    const DoctorsListScreen(),
-
-                    Text(currentUser.email),
+                    currentUserCubit.userType == "Patient"
+                        ? const DoctorsListScreen()
+                        : Text('zebbi'),
+                        
+                    Text(currentUserCubit.currentUser!.email),
                     // Add other user data here
                   ],
                 ),

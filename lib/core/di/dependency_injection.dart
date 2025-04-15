@@ -107,6 +107,6 @@ void homePageDI() {
       getIt(),
     ),
   );
-  getIt.registerLazySingleton<HomePageCubit>(
+  getIt.registerFactory<HomePageCubit>(
       () => HomePageCubit(getIt(), getIt(), getIt()));
 }
