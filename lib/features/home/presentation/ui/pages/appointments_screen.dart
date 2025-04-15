@@ -40,7 +40,10 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Appointments'),
+        title: const Text(
+          'My Appointments',
+          style: TextStyle(color: Colors.white),
+        ),
         centerTitle: true,
         elevation: 0,
         backgroundColor: AppColors.primary,
@@ -180,7 +183,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Dr. ${appointment.doctorId.substring(0, 8)}',
+                        'Dr. ${appointment.doctorName}',
                         style: AppStyle.body1.copyWith(
                           color: AppColors.textSecondary,
                         ),

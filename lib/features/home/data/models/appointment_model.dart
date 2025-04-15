@@ -4,6 +4,7 @@ class AppointmentModel extends AppointmentEntity {
   AppointmentModel(
       {required super.id,
       required super.doctorId,
+      required super.doctorName,
       required super.patientId,
       super.status,
       super.notes,
@@ -12,38 +13,40 @@ class AppointmentModel extends AppointmentEntity {
       required super.appointmentTime});
   // Factory constructor from JSON
   factory AppointmentModel.fromJson(Map<String, dynamic> json) {
-    return AppointmentModel(
-      id: json['id'] as String,
-      doctorId: json['doctor_id'] as String,
-      patientId: json['patient_id'] as String,
-      category: (json['category'] ?? 'Unknown') as String,
-      appointmentTime: DateTime.parse(json['appointment_time'] as String),
-      status: json['status'] as String? ?? 'pending',
-      notes: json['notes'] as String?,
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'] as String)
-          : null,
-    );
+    try {
+      return AppointmentModel(
+        id: json['id']?.toString() ?? '',
+        doctorId: json['doctor_id']?.toString() ?? '',
+        doctorName: json['doctor_name']?.toString() ?? '',
+        patientId: json['patient_id']?.toString() ?? '',
+        category: json['category']?.toString() ?? 'Unknown',
+        appointmentTime: DateTime.parse(
+            json['appointment_time'] ?? DateTime.now().toIso8601String()),
+        status: json['status']?.toString() ?? 'pending',
+        notes: json['notes']?.toString(),
+        createdAt: json['created_at'] != null
+            ? DateTime.tryParse(json['created_at'].toString())
+            : null,
+      );
+    } catch (e) {
+      throw Exception('Failed to parse AppointmentModel: $e');
+    }
   }
+
   AppointmentModel copyWith({
-    String? id,
-    String? doctorId,
-    String? patientId,
-    String? status,
-    String? notes,
-    DateTime? createdAt,
+    String? doctorName,
     String? category,
-    DateTime? appointmentTime,
   }) {
     return AppointmentModel(
-      id: id ?? this.id,
-      doctorId: doctorId ?? this.doctorId,
-      patientId: patientId ?? this.patientId,
-      status: status ?? this.status,
-      notes: notes ?? this.notes,
-      createdAt: createdAt ?? this.createdAt,
+      id: id,
+      doctorId: doctorId,
+      patientId: patientId,
+      appointmentTime: appointmentTime,
+      status: status,
+      notes: notes,
+      createdAt: createdAt,
       category: category ?? this.category,
-      appointmentTime: appointmentTime ?? this.appointmentTime,
+      doctorName: doctorName ?? this.doctorName,
     );
   }
 }

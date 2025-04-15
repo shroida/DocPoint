@@ -74,20 +74,40 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
   }
 
   @override
-  Future<List<AppointmentModel>> getAllAppointments(
-      {required String userType, required String id}) async {
+  Future<List<AppointmentModel>> getAllAppointments({
+    required String userType,
+    required String id,
+  }) async {
     try {
       final response = await _supabaseClient
           .from('appointments')
           .select('*')
           .eq(userType == 'Doctor' ? 'doctor_id' : 'patient_id', id);
 
-      return response
-          .map<AppointmentModel>(
-              (appointment) => AppointmentModel.fromJson(appointment))
-          .toList();
+      List<AppointmentModel> appointments = [];
+
+      for (final appointment in response) {
+        final model = AppointmentModel.fromJson(appointment);
+
+        final doctorResponse = await _supabaseClient
+            .from('doctor_profiles')
+            .select('first_name, last_name, category')
+            .eq('id', model.doctorId)
+            .maybeSingle();
+
+        final fullName = doctorResponse != null
+            ? '${doctorResponse['first_name']} ${doctorResponse['last_name']}'
+            : 'Unknown Doctor';
+        final category = doctorResponse?['category'] ?? 'General';
+
+        appointments.add(
+          model.copyWith(doctorName: fullName, category: category),
+        );
+      }
+
+      return appointments;
     } catch (e) {
-      throw Exception('Failed to schedule appointment: $e');
+      throw Exception('Failed to fetch appointments: $e');
     }
   }
 }
