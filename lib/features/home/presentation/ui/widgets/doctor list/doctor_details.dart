@@ -1,8 +1,10 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_list_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class DoctorDetails extends StatelessWidget {
   const DoctorDetails({
@@ -88,8 +90,10 @@ class DoctorDetails extends StatelessWidget {
             child: ElevatedButton(
               style: AppStyle.primaryButton,
               onPressed: () {
-                // Navigator.pushNamed(context, '/book-appointment',
-                //     arguments: doctor);
+                context.push(
+                  Routes.makeAppointment,
+                  extra: doctor.id,
+                );
               },
               child: Row(
                 mainAxisSize: MainAxisSize.min,

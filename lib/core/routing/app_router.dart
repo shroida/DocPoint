@@ -1,7 +1,9 @@
+import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/ui/home_page.dart';
+import 'package:docpoint/features/home/presentation/ui/pages/make_appointment_screen.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
@@ -15,6 +17,21 @@ class AppRouter {
     GoRoute(
       path: Routes.onBoardingScreen,
       builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: Routes.makeAppointment,
+      builder: (context, state) {
+        final doctorId = state.extra as String; // Pass doctorId via .extra
+        return BlocProvider.value(
+          value: getIt<HomePageCubit>(),
+          child: MakeAppointmentScreen(
+            doctorId: doctorId,
+            patientId: context.read<CurrentUserCubit>().userType == 'Patient'
+                ? context.read<CurrentUserCubit>().currentUser!.id
+                : '',
+          ),
+        );
+      },
     ),
     GoRoute(
         path: Routes.homePage,
