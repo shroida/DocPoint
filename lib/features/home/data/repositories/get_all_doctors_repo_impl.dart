@@ -27,6 +27,7 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
   Future<Either<Failure, void>> scheduleAppointment({
     required String doctorId,
     required String doctorName,
+    required String patientName,
     required String category,
     required String patientId,
     required DateTime appointmentTime,
@@ -38,6 +39,7 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
         doctorId: doctorId,
         patientId: patientId,
         doctorName: doctorName,
+        patientName: patientName,
         category: category,
         appointmentTime: appointmentTime,
         status: status,

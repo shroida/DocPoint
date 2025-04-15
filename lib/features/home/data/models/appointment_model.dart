@@ -5,6 +5,7 @@ class AppointmentModel extends AppointmentEntity {
       {required super.id,
       required super.doctorId,
       required super.doctorName,
+      required super.patientName,
       required super.patientId,
       super.status,
       super.notes,
@@ -18,6 +19,7 @@ class AppointmentModel extends AppointmentEntity {
         id: json['id']?.toString() ?? '',
         doctorId: json['doctor_id']?.toString() ?? '',
         doctorName: json['doctor_name']?.toString() ?? '',
+        patientName: json['patient_name']?.toString() ?? '',
         patientId: json['patient_id']?.toString() ?? '',
         category: json['category']?.toString() ?? 'Unknown',
         appointmentTime: DateTime.parse(
@@ -41,6 +43,7 @@ class AppointmentModel extends AppointmentEntity {
       id: id,
       doctorId: doctorId,
       patientId: patientId,
+      patientName: patientName,
       appointmentTime: appointmentTime,
       status: status,
       notes: notes,

@@ -13,6 +13,7 @@ abstract interface class GetAllDoctorsRepo {
     required String doctorId,
     required String patientId,
     required String doctorName,
+    required String patientName,
     required String category,
     required DateTime appointmentTime,
     required String status,

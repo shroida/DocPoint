@@ -1,4 +1,5 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/features/home/domain/usecase/make_appointment.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
@@ -57,6 +58,8 @@ class _MakeAppointmentScreenState extends State<MakeAppointmentScreen> {
     );
 
     final appointment = AppointmentParams(
+      patientName:
+          '${context.read<CurrentUserCubit>().currentUser!.firstName} ${context.read<CurrentUserCubit>().currentUser!.lastName}',
       category: widget.doctor.category ?? 'General',
       doctorName: '${widget.doctor.firstName} ${widget.doctor.lastName}',
       doctorId: widget.doctor.id,

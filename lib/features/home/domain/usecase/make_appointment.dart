@@ -13,6 +13,7 @@ class MakeAppointment implements UseCase<void, AppointmentParams> {
         appointmentTime: params.appointmentTime,
         doctorId: params.doctorId,
         doctorName: params.doctorName,
+        patientName: params.patientName,
         category: params.category,
         patientId: params.patientId,
         status: params.status,
@@ -25,6 +26,7 @@ class AppointmentParams {
   final String doctorName;
   final String category;
   final String patientId;
+  final String patientName;
   final DateTime appointmentTime;
   final String status;
   String? notes;
@@ -33,6 +35,7 @@ class AppointmentParams {
       {required this.doctorId,
       this.notes,
       required this.patientId,
+      required this.patientName,
       required this.doctorName,
       required this.category,
       required this.appointmentTime,

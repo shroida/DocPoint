@@ -9,6 +9,7 @@ abstract interface class GetAllDoctorsDatasources {
   Future<void> scheduleAppointment({
     required String doctorId,
     required String patientId,
+    required String patientName,
     required String doctorName,
     required String category,
     required DateTime appointmentTime,
@@ -55,6 +56,7 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
     required String category,
     required String doctorId,
     required String patientId,
+    required String patientName,
     required DateTime appointmentTime,
     required String status,
     String? notes,
@@ -64,6 +66,7 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
         'doctor_name': doctorName,
         'patient_id': patientId,
         'doctor_id': doctorId,
+        'patient_name': patientName,
         'category': category,
         'appointment_time': appointmentTime.toIso8601String(),
         'status': status,
@@ -85,45 +88,29 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
     required String id,
   }) async {
     try {
+      print('[DEBUG] Fetching appointments for $userType with id: $id');
+
       final response = await _supabaseClient
           .from('appointments')
           .select('*')
           .eq(userType == 'Doctor' ? 'doctor_id' : 'patient_id', id);
 
+      print('[DEBUG] Appointments fetched: ${response.length} items');
+
       List<AppointmentModel> appointments = [];
 
       for (final appointment in response) {
+        print('[DEBUG] Processing appointment: $appointment');
+
         final model = AppointmentModel.fromJson(appointment);
 
-        // 🔁 Determine the profile to fetch (opposite of userType)
-        final isDoctor = userType == 'Doctor';
-        final profileTable = isDoctor ? 'doctor_profiles' : 'patient_profiles';
-        final profileId = isDoctor ? model.patientId : model.doctorId;
-
-        final profileResponse = await _supabaseClient
-            .from(profileTable)
-            .select('first_name, last_name, category')
-            .eq('id', profileId)
-            .maybeSingle();
-
-        final fullName = profileResponse != null
-            ? '${profileResponse['first_name']} ${profileResponse['last_name']}'
-            : 'Unknown';
-
-        final category = !isDoctor
-            ? (profileResponse?['category'] ?? 'General')
-            : 'N/A'; // you can hide it in UI if needed
-
-        appointments.add(
-          model.copyWith(
-            doctorName: fullName,
-            category: category,
-          ),
-        );
+        appointments.add(model);
       }
 
+      print('[DEBUG] Total appointments returned: ${appointments.length}');
       return appointments;
     } catch (e) {
+      print('[ERROR] Failed to fetch appointments: $e');
       throw Exception('Failed to fetch appointments: $e');
     }
   }

@@ -186,7 +186,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       const SizedBox(height: 4),
                       Text(
                         widget.userType == 'Doctor'
-                            ? 'Patient: ${appointment.doctorName}' // actually the patient's name
+                            ? 'Patient: ${appointment.patientName}' // actually the patient's name
                             : 'Dr. ${appointment.doctorName}', // actually the doctor's name
                         style: AppStyle.body1.copyWith(
                           color: AppColors.textSecondary,
