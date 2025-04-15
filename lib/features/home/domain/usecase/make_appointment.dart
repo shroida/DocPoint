@@ -12,6 +12,8 @@ class MakeAppointment implements UseCase<void, AppointmentParams> {
     return await _doctorsRepo.scheduleAppointment(
         appointmentTime: params.appointmentTime,
         doctorId: params.doctorId,
+        doctorName: params.doctorName,
+        category: params.category,
         patientId: params.patientId,
         status: params.status,
         notes: params.notes);
@@ -20,6 +22,8 @@ class MakeAppointment implements UseCase<void, AppointmentParams> {
 
 class AppointmentParams {
   final String doctorId;
+  final String doctorName;
+  final String category;
   final String patientId;
   final DateTime appointmentTime;
   final String status;
@@ -29,6 +33,8 @@ class AppointmentParams {
       {required this.doctorId,
       this.notes,
       required this.patientId,
+      required this.doctorName,
+      required this.category,
       required this.appointmentTime,
       required this.status});
 }
