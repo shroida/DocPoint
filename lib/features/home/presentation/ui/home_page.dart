@@ -25,14 +25,6 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await _loadUserData();
-
-      final cubit = context.read<CurrentUserCubit>();
-      if (cubit.currentUser != null) {
-        // Manually emit the state again in case it's missed
-        context.read<CurrentUserCubit>().emit(
-              CurrentUserAuthenticated(cubit.currentUser!),
-            );
-      }
     });
   }
 

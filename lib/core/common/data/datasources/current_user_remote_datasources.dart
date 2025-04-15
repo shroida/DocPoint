@@ -20,26 +20,19 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
       final session = currentUserSession;
 
       if (session == null) {
-        print('[ERROR] No active session found.');
         throw Exception('No active session');
       }
 
       final userId = session.user.id;
       final userEmail = session.user.email;
-      print('[INFO] Session is active. User ID: $userId, Email: $userEmail');
 
-      // First check if user is a doctor
-      print('[INFO] Checking if user is a doctor...');
       final doctorResponse = await supabaseClient
           .from('doctor_profiles')
           .select()
           .eq('id', userId)
           .maybeSingle();
 
-      print('[DEBUG] Doctor query result: $doctorResponse');
-
       if (doctorResponse != null) {
-        print('[SUCCESS] Doctor found for userId $userId');
         isLoggedInUser = true;
         return CurrentUserModel.fromJson({
           ...doctorResponse,
@@ -48,18 +41,13 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
         });
       }
 
-      // If not a doctor, check if patient
-      print('[INFO] Doctor not found. Checking if user is a patient...');
       final patientQuery = await supabaseClient
           .from('patient_profiles')
           .select()
           .eq('id', userId);
 
-      print('[DEBUG] Patient query result: $patientQuery');
-
       if (patientQuery.length == 1) {
         final patientResponse = patientQuery.first;
-        print('[SUCCESS] Patient found for userId $userId');
         isLoggedInUser = true;
         return CurrentUserModel.fromJson({
           ...patientResponse,
@@ -67,15 +55,12 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
           'email': userEmail,
         });
       } else if (patientQuery.isEmpty) {
-        print('[ERROR] No patient found with id $userId');
         throw Exception('User not found in patient_profiles');
       } else {
-        print('[ERROR] Multiple patients found with id $userId');
         throw Exception(
             'Multiple users found with same ID in patient_profiles');
       }
     } catch (e) {
-      print('[EXCEPTION] Error while fetching user data: $e');
       throw Exception('Failed to fetch user data: $e');
     }
   }
