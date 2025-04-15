@@ -40,9 +40,6 @@ class SignupCubit extends Cubit<SignupState> {
   Future<void> signUp({required String userType}) async {
     // emit(SignupLoading());
     try {
-      debugPrint('=======================================');
-      debugPrint(userType);
-      debugPrint('=======================================');
       String? imageUrl;
 
       // Upload image if exists
@@ -67,8 +64,7 @@ class SignupCubit extends Cubit<SignupState> {
         (failure) => emit(SignupFailure()),
         (user) => emit(SignupSuccess(user)),
       );
-    } catch (e, stackTrace) {
-      debugPrint('Signup error: $e\n$stackTrace');
+    } catch (e) {
       emit(SignupFailure());
     }
   }
@@ -93,7 +89,6 @@ class SignupCubit extends Cubit<SignupState> {
       // Get public URL
       return supabase.storage.from('profile-images').getPublicUrl(fileName);
     } catch (e) {
-      debugPrint('Image upload error: $e');
       throw Exception('Failed to upload profile image');
     }
   }

@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 abstract interface class CurrentUserRemoteDatasources {
   Session? get currentUserSession;
   Future<CurrentUserModel> getCurrentUserData();
+  Future<void> logout();
 }
 
 class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
@@ -53,6 +54,21 @@ class CurrentUserRemoteDatasourcesImpl implements CurrentUserRemoteDatasources {
       });
     } catch (e) {
       throw Exception('Failed to fetch user data: $e');
+    }
+  }
+
+  @override
+  Future<void> logout() async {
+    try {
+      await supabaseClient.auth.signOut();
+
+      await supabaseClient.removeAllChannels();
+
+      if (supabaseClient.auth.currentSession != null) {
+        throw Exception('Session still exists after logout');
+      }
+    } catch (e) {
+      throw Exception('Failed to logout: $e');
     }
   }
 }

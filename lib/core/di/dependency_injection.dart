@@ -2,8 +2,14 @@ import 'package:docpoint/core/common/data/datasources/current_user_remote_dataso
 import 'package:docpoint/core/common/data/repositories/current_user_repo_impl.dart';
 import 'package:docpoint/core/common/domain/repository/current_user_repo.dart';
 import 'package:docpoint/core/common/domain/usecase/current_user_usecase.dart';
+import 'package:docpoint/core/common/domain/usecase/logout_usecase.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/constants/constants.dart';
+import 'package:docpoint/features/home/data/datasources/get_all_doctors_datasources.dart';
+import 'package:docpoint/features/home/data/repositories/get_all_doctors_repo_impl.dart';
+import 'package:docpoint/features/home/domain/repositories/doctors_repo.dart';
+import 'package:docpoint/features/home/domain/usecase/get_all_doctors.dart';
+import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/login/data/datasources/login_datasources.dart';
 import 'package:docpoint/features/login/data/repositories/login_repo_impl.dart';
 import 'package:docpoint/features/login/domain/repository/login_repo.dart';
@@ -28,6 +34,8 @@ Future<void> setUpGetIt() async {
   signUpDI();
   // login related dependencies
   loginDI();
+  // Home page related dependencies
+  homePageDI();
 }
 
 Future<void> supabaseDI() async {
@@ -49,7 +57,8 @@ void loginDI() {
       () => LoginDatasourcesImpl(getIt(), getIt()));
   getIt.registerFactory<LoginRepo>(() => LoginRepoImpl(getIt()));
   getIt.registerFactory<UserLoginUsecase>(() => UserLoginUsecase(getIt()));
-  getIt.registerLazySingleton<LoginCubit>(() => LoginCubit(getIt(), getIt()));
+  getIt.registerLazySingleton<LoginCubit>(
+      () => LoginCubit(getIt(), getIt(), getIt()));
 }
 
 void authDI() {
@@ -62,7 +71,29 @@ void authDI() {
   getIt.registerFactory<CurrentUserUsecase>(
     () => CurrentUserUsecase(getIt()),
   );
-  getIt.registerFactory<CurrentUserCubit>(
-    () => CurrentUserCubit(getIt()),
+  getIt.registerFactory<LogoutUsecase>(
+    () => LogoutUsecase(getIt()),
   );
+  getIt.registerFactory<CurrentUserCubit>(
+    () => CurrentUserCubit(getIt(), getIt()),
+  );
+}
+
+void homePageDI() {
+  getIt.registerFactory<GetAllDoctorsDatasources>(
+    () => GetAllDoctorsDatasourcesImpl(
+      getIt(),
+    ),
+  );
+  getIt.registerFactory<GetAllDoctorsRepo>(
+    () => GetAllDoctorsRepoImpl(
+      getIt(),
+    ),
+  );
+  getIt.registerFactory<GetAllDoctors>(
+    () => GetAllDoctors(
+      getIt(),
+    ),
+  );
+  getIt.registerLazySingleton<HomePageCubit>(() => HomePageCubit(getIt()));
 }

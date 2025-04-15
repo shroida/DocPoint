@@ -38,17 +38,18 @@ class LoginScreenState extends State<LoginScreen> {
             child: BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state is LoginSuccess) {
-                  debugPrint('Login successful for user: ${state.user.email}');
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(
                       content: Text('Login successful!'),
                       backgroundColor: Colors.green,
                     ),
                   );
-                  context.go(Routes.homePage); // Navigate to home page
+
+                  // Safe way to navigate after current build frame
+                  Future.microtask(() {
+                    context.go(Routes.homePage);
+                  });
                 } else if (state is LoginFailure) {
-                  debugPrint(
-                      'Login failed: ${state.errorMessage}'); // Print the error
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text('Login failed: ${state.errorMessage}'),
