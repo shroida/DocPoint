@@ -3,7 +3,13 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class GetAllDoctorsDatasources {
   Future<List<DoctorModel>> getAllDoctors();
-  Future<List<DoctorModel>> getAllDoctors();
+  Future<void> scheduleAppointment({
+    required String doctorId,
+    required String patientId,
+    required DateTime appointmentTime,
+    required String status,
+    String? notes,
+  });
 }
 
 class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
@@ -26,7 +32,6 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
       category
     ''');
 
-
       if (response.isEmpty) {
         throw Exception('No doctors found');
       }
@@ -36,6 +41,32 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
           .toList();
     } catch (e) {
       throw Exception('Failed to fetch doctors: $e');
+    }
+  }
+
+  @override
+  Future<void> scheduleAppointment({
+    required String doctorId,
+    required String patientId,
+    required DateTime appointmentTime,
+    required String status,
+    String? notes,
+  }) async {
+    try {
+      final response = await _supabaseClient.from('appointments').insert({
+        'doctor_id': doctorId,
+        'patient_id': patientId,
+        'appointment_time': appointmentTime.toIso8601String(),
+        'status': status,
+        'notes': notes,
+        'created_at': DateTime.now().toIso8601String(),
+      });
+
+      if (response != null && response.error != null) {
+        throw Exception(response.error!.message);
+      }
+    } catch (e) {
+      throw Exception('Failed to schedule appointment: $e');
     }
   }
 }
