@@ -1,8 +1,11 @@
+import 'package:docpoint/features/home/data/models/appointment_model.dart';
 import 'package:docpoint/features/home/data/models/doctor_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class GetAllDoctorsDatasources {
   Future<List<DoctorModel>> getAllDoctors();
+  Future<List<AppointmentModel>> getAllAppointments(
+      {required String userType, required String id});
   Future<void> scheduleAppointment({
     required String doctorId,
     required String patientId,
@@ -65,6 +68,24 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
       if (response != null && response.error != null) {
         throw Exception(response.error!.message);
       }
+    } catch (e) {
+      throw Exception('Failed to schedule appointment: $e');
+    }
+  }
+
+  @override
+  Future<List<AppointmentModel>> getAllAppointments(
+      {required String userType, required String id}) async {
+    try {
+      final response = await _supabaseClient
+          .from('appointments')
+          .select('*')
+          .eq(userType == 'Doctor' ? 'doctor_id' : 'patient_id', id);
+
+      return response
+          .map<AppointmentModel>(
+              (appointment) => AppointmentModel.fromJson(appointment))
+          .toList();
     } catch (e) {
       throw Exception('Failed to schedule appointment: $e');
     }
