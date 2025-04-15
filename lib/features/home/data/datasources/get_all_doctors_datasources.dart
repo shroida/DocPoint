@@ -9,6 +9,8 @@ abstract interface class GetAllDoctorsDatasources {
   Future<void> scheduleAppointment({
     required String doctorId,
     required String patientId,
+    required String doctorName,
+    required String category,
     required DateTime appointmentTime,
     required String status,
     String? notes,
@@ -49,6 +51,8 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
 
   @override
   Future<void> scheduleAppointment({
+    required String doctorName,
+    required String category,
     required String doctorId,
     required String patientId,
     required DateTime appointmentTime,
@@ -57,8 +61,10 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
   }) async {
     try {
       final response = await _supabaseClient.from('appointments').insert({
-        'doctor_id': doctorId,
+        'doctor_name': doctorName,
         'patient_id': patientId,
+        'doctor_id': doctorId,
+        'category': category,
         'appointment_time': appointmentTime.toIso8601String(),
         'status': status,
         'notes': notes,

@@ -37,6 +37,8 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
       await _getAllDoctorsDatasources.scheduleAppointment(
         doctorId: doctorId,
         patientId: patientId,
+        doctorName: doctorName,
+        category: category,
         appointmentTime: appointmentTime,
         status: status,
         notes: notes,
