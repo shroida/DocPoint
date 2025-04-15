@@ -10,6 +10,6 @@ class GetAllDoctors implements UseCase<List<DoctorEntity>, NoParams> {
   GetAllDoctors(this._doctorsRepo);
   @override
   Future<Either<Failure, List<DoctorEntity>>> call(NoParams params) async {
-    return _doctorsRepo.fetchDoctors();
+    return await _doctorsRepo.fetchDoctors();
   }
 }

@@ -1,4 +1,6 @@
+import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/features/home/data/models/doctor_model.dart';
+import 'package:flutter/foundation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class GetAllDoctorsDatasources {
@@ -13,23 +15,30 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
   @override
   Future<List<DoctorModel>> getAllDoctors() async {
     try {
-      final response =
-          await _supabaseClient.from('doctor_profiles').select('*');
-      print('Response: $response'); // Log response
+      debugPrint('[Datasource] Fetching doctors from Supabase...');
+      final response = await _supabaseClient.from('doctor_profiles').select('''
+      id,
+      email,
+      first_name,
+      last_name,
+      phone_number,
+      city,
+      avatar_url,
+      experience,
+      category
+    ''');
+
+      debugPrint('[Datasource] Supabase response: $response');
 
       if (response.isEmpty) {
-        print('Response: $response'); // Log the response
         throw Exception('No doctors found');
       }
-      List<DoctorModel> listDocs = response
+
+      return response
           .map<DoctorModel>((doctor) => DoctorModel.fromJson(doctor))
           .toList();
-      print('lenght: ${listDocs.length}'); // Log response
-      print('Response: ${listDocs.first.firstName}'); // Log response
-      return listDocs;
     } catch (e) {
-      print('Error fetching doctors: $e'); // Log error
-
+      debugPrint('[Datasource] Error: $e');
       throw Exception('Failed to fetch doctors: $e');
     }
   }
