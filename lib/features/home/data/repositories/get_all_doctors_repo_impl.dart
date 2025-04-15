@@ -26,6 +26,8 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
   @override
   Future<Either<Failure, void>> scheduleAppointment({
     required String doctorId,
+    required String doctorName,
+    required String category,
     required String patientId,
     required DateTime appointmentTime,
     required String status,
