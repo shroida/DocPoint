@@ -17,3 +17,14 @@ final class HomePageError extends HomePageState {
 
   HomePageError(this.message);
 }
+
+// --- Appointments ---
+final class AppointmentLoading extends HomePageState {}
+
+final class AppointmentSuccess extends HomePageState {}
+
+final class AppointmentFailure extends HomePageState {
+  final String message;
+
+  AppointmentFailure(this.message);
+}
