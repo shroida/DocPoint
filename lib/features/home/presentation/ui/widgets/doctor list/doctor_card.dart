@@ -1,8 +1,7 @@
 import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
-import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_details.dart';
-import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_list_screen.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_image.dart';
 import 'package:flutter/material.dart';
 
 class DoctorCard extends StatelessWidget {
@@ -48,48 +47,6 @@ class DoctorCard extends StatelessWidget {
         end: Alignment.bottomRight,
       ),
       borderRadius: BorderRadius.circular(12),
-    );
-  }
-}
-
-class DoctorImage extends StatelessWidget {
-  const DoctorImage({
-    super.key,
-    required this.doctor,
-  });
-
-  final User doctor;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: 80,
-      height: 80,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(40),
-        border: Border.all(
-          color: AppColors.primary.withOpacity(0.3),
-          width: 2,
-        ),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(40),
-        child: doctor.imageUrl != null
-            ? Image.network(
-                doctor.imageUrl!,
-                fit: BoxFit.cover,
-                errorBuilder: (_, __, ___) => const Icon(
-                  Icons.person,
-                  size: 40,
-                  color: AppColors.primary,
-                ),
-              )
-            : const Icon(
-                Icons.person,
-                size: 40,
-                color: AppColors.primary,
-              ),
-      ),
     );
   }
 }
