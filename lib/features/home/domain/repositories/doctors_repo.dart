@@ -5,6 +5,7 @@ import 'package:fpdart/fpdart.dart';
 
 abstract interface class GetAllDoctorsRepo {
   Future<Either<Failure, List<DoctorEntity>>> fetchDoctors();
+  Future<Either<Failure, void>> updateStatusAppointment();
   Future<Either<Failure, List<AppointmentEntity>>> getAllAppointments({
     required String id,
     required String userType, // Add this
