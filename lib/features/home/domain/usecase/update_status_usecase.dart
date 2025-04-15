@@ -4,7 +4,9 @@ import 'package:docpoint/features/home/domain/repositories/doctors_repo.dart';
 import 'package:fpdart/fpdart.dart';
 
 class UpdateStatusUsecase implements UseCase<void, UpdateStatusParams> {
-  late final GetAllDoctorsRepo _getAllDoctorsRepo;
+  final GetAllDoctorsRepo _getAllDoctorsRepo;
+
+  UpdateStatusUsecase(this._getAllDoctorsRepo);
   @override
   Future<Either<Failure, void>> call(UpdateStatusParams params) async {
     return await _getAllDoctorsRepo.updateStatusAppointment(
