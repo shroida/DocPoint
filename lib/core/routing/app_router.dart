@@ -4,6 +4,7 @@ import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/ui/home_page.dart';
+import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/pages/make_appointment_screen.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
@@ -18,6 +19,16 @@ class AppRouter {
     GoRoute(
       path: Routes.onBoardingScreen,
       builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: Routes.appointmentPage,
+      builder: (context, state) {
+        final currentUserCubit = context.read<CurrentUserCubit>();
+        return AppointmentsScreen(
+          userId: currentUserCubit.currentUser!.id,
+          userType: currentUserCubit.userType,
+        );
+      },
     ),
     GoRoute(
       path: Routes.makeAppointment,

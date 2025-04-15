@@ -1,13 +1,40 @@
-import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
+import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
+import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
+import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
 import 'package:intl/intl.dart';
 
-class AppointmentsScreen extends StatelessWidget {
-  final List<AppointmentEntity> appointments;
+class AppointmentsScreen extends StatefulWidget {
+  final String userId;
+  final String userType;
 
-  const AppointmentsScreen({super.key, required this.appointments});
+  const AppointmentsScreen({
+    super.key,
+    required this.userId,
+    required this.userType,
+  });
+
+  @override
+  State<AppointmentsScreen> createState() => _AppointmentsScreenState();
+}
+
+class _AppointmentsScreenState extends State<AppointmentsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    // Fetch appointments when screen initializes
+    _loadAppointments();
+  }
+
+  Future<void> _loadAppointments() async {
+    await context.read<HomePageCubit>().getAllAppointments(
+          id: widget.userId,
+          userType: widget.userType,
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +44,12 @@ class AppointmentsScreen extends StatelessWidget {
         centerTitle: true,
         elevation: 0,
         backgroundColor: AppColors.primary,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: _loadAppointments,
+          ),
+        ],
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -29,12 +62,41 @@ class AppointmentsScreen extends StatelessWidget {
             ],
           ),
         ),
-        child: _buildAppointmentList(),
+        child: BlocBuilder<HomePageCubit, HomePageState>(
+          builder: (context, state) {
+            if (state is AppointmentLoading) {
+              return const Center(child: CircularProgressIndicator());
+            }
+
+            if (state is AppointmentFailure) {
+              return Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(state.message, style: AppStyle.heading3),
+                    const SizedBox(height: 16),
+                    ElevatedButton(
+                      onPressed: _loadAppointments,
+                      child: const Text('Retry'),
+                    ),
+                  ],
+                ),
+              );
+            }
+
+            if (state is HomePageLoaded) {
+              final appointments = state.appointments ?? [];
+              return _buildAppointmentList(appointments);
+            }
+
+            return const Center(child: Text('No appointments data'));
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildAppointmentList() {
+  Widget _buildAppointmentList(List<AppointmentEntity> appointments) {
     if (appointments.isEmpty) {
       return Center(
         child: Column(
@@ -57,12 +119,15 @@ class AppointmentsScreen extends StatelessWidget {
       );
     }
 
-    return ListView.builder(
-      padding: const EdgeInsets.all(16),
-      itemCount: appointments.length,
-      itemBuilder: (context, index) {
-        return _buildAppointmentCard(appointments[index]);
-      },
+    return RefreshIndicator(
+      onRefresh: _loadAppointments,
+      child: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: appointments.length,
+        itemBuilder: (context, index) {
+          return _buildAppointmentCard(appointments[index]);
+        },
+      ),
     );
   }
 
@@ -115,7 +180,7 @@ class AppointmentsScreen extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'Dr. ${appointment.doctorId.substring(0, 8)}', // In a real app, you'd show doctor name
+                        'Dr. ${appointment.doctorId.substring(0, 8)}',
                         style: AppStyle.body1.copyWith(
                           color: AppColors.textSecondary,
                         ),
