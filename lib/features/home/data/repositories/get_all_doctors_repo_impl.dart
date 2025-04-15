@@ -74,7 +74,19 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
   }
 
   @override
-  Future<Either<Failure, void>> updateStatusAppointment() {
- _getAllDoctorsDatasources.
+  Future<Either<Failure, void>> updateStatusAppointment({
+    required String appointmentId,
+    required String status,
+  }) async {
+    try {
+      await _getAllDoctorsDatasources.updateStautsAppointment(
+          appointmentId: appointmentId, status: status);
+      return const Right(null);
+    } on ServerExceptions catch (e) {
+      return Left(ServerFailure(e.message));
+    } catch (e) {
+      return Left(
+          ServerFailure('Failed to schedule appointment: ${e.toString()}'));
+    }
   }
 }
