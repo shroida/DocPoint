@@ -1,5 +1,6 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
+import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/core/widgets/navigate_signup_or_login.dart';
@@ -12,6 +13,7 @@ import 'package:docpoint/features/signup/presentation/ui/widgets/user_type_selec
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -45,6 +47,10 @@ class SignupScreenState extends State<SignupScreen> {
                       backgroundColor: Colors.green,
                     ),
                   );
+                  Future.microtask(() {
+                    if (!context.mounted) return;
+                    context.go(Routes.homePage); // or pushReplacement
+                  });
                 } else if (state is SignupFailure) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(

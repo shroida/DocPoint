@@ -73,51 +73,39 @@ class CustomDrawer extends StatelessWidget {
                       children: [
                         ListTile(
                           leading: const Icon(Icons.home_outlined,
-                              color: AppColors.primary), 
+                              color: AppColors.primary),
                           title: const Text('Home',
-                              style: TextStyle(
-                                  color: Colors.black)),
-                          onTap: () {
-
-                          },
-                        ), 
-
+                              style: TextStyle(color: Colors.black)),
+                          onTap: () {},
+                        ),
                         if (currentUserCubit.userType == 'Patient')
                           ListTile(
                             leading: const Icon(Icons.calendar_today,
                                 color: AppColors.primary),
                             title: const Text('Appointment',
                                 style: TextStyle(color: Colors.black)),
-                            onTap: () {
-                            
-                            },
+                            onTap: () {},
                           ),
                         ListTile(
                           leading: const Icon(Icons.person,
                               color: AppColors.primary),
                           title: const Text('Profile',
                               style: TextStyle(color: Colors.black)),
-                          onTap: () {
-                            
-                          },
+                          onTap: () {},
                         ),
                         ListTile(
                           leading: const Icon(Icons.notifications,
                               color: AppColors.primary),
                           title: const Text('Notifications',
                               style: TextStyle(color: Colors.black)),
-                          onTap: () {
-                          
-                          },
+                          onTap: () {},
                         ),
                         ListTile(
                           leading: const Icon(Icons.settings,
                               color: AppColors.primary),
                           title: const Text('Settings',
                               style: TextStyle(color: Colors.black)),
-                          onTap: () {
-                       
-                          },
+                          onTap: () {},
                         ),
                       ],
                     ),
@@ -131,12 +119,10 @@ class CustomDrawer extends StatelessWidget {
                           style: TextStyle(color: Colors.red)),
                       onTap: () async {
                         await currentUserCubit.logout();
-                        if (context.mounted) {
-                          Future.microtask(() {
-                            context
-                                .go(Routes.loginScreen); // or pushReplacement
-                          });
-                        }
+                        Future.microtask(() {
+                          if (!context.mounted) return;
+                          context.go(Routes.loginScreen); // or pushReplacement
+                        });
                         FocusManager.instance.primaryFocus?.unfocus();
                       },
                     ),

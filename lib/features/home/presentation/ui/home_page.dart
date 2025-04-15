@@ -74,12 +74,12 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 20.h,
                     ),
-                    UserInfoCard(),
+                    const UserInfoCard(),
                     SizedBox(
                       height: 20.h,
                     ),
                     // Adjust height as needed
-                    DoctorsListScreen(),
+                    const DoctorsListScreen(),
 
                     Text(currentUser.email),
                     // Add other user data here
