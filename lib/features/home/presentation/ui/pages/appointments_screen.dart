@@ -148,7 +148,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Header with status
+            // Header with status and date
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -179,18 +179,14 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        appointment.category,
-                        style: AppStyle.heading3,
-                      ),
+                      Text(appointment.category, style: AppStyle.heading3),
                       const SizedBox(height: 4),
                       Text(
                         widget.userType == 'Doctor'
-                            ? 'Patient: ${appointment.patientName}' // actually the patient's name
-                            : 'Dr. ${appointment.doctorName}', // actually the doctor's name
-                        style: AppStyle.body1.copyWith(
-                          color: AppColors.textSecondary,
-                        ),
+                            ? 'Patient: ${appointment.patientName}'
+                            : 'Dr. ${appointment.doctorName}',
+                        style: AppStyle.body1
+                            .copyWith(color: AppColors.textSecondary),
                       ),
                       const SizedBox(height: 8),
                       Row(
@@ -215,13 +211,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                     ],
                   ),
                 ),
-                IconButton(
-                  icon:
-                      const Icon(Icons.chevron_right, color: AppColors.primary),
-                  onPressed: () {
-                    // Navigate to appointment details
-                  },
-                ),
               ],
             ),
 
@@ -235,9 +224,46 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 style: AppStyle.body1.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
-              Text(
-                appointment.notes!,
-                style: AppStyle.body2,
+              Text(appointment.notes!, style: AppStyle.body2),
+            ],
+
+            // Doctor action buttons
+            if (widget.userType == 'Doctor' &&
+                appointment.status.toLowerCase() == 'pending') ...[
+              const SizedBox(height: 16),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  ElevatedButton.icon(
+                    icon: const Icon(
+                      Icons.check,
+                      color: Colors.white,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.green,
+                    ),
+                    onPressed: () {},
+                    label: const Text(
+                      'Accept',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(width: 12),
+                  ElevatedButton.icon(
+                    icon: const Icon(
+                      Icons.cancel,
+                      color: Colors.white,
+                    ),
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.red,
+                    ),
+                    onPressed: () {},
+                    label: const Text(
+                      'Cancel',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
               ),
             ],
           ],
