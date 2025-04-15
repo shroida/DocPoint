@@ -17,8 +17,9 @@ class DoctorsListScreen extends StatefulWidget {
 class _DoctorsListScreenState extends State<DoctorsListScreen> {
   String? _selectedCity;
   String? _selectedCategory;
-  late List<String> _cities = [];
-  late List<String> _categories = [];
+  List<String> _cities = [];
+  List<String> _categories = [];
+  bool _filtersInitialized = false;
 
   @override
   void initState() {
@@ -34,6 +35,7 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
     setState(() {
       _cities = cities.toList();
       _categories = categories.toList();
+      _filtersInitialized = true;
     });
   }
 
@@ -59,25 +61,25 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
         }
 
         if (state is HomePageLoaded) {
-          // Handle null case for doctors list
           if (state.doctors == null) {
             return const Center(child: Text('No doctors available'));
           }
 
-          if (_cities.isEmpty && _categories.isEmpty) {
-            _extractFilterOptions(state.doctors!); // Use ! to assert non-null
+          // Schedule filter extraction after build
+          if (!_filtersInitialized) {
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              if (mounted) {
+                _extractFilterOptions(state.doctors!);
+              }
+            });
           }
 
-          final filteredDoctors =
-              _filterDoctors(state.doctors!); // Use ! to assert non-null
+          final filteredDoctors = _filterDoctors(state.doctors!);
 
           return Column(
             children: [
-              // Filter Section
               _buildFilterSection(),
               const SizedBox(height: 16),
-
-              // Doctors List
               if (filteredDoctors.isEmpty)
                 const Center(child: Text('No doctors match your filters'))
               else ...[
@@ -115,7 +117,6 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
               spacing: 8,
               runSpacing: 8,
               children: [
-                // City Chips
                 ..._cities.map((city) => FilterChip(
                       label: Text(city, style: AppStyle.body2),
                       selected: _selectedCity == city,
@@ -132,8 +133,6 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                             : AppColors.textPrimary,
                       ),
                     )),
-
-                // Category Chips
                 ..._categories.map((category) => FilterChip(
                       label: Text(category, style: AppStyle.body2),
                       selected: _selectedCategory == category,
@@ -150,14 +149,11 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
                             : AppColors.textPrimary,
                       ),
                     )),
-
-                // Reset Button
                 if (_selectedCity != null || _selectedCategory != null)
                   ActionChip(
                     label: Text('Reset',
-                        style: AppStyle.body2.copyWith(
-                          color: AppColors.primary,
-                        )),
+                        style:
+                            AppStyle.body2.copyWith(color: AppColors.primary)),
                     onPressed: () {
                       setState(() {
                         _selectedCity = null;

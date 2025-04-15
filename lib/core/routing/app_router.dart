@@ -21,26 +21,24 @@ class AppRouter {
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
-      path: Routes.appointmentPage,
+      path: Routes.makeAppointment,
       builder: (context, state) {
-        final currentUserCubit = context.read<CurrentUserCubit>();
-        return AppointmentsScreen(
-          userId: currentUserCubit.currentUser!.id,
-          userType: currentUserCubit.userType,
+        final doctor = state.extra as User;
+        return MakeAppointmentScreen(
+          doctor: doctor,
+          patientId: context.read<CurrentUserCubit>().currentUser!.id,
         );
       },
     ),
     GoRoute(
-      path: Routes.makeAppointment,
+      path: Routes.appointmentPage,
       builder: (context, state) {
-        final doctor = state.extra as User; // Pass doctorId via .extra
-        return BlocProvider.value(
-          value: getIt<HomePageCubit>(),
-          child: MakeAppointmentScreen(
-            doctor: doctor,
-            patientId: context.read<CurrentUserCubit>().userType == 'Patient'
-                ? context.read<CurrentUserCubit>().currentUser!.id
-                : '',
+        final extra = state.extra as AppointmentPageArgs;
+        return BlocProvider(
+          create: (_) => getIt<HomePageCubit>(),
+          child: AppointmentsScreen(
+            userId: extra.userId,
+            userType: extra.userType,
           ),
         );
       },
@@ -64,4 +62,14 @@ class AppRouter {
               child: const SignupScreen(),
             )),
   ], initialLocation: Routes.homePage);
+}
+
+class AppointmentPageArgs {
+  final String userId;
+  final String userType;
+
+  AppointmentPageArgs({
+    required this.userId,
+    required this.userType,
+  });
 }

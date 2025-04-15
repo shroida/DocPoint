@@ -1,5 +1,6 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
+import 'package:docpoint/core/routing/app_router.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +85,19 @@ class CustomDrawer extends StatelessWidget {
                                 color: AppColors.primary),
                             title: const Text('Appointment',
                                 style: TextStyle(color: Colors.black)),
-                            onTap: () {},
+                            onTap: () {
+                              context.push(
+                                Routes.appointmentPage,
+                                extra: AppointmentPageArgs(
+                                  userId: context
+                                      .read<CurrentUserCubit>()
+                                      .currentUser!
+                                      .id,
+                                  userType:
+                                      context.read<CurrentUserCubit>().userType,
+                                ),
+                              );
+                            },
                           ),
                         ListTile(
                           leading: const Icon(Icons.person,
