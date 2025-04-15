@@ -16,7 +16,7 @@ class DoctorCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
       ),
-      margin: const EdgeInsets.only(bottom: 20),
+      margin: const EdgeInsets.only(bottom: 20, left: 10, right: 10),
       child: Container(
         decoration: _containerDecoration(),
         child: Padding(
