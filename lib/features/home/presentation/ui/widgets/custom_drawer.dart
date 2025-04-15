@@ -73,21 +73,32 @@ class CustomDrawer extends StatelessWidget {
                       children: [
                         ListTile(
                           leading: const Icon(Icons.home_outlined,
-                              color: AppColors.primary), // Set icon color
+                              color: AppColors.primary), 
                           title: const Text('Home',
                               style: TextStyle(
-                                  color: Colors.black)), // Set text color
+                                  color: Colors.black)),
                           onTap: () {
-                            // Add navigation logic here
+
                           },
-                        ), // Profile and Logout Section
+                        ), 
+
+                        if (currentUserCubit.userType == 'Patient')
+                          ListTile(
+                            leading: const Icon(Icons.calendar_today,
+                                color: AppColors.primary),
+                            title: const Text('Appointment',
+                                style: TextStyle(color: Colors.black)),
+                            onTap: () {
+                            
+                            },
+                          ),
                         ListTile(
                           leading: const Icon(Icons.person,
                               color: AppColors.primary),
                           title: const Text('Profile',
                               style: TextStyle(color: Colors.black)),
                           onTap: () {
-                            // Add navigation to profile
+                            
                           },
                         ),
                         ListTile(
@@ -96,7 +107,7 @@ class CustomDrawer extends StatelessWidget {
                           title: const Text('Notifications',
                               style: TextStyle(color: Colors.black)),
                           onTap: () {
-                            // Add navigation to profile
+                          
                           },
                         ),
                         ListTile(
@@ -105,7 +116,7 @@ class CustomDrawer extends StatelessWidget {
                           title: const Text('Settings',
                               style: TextStyle(color: Colors.black)),
                           onTap: () {
-                            // Add navigation logic here
+                       
                           },
                         ),
                       ],
