@@ -1,15 +1,34 @@
 import 'package:docpoint/core/error/failure.dart';
 import 'package:docpoint/core/usecase/usecase.dart';
-import 'package:docpoint/features/home/domain/entities/doctor_entity.dart';
 import 'package:docpoint/features/home/domain/repositories/doctors_repo.dart';
 import 'package:fpdart/fpdart.dart';
 
-class MakeAppointment implements UseCase<List<DoctorEntity>, NoParams> {
+class MakeAppointment implements UseCase<void, AppointmentParams> {
   final GetAllDoctorsRepo _doctorsRepo;
 
   MakeAppointment(this._doctorsRepo);
   @override
-  Future<Either<Failure, List<DoctorEntity>>> call(NoParams params) async {
-    return await _doctorsRepo.fetchDoctors();
+  Future<Either<Failure, void>> call(AppointmentParams params) async {
+    return await _doctorsRepo.scheduleAppointment(
+        appointmentTime: params.appointmentTime,
+        doctorId: params.doctorId,
+        patientId: params.patientId,
+        status: params.status,
+        notes: params.notes);
   }
+}
+
+class AppointmentParams {
+  final String doctorId;
+  final String patientId;
+  final DateTime appointmentTime;
+  final String status;
+  String? notes;
+
+  AppointmentParams(
+      {required this.doctorId,
+      this.notes,
+      required this.patientId,
+      required this.appointmentTime,
+      required this.status});
 }
