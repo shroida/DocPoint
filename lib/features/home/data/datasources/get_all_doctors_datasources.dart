@@ -91,12 +91,12 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
 
         // 🔁 Determine the profile to fetch (opposite of userType)
         final isDoctor = userType == 'Doctor';
-        final profileTable = isDoctor ? 'patient_profiles' : 'doctor_profiles';
+        final profileTable = isDoctor ? 'doctor_profiles' : 'patient_profiles';
         final profileId = isDoctor ? model.patientId : model.doctorId;
 
         final profileResponse = await _supabaseClient
             .from(profileTable)
-            .select('first_name, last_name, ${!isDoctor ? 'category' : ''}')
+            .select('first_name, last_name, ${isDoctor ? 'category' : ''}')
             .eq('id', profileId)
             .maybeSingle();
 
