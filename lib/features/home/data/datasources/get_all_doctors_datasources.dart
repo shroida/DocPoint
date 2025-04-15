@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class GetAllDoctorsDatasources {
   Future<List<DoctorModel>> getAllDoctors();
+  Future<List<DoctorModel>> getAllDoctors();
 }
 
 class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {

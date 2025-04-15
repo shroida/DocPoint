@@ -4,7 +4,7 @@ import 'package:fpdart/fpdart.dart';
 
 abstract interface class GetAllDoctorsRepo {
   Future<Either<Failure, List<DoctorEntity>>> fetchDoctors();
-  Future<void> scheduleAppointment({
+  Future<Either<Failure, void>> scheduleAppointment({
     required String doctorId,
     required String patientId,
     required DateTime appointmentTime,
