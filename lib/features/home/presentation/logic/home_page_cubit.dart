@@ -2,14 +2,17 @@ import 'package:docpoint/core/error/failure.dart';
 import 'package:docpoint/core/usecase/usecase.dart';
 import 'package:docpoint/features/home/domain/entities/doctor_entity.dart';
 import 'package:docpoint/features/home/domain/usecase/get_all_doctors.dart';
+import 'package:docpoint/features/home/domain/usecase/make_appointment.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageCubit extends Cubit<HomePageState> {
   final GetAllDoctors _getAllDoctors;
+  final MakeAppointment _makeAppointment;
   List<DoctorEntity>? doctorList;
 
-  HomePageCubit(this._getAllDoctors) : super(HomePageInitial());
+  HomePageCubit(this._getAllDoctors, this._makeAppointment)
+      : super(HomePageInitial());
 
   Future<void> getAllDoctors() async {
     emit(HomePageLoading());
@@ -24,6 +27,17 @@ class HomePageCubit extends Cubit<HomePageState> {
         doctorList = doctors;
         emit(HomePageLoaded(doctors));
       },
+    );
+  }
+
+  Future<void> scheduleAppointment(AppointmentParams params) async {
+    emit(AppointmentLoading());
+
+    final result = await _makeAppointment.call(params);
+
+    result.fold(
+      (failure) => emit(AppointmentFailure(_mapFailureToMessage(failure))),
+      (_) => emit(AppointmentSuccess()),
     );
   }
 
