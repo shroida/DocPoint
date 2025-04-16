@@ -20,13 +20,6 @@ class SignupCubit extends Cubit<SignupState> {
     currentUserCubit.setUserType(type);
   }
 
-  // Common controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final phoneController = TextEditingController();
-
   // Doctor specific controllers
   final experienceController = TextEditingController();
 
