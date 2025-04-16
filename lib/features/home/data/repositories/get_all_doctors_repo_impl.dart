@@ -79,7 +79,7 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
     required String status,
   }) async {
     try {
-      await _getAllDoctorsDatasources.updateStautsAppointment(
+      await _getAllDoctorsDatasources.updateStatusAppointment(
           appointmentId: appointmentId, status: status);
       return const Right(null);
     } on ServerExceptions catch (e) {

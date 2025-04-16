@@ -1,3 +1,4 @@
+import 'package:docpoint/features/home/domain/usecase/update_status_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
@@ -38,6 +39,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final homePageCubit = context.read<HomePageCubit>();
+
     return Scaffold(
       appBar: widget.userType == "Patient"
           ? AppBar(
@@ -119,6 +122,11 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               'Book your first appointment to get started',
               style: AppStyle.body2,
             ),
+            ElevatedButton(
+                onPressed: () {
+                  _loadAppointments();
+                },
+                child: Text('retry'))
           ],
         ),
       );
@@ -242,7 +250,17 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.green,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      await context
+                          .read<HomePageCubit>()
+                          .updateStatusAppointment(
+                            UpdateStatusParams(
+                              appointmentId: appointment.id,
+                              status: 'confirmed',
+                            ),
+                          );
+                      _loadAppointments(); // refresh list after status change
+                    },
                     label: const Text(
                       'Accept',
                       style: TextStyle(color: Colors.white),
@@ -257,7 +275,17 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Colors.red,
                     ),
-                    onPressed: () {},
+                    onPressed: () async {
+                      await context
+                          .read<HomePageCubit>()
+                          .updateStatusAppointment(
+                            UpdateStatusParams(
+                              appointmentId: appointment.id,
+                              status: 'cancelled',
+                            ),
+                          );
+                      _loadAppointments();
+                    },
                     label: const Text(
                       'Cancel',
                       style: TextStyle(color: Colors.white),

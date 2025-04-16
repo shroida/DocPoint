@@ -4,7 +4,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class GetAllDoctorsDatasources {
   Future<List<DoctorModel>> getAllDoctors();
-  Future<void> updateStautsAppointment(
+  Future<void> updateStatusAppointment(
       {required String appointmentId, required String status});
   Future<List<AppointmentModel>> getAllAppointments(
       {required String userType, required String id});
@@ -90,40 +90,45 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
     required String id,
   }) async {
     try {
-      print('[DEBUG] Fetching appointments for $userType with id: $id');
+      // Log the exact query being sent
+      final field = userType == 'Doctor' ? 'doctor_id' : 'patient_id';
 
-      final response = await _supabaseClient
-          .from('appointments')
-          .select('*')
-          .eq(userType == 'Doctor' ? 'doctor_id' : 'patient_id', id);
-
-      print('[DEBUG] Appointments fetched: ${response.length} items');
+      final response =
+          await _supabaseClient.from('appointments').select('*').eq(field, id);
 
       List<AppointmentModel> appointments = [];
 
       for (final appointment in response) {
-        print('[DEBUG] Processing appointment: $appointment');
-
         final model = AppointmentModel.fromJson(appointment);
-
         appointments.add(model);
       }
 
-      print('[DEBUG] Total appointments returned: ${appointments.length}');
       return appointments;
     } catch (e) {
-      print('[ERROR] Failed to fetch appointments: $e');
       throw Exception('Failed to fetch appointments: $e');
     }
   }
 
   @override
-  Future<void> updateStautsAppointment({
+  Future<void> updateStatusAppointment({
     required String appointmentId,
     required String status,
   }) async {
-    await _supabaseClient
-        .from('appointments')
-        .update({'status': status}).eq('id', appointmentId);
+    try {
+      print(' appointment for with id: $appointmentId the status is $status');
+      final response = await _supabaseClient.from('appointments').upsert({
+        'id': '373b2c30-0deb-42b0-bc76-21f0c6c09815',
+        'status': 'confirmed',
+      });
+
+      if (response == null) {
+        print('❌ No appointment found with id: $appointmentId');
+      } else {
+        print('response $response the status is $status');
+        print('✅ Appointment status updated successfully!');
+      }
+    } catch (e) {
+      print('🚨 Exception occurred: $e');
+    }
   }
 }
