@@ -43,14 +43,6 @@ class UserProfileScreen extends StatelessWidget {
                 _profileItem("Category", user.category ?? ''),
                 _profileItem("Experience", "${(user).experience} years"),
               ],
-              SizedBox(height: 30.h),
-              ElevatedButton(
-                style: AppStyle.primaryButton,
-                onPressed: () {
-                  // Add logout/edit etc.
-                },
-                child: Text("Edit Profile"),
-              ),
             ],
           ),
         ),
