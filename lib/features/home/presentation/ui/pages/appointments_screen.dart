@@ -26,7 +26,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   @override
   void initState() {
     super.initState();
-    // Fetch appointments when screen initializes
+
     _loadAppointments();
   }
 
@@ -39,7 +39,7 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final homePageCubit = context.read<HomePageCubit>();
+    // final homePageCubit = context.read<HomePageCubit>();
 
     return Scaffold(
       appBar: widget.userType == "Patient"
@@ -122,11 +122,6 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               'Book your first appointment to get started',
               style: AppStyle.body2,
             ),
-            ElevatedButton(
-                onPressed: () {
-                  _loadAppointments();
-                },
-                child: Text('retry'))
           ],
         ),
       );

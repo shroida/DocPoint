@@ -1,3 +1,4 @@
+import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/features/home/data/models/appointment_model.dart';
 import 'package:docpoint/features/home/data/models/doctor_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -90,7 +91,6 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
     required String id,
   }) async {
     try {
-      // Log the exact query being sent
       final field = userType == 'Doctor' ? 'doctor_id' : 'patient_id';
 
       final response =
@@ -115,20 +115,18 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
     required String status,
   }) async {
     try {
-      print(' appointment for with id: $appointmentId the status is $status');
-      final response = await _supabaseClient.from('appointments').upsert({
-        'id': '373b2c30-0deb-42b0-bc76-21f0c6c09815',
-        'status': 'confirmed',
-      });
-
-      if (response == null) {
-        print('❌ No appointment found with id: $appointmentId');
-      } else {
-        print('response $response the status is $status');
-        print('✅ Appointment status updated successfully!');
-      }
+      await _supabaseClient
+          .from('appointments')
+          .update({
+            'status': status,
+          })
+          .eq(
+            'id',
+            appointmentId,
+          )
+          .single();
     } catch (e) {
-      print('🚨 Exception occurred: $e');
+      throw ServerExceptions(e.toString());
     }
   }
 }
