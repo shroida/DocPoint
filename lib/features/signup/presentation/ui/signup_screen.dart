@@ -84,11 +84,6 @@ class SignupScreenState extends State<SignupScreen> {
                             if (cubitSignup.formKey.currentState?.validate() ??
                                 false) {
                               cubitSignup.signUp(
-                                  email: emailController.text,
-                                  password: passwordController.text,
-                                  firstName: firstNameController.text,
-                                  lastName: lastNameController.text,
-                                  phone: phoneController.text,
                                   userType:
                                       currentUserState.userType ?? 'Patient');
                             }

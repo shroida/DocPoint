@@ -51,11 +51,6 @@ class SignupCubit extends Cubit<SignupState> {
 
   Future<void> signUp({
     required String userType,
-    required String email,
-    required String firstName,
-    required String password,
-    required String phone,
-    required String lastName,
   }) async {
     emit(SignupLoading());
     try {
@@ -67,12 +62,12 @@ class SignupCubit extends Cubit<SignupState> {
       }
 
       final response = await _signUpRepoUsecase.call(UserSignUpParams(
-        email: email,
+        email: emailController.text,
         imageUrl: imageUrl!,
-        password: password,
-        firstName: firstName,
-        lastName: lastName,
-        phoneNumber: phone,
+        password: passwordController.text,
+        firstName: firstNameController.text,
+        lastName: lastNameController.text,
+        phoneNumber: phoneController.text,
         city: city,
         category: category,
         experience: int.tryParse(experienceController.text) ?? 0,
