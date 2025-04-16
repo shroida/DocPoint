@@ -79,7 +79,10 @@ class LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 10.h),
                         const UserTypeSelectorLogin(),
                         SizedBox(height: 10.h),
-                        const LoginForm(),
+                        LoginForm(
+                          emailController: emailController,
+                          passwordController: passwordController,
+                        ),
                         SizedBox(height: 10.h),
                         if (state is LoginLoading)
                           const CircularProgressIndicator()
