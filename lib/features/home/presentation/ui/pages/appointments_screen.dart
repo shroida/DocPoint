@@ -24,7 +24,7 @@ class AppointmentsScreen extends StatefulWidget {
 }
 
 class _AppointmentsScreenState extends State<AppointmentsScreen> {
-  String? _selectedappointmentStatus = '';
+  String? _selectedappointmentStatus;
   @override
   void initState() {
     super.initState();
@@ -93,9 +93,15 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                 ),
               );
             }
-
             if (state is HomePageLoaded) {
               final appointments = state.appointments ?? [];
+              final filteredAppointments = _selectedappointmentStatus == null
+                  ? appointments
+                  : appointments
+                      .where((appointment) =>
+                          appointment.status == _selectedappointmentStatus)
+                      .toList();
+
               return Column(
                 children: [
                   Wrap(spacing: 8, runSpacing: 8, children: [
@@ -113,15 +119,15 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                           selectedColor: AppColors.primaryLight,
                           backgroundColor: AppColors.surface,
                           labelStyle: TextStyle(
-                            color: _selectedappointmentStatus == appointment
-                                ? AppColors.primary
-                                : AppColors.textPrimary,
+                            color:
+                                _selectedappointmentStatus == appointment.status
+                                    ? AppColors.primary
+                                    : AppColors.textPrimary,
                           ),
                         )),
                   ]),
-                  SizedBox(height: 16.h), // optional padding
-
-                  Expanded(child: _buildAppointmentList(appointments)),
+                  SizedBox(height: 16.h),
+                  Expanded(child: _buildAppointmentList(filteredAppointments)),
                 ],
               );
             }
