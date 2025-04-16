@@ -105,9 +105,10 @@ class CustomDrawer extends StatelessWidget {
                           title: const Text('Profile',
                               style: TextStyle(color: Colors.black)),
                           onTap: () {
-                            context.push(
-                              Routes.profilePage,
-                            );
+                            context.push(Routes.profilePage,
+                                extra: context
+                                    .read<CurrentUserCubit>()
+                                    .currentUser);
                           },
                         ),
                         ListTile(

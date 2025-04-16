@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:docpoint/core/common/domain/entites/user.dart';
-import 'package:docpoint/features/home/domain/entities/doctor_entity.dart';
 
 class UserProfileScreen extends StatelessWidget {
   final User user;
@@ -41,7 +40,7 @@ class UserProfileScreen extends StatelessWidget {
               _profileItem("Phone Number", user.phoneNumber ?? ''),
               _profileItem("City", user.city ?? ''),
               if (isDoctor) ...[
-                _profileItem("Category", (user as DoctorEntity).category ?? ''),
+                _profileItem("Category", user.category ?? ''),
                 _profileItem("Experience", "${(user).experience} years"),
               ],
               SizedBox(height: 30.h),
