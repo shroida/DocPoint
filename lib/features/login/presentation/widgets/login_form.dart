@@ -7,11 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class LoginForm extends StatelessWidget {
   const LoginForm({
     super.key,
-    required this.emailController,
-    required this.passwordController,
   });
-  final TextEditingController emailController;
-  final TextEditingController passwordController;
+
   @override
   Widget build(BuildContext context) {
     final loginCubit = context.read<LoginCubit>();
@@ -21,7 +18,7 @@ class LoginForm extends StatelessWidget {
         child: Column(
           children: [
             AppTextFormField(
-              controller: emailController,
+              controller:loginCubit. emailController,
               hintText: 'Email',
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -33,7 +30,7 @@ class LoginForm extends StatelessWidget {
             SizedBox(height: 10.h),
             AppTextFormField(
               hintText: 'Password',
-              controller: passwordController,
+              controller:loginCubit. passwordController,
               isObscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {

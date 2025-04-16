@@ -73,7 +73,7 @@ class SignupCubit extends Cubit<SignupState> {
         experience: int.tryParse(experienceController.text) ?? 0,
         userType: userType,
       ));
-
+      close();
       response.fold(
         (failure) => emit(SignupFailure()),
         (user) => emit(SignupSuccess(user)),

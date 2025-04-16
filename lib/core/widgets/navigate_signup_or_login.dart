@@ -26,7 +26,8 @@ class NavigateSignupOrLogin extends StatelessWidget {
         ),
         GestureDetector(
           onTap: () {
-            context.go(login ? Routes.signupScreen : Routes.loginScreen);
+            context.pushReplacement(
+                login ? Routes.signupScreen : Routes.loginScreen);
           },
           child: Text(
             login ? 'Signup' : 'Login',

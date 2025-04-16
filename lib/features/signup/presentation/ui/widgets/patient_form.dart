@@ -13,35 +13,16 @@ class PatientForm extends StatefulWidget {
 }
 
 class _PatientFormState extends State<PatientForm> {
-  // Common controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final phoneController = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    firstNameController.dispose();
-    lastNameController.dispose();
-    phoneController.dispose();
-    phoneController.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     final signupCubit = context.read<SignupCubit>();
     return Form(
-      key: formKey,
+      key: signupCubit.formKey,
       child: Column(
         children: [
           AppTextFormField(
             hintText: 'Email',
-            controller: emailController,
+            controller: signupCubit.emailController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your email';
@@ -52,7 +33,7 @@ class _PatientFormState extends State<PatientForm> {
           SizedBox(height: 10.h),
           AppTextFormField(
             hintText: 'Password',
-            controller: passwordController,
+            controller: signupCubit.passwordController,
             isObscureText: true,
             validator: (value) {
               if (value == null || value.isEmpty) {
@@ -64,7 +45,7 @@ class _PatientFormState extends State<PatientForm> {
           SizedBox(height: 10.h),
           AppTextFormField(
             hintText: 'First name',
-            controller: firstNameController,
+            controller: signupCubit.firstNameController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your first name';
@@ -75,7 +56,7 @@ class _PatientFormState extends State<PatientForm> {
           SizedBox(height: 10.h),
           AppTextFormField(
             hintText: 'Last name',
-            controller: lastNameController,
+            controller: signupCubit.lastNameController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your last name';
@@ -86,7 +67,7 @@ class _PatientFormState extends State<PatientForm> {
           SizedBox(height: 10.h),
           AppTextFormField(
             hintText: 'Phone number',
-            controller: phoneController,
+            controller: signupCubit.phoneController,
             validator: (value) {
               if (value == null || value.isEmpty) {
                 return 'Please enter your phone number';

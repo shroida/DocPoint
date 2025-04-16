@@ -73,8 +73,8 @@ class SignupScreenState extends State<SignupScreen> {
                         const UserTypeSelectorSignup(),
                         SizedBox(height: 16.h),
                         currentUserState.userType == 'Patient'
-                            ? PatientForm()
-                            : DoctorForm(),
+                            ? const PatientForm()
+                            : const DoctorForm(),
                         SizedBox(height: 24.h),
                         AppTextButton(
                           buttonText: "Create Account",

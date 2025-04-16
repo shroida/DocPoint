@@ -79,10 +79,7 @@ class LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 10.h),
                         const UserTypeSelectorLogin(),
                         SizedBox(height: 10.h),
-                        LoginForm(
-                          emailController: emailController,
-                          passwordController: passwordController,
-                        ),
+                        const LoginForm(),
                         SizedBox(height: 10.h),
                         if (state is LoginLoading)
                           const CircularProgressIndicator()
@@ -94,9 +91,7 @@ class LoginScreenState extends State<LoginScreen> {
                             onPressed: () {
                               if (cubitLogin.formKey.currentState?.validate() ??
                                   false) {
-                                cubitLogin.login(
-                                    email: emailController.text,
-                                    password: passwordController.text);
+                                cubitLogin.login();
                               }
                             },
                           ),

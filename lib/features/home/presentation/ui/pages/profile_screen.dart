@@ -62,7 +62,7 @@ class UserProfileScreen extends StatelessWidget {
           BoxShadow(
             color: Colors.black12,
             blurRadius: 4.r,
-            offset: Offset(2, 2),
+            offset: const Offset(2, 2),
           )
         ],
       ),
