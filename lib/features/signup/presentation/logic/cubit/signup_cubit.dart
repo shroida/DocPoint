@@ -30,7 +30,14 @@ class SignupCubit extends Cubit<SignupState> {
   // Image file
   File? imageFile;
 
-  Future<void> signUp({required String userType}) async {
+  Future<void> signUp({
+    required String userType,
+    required String email,
+    required String firstName,
+    required String password,
+    required String phone,
+    required String lastName,
+  }) async {
     // emit(SignupLoading());
     try {
       String? imageUrl;
@@ -41,12 +48,12 @@ class SignupCubit extends Cubit<SignupState> {
       }
 
       final response = await _signUpRepoUsecase.call(UserSignUpParams(
-        email: emailController.text,
+        email: email,
         imageUrl: imageUrl!,
-        password: passwordController.text,
-        firstName: firstNameController.text,
-        lastName: lastNameController.text,
-        phoneNumber: phoneController.text,
+        password: password,
+        firstName: firstName,
+        lastName: lastName,
+        phoneNumber: phone,
         city: city,
         category: category,
         experience: int.tryParse(experienceController.text) ?? 0,
@@ -113,14 +120,4 @@ class SignupCubit extends Cubit<SignupState> {
     'ENT Specialist',
     'Dermatologist'
   ];
-  @override
-  Future<void> close() {
-    emailController.dispose();
-    passwordController.dispose();
-    firstNameController.dispose();
-    lastNameController.dispose();
-    phoneController.dispose();
-    experienceController.dispose();
-    return super.close();
-  }
 }
