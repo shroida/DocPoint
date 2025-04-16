@@ -13,7 +13,7 @@ class UserProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isDoctor = user.userType == 'doctor';
+    final isDoctor = user.category != null;
 
     return Scaffold(
       backgroundColor: AppColors.background,
