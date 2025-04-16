@@ -6,6 +6,7 @@ import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/ui/home_page.dart';
 import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/pages/make_appointment_screen.dart';
+import 'package:docpoint/features/home/presentation/ui/pages/profile_screen.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
@@ -19,6 +20,15 @@ class AppRouter {
     GoRoute(
       path: Routes.onBoardingScreen,
       builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: Routes.profilePage,
+      builder: (context, state) {
+        final user = state.extra as User;
+        return UserProfileScreen(
+          user: user,
+        );
+      },
     ),
     GoRoute(
       path: Routes.makeAppointment,
