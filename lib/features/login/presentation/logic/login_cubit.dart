@@ -16,16 +16,16 @@ class LoginCubit extends Cubit<LoginState> {
   // Form key for login Form
   final formKey = GlobalKey<FormState>();
 
-  // Login controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  Future<void> login() async {
+  Future<void> login({
+    required String email,
+    required String password,
+  }) async {
     emit(LoginLoading());
     try {
       // 1. Authenticate with Supabase
       final response = await _loginUsecase.call(LoginParams(
-        email: emailController.text,
-        password: passwordController.text,
+        email: email,
+        password: password,
       ));
 
       response.fold(
@@ -45,10 +45,5 @@ class LoginCubit extends Cubit<LoginState> {
     }
   }
 
-  @override
-  Future<void> close() {
-    emailController.dispose();
-    passwordController.dispose();
-    return super.close();
-  }
+
 }
