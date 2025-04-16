@@ -14,10 +14,29 @@ class SignupCubit extends Cubit<SignupState> {
 
   SignupCubit(this._signUpRepoUsecase, this.supabase, this.currentUserCubit)
       : super(SignupInit());
-  final formKey = GlobalKey<FormState>();
 // In SignupCubit
   void setUserType(String type) {
     currentUserCubit.setUserType(type);
+  }
+// SignupCubit
+
+// Common fields
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final phoneController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
+  @override
+  Future<void> close() {
+    emailController.dispose();
+    passwordController.dispose();
+    firstNameController.dispose();
+    lastNameController.dispose();
+    phoneController.dispose();
+    experienceController.dispose();
+    return super.close();
   }
 
   // Doctor specific controllers
@@ -38,7 +57,7 @@ class SignupCubit extends Cubit<SignupState> {
     required String phone,
     required String lastName,
   }) async {
-    // emit(SignupLoading());
+    emit(SignupLoading());
     try {
       String? imageUrl;
 

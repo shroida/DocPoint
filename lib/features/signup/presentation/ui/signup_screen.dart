@@ -24,22 +24,6 @@ class SignupScreen extends StatefulWidget {
 
 class SignupScreenState extends State<SignupScreen> {
   bool isPasswordObscureText = true;
-// Common controllers
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-  final firstNameController = TextEditingController();
-  final lastNameController = TextEditingController();
-  final phoneController = TextEditingController();
-
-  @override
-  void dispose() {
-    emailController.dispose();
-    passwordController.dispose();
-    firstNameController.dispose();
-    lastNameController.dispose();
-    phoneController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,8 +73,8 @@ class SignupScreenState extends State<SignupScreen> {
                         const UserTypeSelectorSignup(),
                         SizedBox(height: 16.h),
                         currentUserState.userType == 'Patient'
-                            ? const PatientForm()
-                            : const DoctorForm(),
+                            ? PatientForm()
+                            : DoctorForm(),
                         SizedBox(height: 24.h),
                         AppTextButton(
                           buttonText: "Create Account",
