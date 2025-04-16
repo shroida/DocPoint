@@ -6,6 +6,7 @@ import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 
 class AppointmentsScreen extends StatefulWidget {
@@ -23,6 +24,7 @@ class AppointmentsScreen extends StatefulWidget {
 }
 
 class _AppointmentsScreenState extends State<AppointmentsScreen> {
+  String? _selectedappointmentStatus = '';
   @override
   void initState() {
     super.initState();
@@ -94,7 +96,34 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
 
             if (state is HomePageLoaded) {
               final appointments = state.appointments ?? [];
-              return _buildAppointmentList(appointments);
+              return Column(
+                children: [
+                  Wrap(spacing: 8, runSpacing: 8, children: [
+                    ...appointments.map((appointment) => FilterChip(
+                          label:
+                              Text(appointment.status, style: AppStyle.body2),
+                          selected:
+                              _selectedappointmentStatus == appointment.status,
+                          onSelected: (selected) {
+                            setState(() {
+                              _selectedappointmentStatus =
+                                  selected ? appointment.status : null;
+                            });
+                          },
+                          selectedColor: AppColors.primaryLight,
+                          backgroundColor: AppColors.surface,
+                          labelStyle: TextStyle(
+                            color: _selectedappointmentStatus == appointment
+                                ? AppColors.primary
+                                : AppColors.textPrimary,
+                          ),
+                        )),
+                  ]),
+                  SizedBox(height: 16.h), // optional padding
+
+                  Expanded(child: _buildAppointmentList(appointments)),
+                ],
+              );
             }
 
             return const Center(child: Text('No appointments data'));
