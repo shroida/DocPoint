@@ -5,7 +5,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
-  final List<Widget>? actions;
   final String name;
   final String city;
   final String image;
@@ -14,7 +13,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   const CustomAppBar({
     super.key,
     required this.title,
-    this.actions,
     this.scaffoldKey,
     required this.name,
     required this.city,
@@ -65,7 +63,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       backgroundColor: AppColors.primary,
       elevation: 6,
-      actions: actions,
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.notifications, color: AppColors.surface),
+          onPressed: () {},
+        ),
+      ],
       centerTitle: true,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(

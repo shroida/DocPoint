@@ -1,7 +1,6 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/error/server_exeptions.dart';
-import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
@@ -47,12 +46,6 @@ class _HomePageState extends State<HomePage> {
         city: currentUser.city ?? '',
         name: '${currentUser.firstName} ${currentUser.lastName} ',
         title: 'Home',
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.notifications, color: AppColors.surface),
-            onPressed: () {},
-          ),
-        ],
       ),
       drawer: const CustomDrawer(),
       body: BlocBuilder<CurrentUserCubit, CurrentUserState>(
