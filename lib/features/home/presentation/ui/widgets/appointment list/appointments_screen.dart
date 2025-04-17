@@ -100,14 +100,12 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       .where((appointment) =>
                           appointment.status == _selectedappointmentStatus)
                       .toList();
-              final List<String> appointmentStatuses = appointments
-                  .map((e) => e.status)
-                  .toSet()
-                  .toList(); // ensure uniqueness
+              final List<String> appointmentStatuses =
+                  appointments.map((e) => e.status).toSet().toList();
 
               return Column(
                 children: [
-                  const SizedBox(height: 12),
+                  const SizedBox(height: 20),
                   if (appointments.isNotEmpty)
                     FilterChipsRow(
                       list: appointmentStatuses,
