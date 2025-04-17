@@ -1,6 +1,9 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/error/server_exeptions.dart';
+import 'package:docpoint/core/routing/app_router.dart';
+import 'package:docpoint/core/routing/routes.dart';
+import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
@@ -8,6 +11,8 @@ import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doc
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -47,6 +52,51 @@ class _HomePageState extends State<HomePage> {
         title: 'Home',
       ),
       drawer: const CustomDrawer(),
+      bottomNavigationBar: GNav(
+          padding: const EdgeInsets.all(10),
+          gap: 6,
+          tabMargin: EdgeInsets.symmetric(vertical: 10, horizontal: 10.w),
+          activeColor: AppColors.primary,
+          backgroundColor: Colors.white,
+          tabBackgroundColor: const Color(0xFFEBEBEB),
+          onTabChange: (index) {
+            switch (index) {
+              case 0:
+                context.pushReplacement(
+                  Routes.homePage,
+                );
+                break;
+              case 2:
+                context.push(Routes.appointmentPage,
+                    extra: AppointmentPageArgs(
+                        userId:
+                            context.read<CurrentUserCubit>().currentUser!.id,
+                        userType: context.read<CurrentUserCubit>().userType));
+                break;
+              case 3:
+                context.push(Routes.profilePage, extra: currentUser);
+                break;
+              default:
+            }
+          },
+          tabs: const [
+            GButton(
+              icon: Icons.home,
+              text: 'Home',
+            ),
+            GButton(
+              icon: Icons.messenger_rounded,
+              text: 'Messages',
+            ),
+            GButton(
+              icon: Icons.calendar_month,
+              text: 'Appointments',
+            ),
+            GButton(
+              icon: Icons.person,
+              text: 'Profile',
+            ),
+          ]),
       body: BlocBuilder<CurrentUserCubit, CurrentUserState>(
         builder: (context, state) {
           if (state is CurrentUserLoading) {
