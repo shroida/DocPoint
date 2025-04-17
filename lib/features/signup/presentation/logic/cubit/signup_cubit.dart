@@ -28,16 +28,16 @@ class SignupCubit extends Cubit<SignupState> {
   final phoneController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  @override
-  Future<void> close() {
-    emailController.dispose();
-    passwordController.dispose();
-    firstNameController.dispose();
-    lastNameController.dispose();
-    phoneController.dispose();
-    experienceController.dispose();
-    return super.close();
-  }
+  // @override
+  // Future<void> close() {
+  //   emailController.dispose();
+  //   passwordController.dispose();
+  //   firstNameController.dispose();
+  //   lastNameController.dispose();
+  //   phoneController.dispose();
+  //   experienceController.dispose();
+  //   return super.close();
+  // }
 
   // Doctor specific controllers
   final experienceController = TextEditingController();
@@ -73,7 +73,6 @@ class SignupCubit extends Cubit<SignupState> {
         experience: int.tryParse(experienceController.text) ?? 0,
         userType: userType,
       ));
-      close();
       response.fold(
         (failure) => emit(SignupFailure()),
         (user) => emit(SignupSuccess(user)),

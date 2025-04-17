@@ -12,40 +12,38 @@ class LoginCubit extends Cubit<LoginState> {
 
   LoginCubit(this._loginUsecase, this._currentUserCubit, this._userDatasources)
       : super(LoginInitial());
+
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  // Form key for login Form
   final formKey = GlobalKey<FormState>();
-  @override
-  Future<void> close() {
-    emailController.dispose();
-    passwordController.dispose();
-    return super.close();
-  }
 
   Future<void> login() async {
+    if (isClosed) return;
     emit(LoginLoading());
     try {
-      // 1. Authenticate with Supabase
       final response = await _loginUsecase.call(LoginParams(
         email: emailController.text,
         password: passwordController.text,
       ));
 
       response.fold(
-        (failure) => emit(LoginFailure(failure.message)),
+        (failure) {
+          if (!isClosed) {
+            emit(LoginFailure(failure.message));
+          }
+        },
         (user) async {
-          // 2. Get complete user data
           final userData = await _userDatasources.getCurrentUserData();
-
-          // 3. Update current user cubit with complete data
           await _currentUserCubit.updateUser(userData.toUserEntity());
-          close();
-          emit(LoginSuccess(userData.toUserEntity()));
+          if (!isClosed) {
+            emit(LoginSuccess(userData.toUserEntity()));
+          }
         },
       );
     } catch (e) {
-      emit(LoginFailure(e.toString()));
+      if (!isClosed) {
+        emit(LoginFailure(e.toString()));
+      }
     }
   }
 }
