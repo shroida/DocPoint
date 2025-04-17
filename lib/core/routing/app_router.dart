@@ -9,6 +9,7 @@ import 'package:docpoint/features/home/presentation/ui/pages/make_appointment_sc
 import 'package:docpoint/features/home/presentation/ui/pages/profile_screen.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
+import 'package:docpoint/features/login/presentation/pages/new_password_screen.dart';
 import 'package:docpoint/features/login/presentation/pages/reset_password_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
@@ -21,6 +22,13 @@ class AppRouter {
     GoRoute(
       path: Routes.onBoardingScreen,
       builder: (context, state) => const OnboardingScreen(),
+    ),
+    GoRoute(
+      path: '/reset-password',
+      builder: (context, state) {
+        final code = state.uri.queryParameters['code']!;
+        return NewPasswordScreen(accessToken: code);
+      },
     ),
     GoRoute(
       path: Routes.forgotPasswordScreen,
