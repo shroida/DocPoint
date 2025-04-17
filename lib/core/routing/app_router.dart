@@ -28,8 +28,8 @@ class AppRouter {
     GoRoute(
       path: '/new-password',
       builder: (context, state) {
-        final token = state.uri.queryParameters['token'];
-        if (token == null) {
+        final code = state.uri.queryParameters['code'];
+        if (code == null) {
           SchedulerBinding.instance.addPostFrameCallback((_) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text("Token is missing")),
@@ -40,7 +40,9 @@ class AppRouter {
             child: const LoginScreen(),
           );
         }
-        return NewPasswordScreen(accessToken: token);
+        return NewPasswordScreen(
+          code: code,
+        );
       },
     ),
     GoRoute(
@@ -101,7 +103,7 @@ class AppRouter {
               create: (context) => getIt<SignupCubit>(),
               child: const SignupScreen(),
             )),
-  ], initialLocation: Routes.forgotPasswordScreen);
+  ], initialLocation: Routes.loginScreen);
 }
 
 class AppointmentPageArgs {

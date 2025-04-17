@@ -30,7 +30,8 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
       // Send the reset password email
       await Supabase.instance.client.auth.resetPasswordForEmail(
         email,
-        redirectTo: 'io.supabase.flutter://reset-callback',
+        redirectTo:
+            'io.supabase.flutter://reset-callback', // URL with the token (code)
       );
 
       // Show success message
@@ -38,13 +39,10 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
         SnackBar(content: Text("Reset link sent to $email")),
       );
 
-      // Navigate to the NewPasswordScreen with a token in the query parameter
-      // This token should ideally come from Supabase or your back-end
-      final token =
-          'yourTokenHere'; // Replace with the token from Supabase or your back-end
-
+      // Navigate to the NewPasswordScreen with the token in the query parameter
+      final token = 'yourTokenHere'; // Replace with the actual token you get
       context.push(
-          '/new-password?token=$token'); // Navigate with token as query parameter
+          '/new-password?code=$token'); // Pass the token via query parameter
     } on AuthException catch (e) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text(e.message)),
