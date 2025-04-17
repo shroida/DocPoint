@@ -4,7 +4,7 @@ import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/ui/home_page.dart';
-import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/pages/make_appointment_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/pages/profile_screen.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';

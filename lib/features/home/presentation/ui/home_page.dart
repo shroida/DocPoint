@@ -1,7 +1,7 @@
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/error/server_exeptions.dart';
-import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_list_screen.dart';

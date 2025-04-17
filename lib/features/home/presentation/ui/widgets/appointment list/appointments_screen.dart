@@ -10,9 +10,9 @@ import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import '../widgets/appointment_card.dart';
-import '../widgets/appointments_list.dart';
-import '../widgets/empty_appointments.dart';
+import '../appointment_card.dart';
+import '../appointments_list.dart';
+import '../empty_appointments.dart';
 
 class AppointmentsScreen extends StatefulWidget {
   final String userId;
