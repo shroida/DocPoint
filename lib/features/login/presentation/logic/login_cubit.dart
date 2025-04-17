@@ -25,6 +25,7 @@ class LoginCubit extends Cubit<LoginState> {
   // }
 
   Future<void> login() async {
+    if (isClosed) return; // Ensure no state emission after close
     emit(LoginLoading());
     try {
       final response = await _loginUsecase.call(LoginParams(
@@ -33,15 +34,21 @@ class LoginCubit extends Cubit<LoginState> {
       ));
 
       response.fold(
-        (failure) => emit(LoginFailure(failure.message)),
+        (failure) {
+          if (!isClosed)
+            emit(LoginFailure(failure.message)); // Emit only if not closed
+        },
         (user) async {
           final userData = await _userDatasources.getCurrentUserData();
           await _currentUserCubit.updateUser(userData.toUserEntity());
-          emit(LoginSuccess(userData.toUserEntity()));
+          if (!isClosed)
+            emit(LoginSuccess(
+                userData.toUserEntity())); // Emit only if not closed
         },
       );
     } catch (e) {
-      emit(LoginFailure(e.toString()));
+      if (!isClosed)
+        emit(LoginFailure(e.toString())); // Emit only if not closed
     }
   }
 }
