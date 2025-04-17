@@ -103,70 +103,141 @@ class _DoctorsListScreenState extends State<DoctorsListScreen> {
   }
 
   Widget _buildFilterSection() {
-    return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 8),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+        // Title Row
+        const Row(
           children: [
-            const Text('Filters', style: AppStyle.heading3),
-            const SizedBox(height: 12),
-            Wrap(
-              spacing: 8,
-              runSpacing: 8,
-              children: [
-                ..._cities.map((city) => FilterChip(
-                      label: Text(city, style: AppStyle.body2),
-                      selected: _selectedCity == city,
-                      onSelected: (selected) {
-                        setState(() {
-                          _selectedCity = selected ? city : null;
-                        });
-                      },
-                      selectedColor: AppColors.primaryLight,
-                      backgroundColor: AppColors.surface,
-                      labelStyle: TextStyle(
-                        color: _selectedCity == city
-                            ? AppColors.primary
-                            : AppColors.textPrimary,
-                      ),
-                    )),
-                ..._categories.map((category) => FilterChip(
-                      label: Text(category, style: AppStyle.body2),
-                      selected: _selectedCategory == category,
-                      onSelected: (selected) {
-                        setState(() {
-                          _selectedCategory = selected ? category : null;
-                        });
-                      },
-                      selectedColor: AppColors.primaryLight,
-                      backgroundColor: AppColors.surface,
-                      labelStyle: TextStyle(
-                        color: _selectedCategory == category
-                            ? AppColors.primary
-                            : AppColors.textPrimary,
-                      ),
-                    )),
-                if (_selectedCity != null || _selectedCategory != null)
-                  ActionChip(
-                    label: Text('Reset',
-                        style:
-                            AppStyle.body2.copyWith(color: AppColors.primary)),
-                    onPressed: () {
-                      setState(() {
-                        _selectedCity = null;
-                        _selectedCategory = null;
-                      });
-                    },
-                    backgroundColor: AppColors.surface,
-                  ),
-              ],
-            ),
+            Icon(Icons.filter_alt_outlined, color: AppColors.primary),
+            SizedBox(width: 8),
+            Text('Filters', style: AppStyle.heading3),
           ],
         ),
-      ),
+        const SizedBox(height: 16),
+
+        // City Filters
+        const Text("Cities", style: AppStyle.heading3),
+        const SizedBox(height: 8),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: _cities.map((city) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: FilterChip(
+                  avatar: const Icon(Icons.location_on, size: 18),
+                  label: Text(city, style: AppStyle.body2),
+                  selected: _selectedCity == city,
+                  onSelected: (selected) {
+                    setState(() {
+                      _selectedCity = selected ? city : null;
+                    });
+                  },
+                  selectedColor: AppColors.primaryLight,
+                  backgroundColor: AppColors.surface,
+                  labelStyle: TextStyle(
+                    color: _selectedCity == city
+                        ? AppColors.primary
+                        : AppColors.textPrimary,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+
+        const SizedBox(height: 20),
+
+        // Category Filters
+        const Text("Categories", style: AppStyle.heading3),
+        const SizedBox(height: 8),
+        SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            children: _categories.map((category) {
+              return Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: GestureDetector(
+                  onTap: () {
+                    setState(() {
+                      _selectedCategory =
+                          _selectedCategory == category ? null : category;
+                    });
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                    decoration: BoxDecoration(
+                      color: _selectedCategory == category
+                          ? Colors.white
+                          : AppColors.surface,
+                      borderRadius: BorderRadius.circular(10),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.08),
+                          blurRadius: 7,
+                          offset: const Offset(5, 1),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.label,
+                          size: 18,
+                          color: _selectedCategory == category
+                              ? AppColors.primary
+                              : Colors.grey,
+                        ),
+                        const SizedBox(width: 6),
+                        Text(
+                          category,
+                          style: AppStyle.body2.copyWith(
+                            color: _selectedCategory == category
+                                ? AppColors.primary
+                                : AppColors.textPrimary,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              );
+            }).toList(),
+          ),
+        ),
+
+        const SizedBox(height: 16),
+
+        // Reset Chip
+        if (_selectedCity != null || _selectedCategory != null)
+          Align(
+            alignment: Alignment.centerLeft,
+            child: ActionChip(
+              avatar:
+                  const Icon(Icons.refresh, size: 18, color: AppColors.primary),
+              label: Text(
+                'Reset',
+                style: AppStyle.body2.copyWith(color: AppColors.primary),
+              ),
+              onPressed: () {
+                setState(() {
+                  _selectedCity = null;
+                  _selectedCategory = null;
+                });
+              },
+              backgroundColor: AppColors.surface,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          )
+      ]),
     );
   }
 }
