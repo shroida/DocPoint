@@ -6,6 +6,7 @@ import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/core/widgets/navigate_signup_or_login.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/logic/login_state.dart';
+import 'package:docpoint/features/login/presentation/widgets/forgot_password.dart';
 import 'package:docpoint/features/login/presentation/widgets/user_type_selector_login.dart';
 import 'package:docpoint/features/login/presentation/widgets/login_form.dart';
 import 'package:docpoint/features/login/presentation/widgets/logo_login.dart';
@@ -81,7 +82,7 @@ class LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 10.h),
                         const LoginForm(),
                         SizedBox(height: 10.h),
-                        ForgotPassword(),
+                        const ForgotPassword(),
                         if (state is LoginLoading)
                           const CircularProgressIndicator()
                         else
