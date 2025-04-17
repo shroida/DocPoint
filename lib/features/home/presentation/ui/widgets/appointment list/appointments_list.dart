@@ -1,7 +1,6 @@
-// appointments_list.dart
+import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointment_card.dart';
 import 'package:flutter/material.dart';
 import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
-import '../appointment_card.dart';
 
 class AppointmentsList extends StatelessWidget {
   final List<AppointmentEntity> appointments;
@@ -23,10 +22,10 @@ class AppointmentsList extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         itemCount: appointments.length,
         itemBuilder: (context, index) {
-          return AppointmentCard(
+          return DetailedAppointmentCard(
             appointment: appointments[index],
             userType: userType,
-            onStatusChanged: onRefresh,
+            onStatusUpdated: onRefresh,
           );
         },
       ),
