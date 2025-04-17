@@ -105,41 +105,44 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
               return Column(
                 children: [
                   const SizedBox(height: 12),
-                  Card(
-                      elevation: 2,
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text('Filters', style: AppStyle.heading3),
-                              const SizedBox(height: 12),
-                              Wrap(spacing: 8, runSpacing: 8, children: [
-                                ...appointments.map((appointment) => FilterChip(
-                                      label: Text(appointment.status,
-                                          style: AppStyle.body2),
-                                      selected: _selectedappointmentStatus ==
-                                          appointment.status,
-                                      onSelected: (selected) {
-                                        setState(() {
-                                          _selectedappointmentStatus = selected
-                                              ? appointment.status
-                                              : null;
-                                        });
-                                      },
-                                      selectedColor: AppColors.primaryLight,
-                                      backgroundColor: AppColors.surface,
-                                      labelStyle: TextStyle(
-                                        color: _selectedappointmentStatus ==
-                                                appointment.status
-                                            ? AppColors.primary
-                                            : AppColors.textPrimary,
-                                      ),
-                                    )),
+                  if (appointments.isNotEmpty)
+                    Card(
+                        elevation: 2,
+                        margin: const EdgeInsets.symmetric(horizontal: 8),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Filters', style: AppStyle.heading3),
+                                const SizedBox(height: 12),
+                                Wrap(spacing: 8, runSpacing: 8, children: [
+                                  ...appointments.map((appointment) =>
+                                      FilterChip(
+                                        label: Text(appointment.status,
+                                            style: AppStyle.body2),
+                                        selected: _selectedappointmentStatus ==
+                                            appointment.status,
+                                        onSelected: (selected) {
+                                          setState(() {
+                                            _selectedappointmentStatus =
+                                                selected
+                                                    ? appointment.status
+                                                    : null;
+                                          });
+                                        },
+                                        selectedColor: AppColors.primaryLight,
+                                        backgroundColor: AppColors.surface,
+                                        labelStyle: TextStyle(
+                                          color: _selectedappointmentStatus ==
+                                                  appointment.status
+                                              ? AppColors.primary
+                                              : AppColors.textPrimary,
+                                        ),
+                                      )),
+                                ]),
                               ]),
-                            ]),
-                      )),
+                        )),
                   SizedBox(height: 16.h),
                   Expanded(child: _buildAppointmentList(filteredAppointments)),
                 ],
