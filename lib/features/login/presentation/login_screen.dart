@@ -81,6 +81,7 @@ class LoginScreenState extends State<LoginScreen> {
                         SizedBox(height: 10.h),
                         const LoginForm(),
                         SizedBox(height: 10.h),
+                        ForgotPassword(),
                         if (state is LoginLoading)
                           const CircularProgressIndicator()
                         else
@@ -95,6 +96,7 @@ class LoginScreenState extends State<LoginScreen> {
                               }
                             },
                           ),
+                        SizedBox(height: 10.h),
                         const NavigateSignupOrLogin(login: true)
                       ],
                     );
