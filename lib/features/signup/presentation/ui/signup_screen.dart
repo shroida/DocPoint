@@ -83,9 +83,25 @@ class SignupScreenState extends State<SignupScreen> {
                           onPressed: () {
                             if (cubitSignup.formKey.currentState?.validate() ??
                                 false) {
-                              cubitSignup.signUp(
-                                  userType:
-                                      currentUserState.userType ?? 'Patient');
+                              if (cubitSignup.imageFile == null) {
+                                showAppSnackBar(
+                                  context: context,
+                                  message: 'Please choose an image.',
+                                  backgroundColor: Colors.red,
+                                );
+                              }
+                              if (cubitSignup
+                                  .experienceController.text.isEmpty) {
+                                showAppSnackBar(
+                                  context: context,
+                                  message: 'Please enter your experience.',
+                                  backgroundColor: Colors.red,
+                                );
+                              } else {
+                                cubitSignup.signUp(
+                                    userType:
+                                        currentUserState.userType ?? 'Patient');
+                              }
                             }
                           },
                         ),
