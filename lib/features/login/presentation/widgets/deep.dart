@@ -41,7 +41,9 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
     if (uri != null && uri.queryParameters.containsKey('token')) {
       final token = uri.queryParameters['token']!;
       // Navigate to NewPasswordScreen and pass the token as a parameter
-      widget.appRouter.router.go('/new-password?token=$token');
+      widget.appRouter.router.go(
+        '/new-password?token=$token',
+      );
     }
   }
 

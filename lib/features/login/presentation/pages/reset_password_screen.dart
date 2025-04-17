@@ -27,30 +27,37 @@ class ResetPasswordScreenState extends State<ResetPasswordScreen> {
     setState(() => _loading = true);
 
     try {
-      // Send the reset password email
       await Supabase.instance.client.auth.resetPasswordForEmail(
-        email,
-        redirectTo:
-            'io.supabase.flutter://reset-callback', // URL with the token (code)
+        'shroidev@gmail.com',
+        redirectTo: 'devcode://password-reset',
       );
 
-      // Show success message
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Reset link sent to $email")),
-      );
+      if (mounted) {
+        setState(() => _loading = false); // ✅ reset loading before navigating
 
-      // Navigate to the NewPasswordScreen with the token in the query parameter
-      final token = 'yourTokenHere'; // Replace with the actual token you get
-      context.push(
-          '/new-password?code=$token'); // Pass the token via query parameter
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Reset link sent to $email")),
+        );
+
+        context.pushReplacement(
+          '/new-password',
+          extra: email,
+        );
+      }
     } on AuthException catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(e.message)),
-      );
+      if (mounted) {
+        setState(() => _loading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(e.message)),
+        );
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Unexpected error: $e")),
-      );
+      if (mounted) {
+        setState(() => _loading = false);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Unexpected error: $e")),
+        );
+      }
     } finally {
       setState(() => _loading = false);
     }

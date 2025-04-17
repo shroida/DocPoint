@@ -4,9 +4,11 @@ import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class NewPasswordScreen extends StatefulWidget {
-  final String code; // Accepting the code parameter from the redirect URL
-
-  const NewPasswordScreen({super.key, required this.code});
+  final String email;
+  const NewPasswordScreen({
+    super.key,
+    required this.email,
+  });
 
   @override
   State<NewPasswordScreen> createState() => _NewPasswordScreenState();
@@ -23,26 +25,23 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     setState(() => _loading = true);
 
     try {
-      // Use the code (token) to verify or perform the password update
-      final response = await Supabase.instance.client.auth
-          .exchangeCodeForSession(
-              widget.code); // Assuming this method works for your case
-
-      // Once we have the session, update the password
       await Supabase.instance.client.auth.updateUser(
         UserAttributes(password: newPassword),
       );
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Password updated successfully')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Password updated successfully')),
+        );
+      }
     } catch (e) {
-      print(e.toString());
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error updating password: $e')),
-      );
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error updating password: $e')),
+        );
+      }
     } finally {
-      setState(() => _loading = false);
+      if (mounted) setState(() => _loading = false);
     }
   }
 

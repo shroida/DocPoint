@@ -14,8 +14,7 @@ import 'package:docpoint/features/login/presentation/pages/reset_password_screen
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:docpoint/features/signup/presentation/ui/signup_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -28,20 +27,9 @@ class AppRouter {
     GoRoute(
       path: '/new-password',
       builder: (context, state) {
-        final code = state.uri.queryParameters['code'];
-        if (code == null) {
-          SchedulerBinding.instance.addPostFrameCallback((_) {
-            ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(content: Text("Token is missing")),
-            );
-          });
-          return BlocProvider(
-            create: (_) => getIt<LoginCubit>(), // Provide the LoginCubit here
-            child: const LoginScreen(),
-          );
-        }
+        final email = state.extra as String;
         return NewPasswordScreen(
-          code: code,
+          email: email,
         );
       },
     ),
