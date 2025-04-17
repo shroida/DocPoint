@@ -38,18 +38,18 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    final currentUser = context.read<CurrentUserCubit>().currentUser;
     return Scaffold(
       key: scaffoldKey,
       appBar: CustomAppBar(
         scaffoldKey: scaffoldKey,
+        image: currentUser!.imageUrl ?? '',
+        city: currentUser.city ?? '',
+        name: '${currentUser.firstName} ${currentUser.lastName} ',
         title: 'Home',
         actions: [
           IconButton(
             icon: const Icon(Icons.notifications, color: AppColors.surface),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: const Icon(Icons.settings, color: AppColors.surface),
             onPressed: () {},
           ),
         ],

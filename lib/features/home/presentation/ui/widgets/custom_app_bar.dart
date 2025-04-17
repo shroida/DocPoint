@@ -1,10 +1,14 @@
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
   final List<Widget>? actions;
+  final String name;
+  final String city;
+  final String image;
   final GlobalKey<ScaffoldState>? scaffoldKey;
 
   const CustomAppBar({
@@ -12,6 +16,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.actions,
     this.scaffoldKey,
+    required this.name,
+    required this.city,
+    required this.image,
   });
 
   @override
@@ -24,12 +31,40 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           scaffoldKey?.currentState?.openDrawer();
         },
       ),
-      title: Text(
-        title,
-        style: AppStyle.heading2.copyWith(color: Colors.white),
+      title: Row(
+        children: [
+          CircleAvatar(
+            radius: 20.h,
+            backgroundImage: NetworkImage(image),
+            backgroundColor: Colors.grey[200],
+          ),
+          SizedBox(width: 12.w),
+
+          // Name and City
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                name,
+                style: AppStyle.heading3.copyWith(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                city,
+                style: AppStyle.heading1.copyWith(
+                  color: Colors.white70,
+                  fontSize: 12.w,
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
       backgroundColor: AppColors.primary,
-      elevation: 4,
+      elevation: 6,
       actions: actions,
       centerTitle: true,
       shape: const RoundedRectangleBorder(
@@ -37,7 +72,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           bottom: Radius.circular(16.0),
         ),
       ),
-      toolbarHeight: 56.0,
+      toolbarHeight: 80.0.h,
     );
   }
 
