@@ -17,15 +17,8 @@ class LoginCubit extends Cubit<LoginState> {
   TextEditingController passwordController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
-  // @override
-  // Future<void> close() {
-  //   emailController.dispose();
-  //   passwordController.dispose();
-  //   return super.close();
-  // }
-
   Future<void> login() async {
-    if (isClosed) return; // Ensure no state emission after close
+    if (isClosed) return;
     emit(LoginLoading());
     try {
       final response = await _loginUsecase.call(LoginParams(
@@ -35,20 +28,22 @@ class LoginCubit extends Cubit<LoginState> {
 
       response.fold(
         (failure) {
-          if (!isClosed)
-            emit(LoginFailure(failure.message)); // Emit only if not closed
+          if (!isClosed) {
+            emit(LoginFailure(failure.message));
+          }
         },
         (user) async {
           final userData = await _userDatasources.getCurrentUserData();
           await _currentUserCubit.updateUser(userData.toUserEntity());
-          if (!isClosed)
-            emit(LoginSuccess(
-                userData.toUserEntity())); // Emit only if not closed
+          if (!isClosed) {
+            emit(LoginSuccess(userData.toUserEntity()));
+          }
         },
       );
     } catch (e) {
-      if (!isClosed)
-        emit(LoginFailure(e.toString())); // Emit only if not closed
+      if (!isClosed) {
+        emit(LoginFailure(e.toString()));
+      }
     }
   }
 }
