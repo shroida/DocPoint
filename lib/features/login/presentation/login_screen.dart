@@ -6,7 +6,6 @@ import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/core/widgets/navigate_signup_or_login.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/logic/login_state.dart';
-import 'package:docpoint/features/login/presentation/widgets/user_type_selector_login.dart';
 import 'package:docpoint/features/login/presentation/widgets/login_form.dart';
 import 'package:docpoint/features/login/presentation/widgets/logo_login.dart';
 import 'package:flutter/material.dart';
@@ -45,7 +44,6 @@ class LoginScreenState extends State<LoginScreen> {
                     ),
                   );
 
-                  // Safe way to navigate after current build frame
                   Future.microtask(() {
                     if (!context.mounted) return;
                     context.go(Routes.homePage);
@@ -68,8 +66,6 @@ class LoginScreenState extends State<LoginScreen> {
                       children: [
                         const LogoLogin(),
                         SizedBox(height: 10.h),
-                        const UserTypeSelectorLogin(),
-                        SizedBox(height: 10.h),
                         const LoginForm(),
                         SizedBox(height: 10.h),
                         if (state is LoginLoading)
@@ -86,6 +82,7 @@ class LoginScreenState extends State<LoginScreen> {
                               }
                             },
                           ),
+                        SizedBox(height: 10.h),
                         const NavigateSignupOrLogin(login: true)
                       ],
                     );
