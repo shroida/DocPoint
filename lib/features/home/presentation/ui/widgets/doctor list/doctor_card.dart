@@ -41,14 +41,7 @@ class DoctorCard extends StatelessWidget {
 
   BoxDecoration _containerDecoration() {
     return BoxDecoration(
-      gradient: LinearGradient(
-        colors: [
-          AppColors.primaryLight,
-          AppColors.primary.withOpacity(0.1),
-        ],
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-      ),
+      color: AppColors.surface,
       borderRadius: BorderRadius.circular(12),
     );
   }

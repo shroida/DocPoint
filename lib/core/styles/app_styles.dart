@@ -95,9 +95,9 @@ class AppStyle {
   static ButtonStyle primaryButton = ElevatedButton.styleFrom(
     backgroundColor: AppColors.primary,
     shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(16.0),
+      borderRadius: BorderRadius.circular(50.0),
     ),
-    padding: EdgeInsets.symmetric(vertical: 14.h, horizontal: 24.w),
+    padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 15.w),
     textStyle: body1.copyWith(fontWeight: FontWeight.w600),
   );
 }

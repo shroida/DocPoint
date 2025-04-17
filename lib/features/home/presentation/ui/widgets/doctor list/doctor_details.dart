@@ -3,6 +3,7 @@ import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class DoctorDetails extends StatelessWidget {
@@ -91,7 +92,17 @@ class DoctorDetails extends StatelessWidget {
             Align(
               alignment: Alignment.centerRight,
               child: ElevatedButton(
-                style: AppStyle.primaryButton,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primary, // Set your primary color
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.horizontal(
+                      left: Radius.circular(50), // Rounded left side
+                      right: Radius.circular(50), // Rounded right side
+                    ),
+                  ),
+                  padding: EdgeInsets.symmetric(
+                      vertical: 7.h, horizontal: 12), // Smaller height
+                ),
                 onPressed: () {
                   context.push(
                     Routes.makeAppointment,
@@ -101,7 +112,20 @@ class DoctorDetails extends StatelessWidget {
                 child: Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    const Icon(Icons.calendar_today, color: Colors.white),
+                    Container(
+                      padding: const EdgeInsets.all(
+                          6), // Padding to make the icon fit in a circle
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape:
+                            BoxShape.circle, // Circular background for the icon
+                      ),
+                      child: const Icon(
+                        Icons.calendar_today,
+                        color:
+                            AppColors.primary, // Change icon color if necessary
+                      ),
+                    ),
                     const SizedBox(width: 8),
                     Text(
                       'Book Appointment',
