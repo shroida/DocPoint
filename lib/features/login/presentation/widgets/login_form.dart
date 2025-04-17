@@ -11,14 +11,12 @@ class LoginForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final loginCubit = context.read<LoginCubit>();
-
     return Form(
-        key: loginCubit.formKey,
+        key: context.read<LoginCubit>().formKey,
         child: Column(
           children: [
             AppTextFormField(
-              controller:loginCubit. emailController,
+              controller: context.read<LoginCubit>().emailController,
               hintText: 'Email',
               validator: (value) {
                 if (value == null || value.isEmpty) {
@@ -30,7 +28,7 @@ class LoginForm extends StatelessWidget {
             SizedBox(height: 10.h),
             AppTextFormField(
               hintText: 'Password',
-              controller:loginCubit. passwordController,
+              controller: context.read<LoginCubit>().passwordController,
               isObscureText: true,
               validator: (value) {
                 if (value == null || value.isEmpty) {

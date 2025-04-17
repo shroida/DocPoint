@@ -51,7 +51,7 @@ void signUpDI() {
       () => SignUpRemoteDatasourceImpl(getIt(), getIt()));
   getIt.registerFactory<SignUpRepo>(() => SignUpRepoImpl(getIt()));
   getIt.registerFactory<UserSignUpUsecase>(() => UserSignUpUsecase(getIt()));
-  getIt.registerLazySingleton<SignupCubit>(
+  getIt.registerFactory<SignupCubit>(
       () => SignupCubit((getIt<UserSignUpUsecase>()), getIt(), getIt()));
 }
 
@@ -60,8 +60,8 @@ void loginDI() {
       () => LoginDatasourcesImpl(getIt(), getIt()));
   getIt.registerFactory<LoginRepo>(() => LoginRepoImpl(getIt()));
   getIt.registerFactory<UserLoginUsecase>(() => UserLoginUsecase(getIt()));
-  getIt.registerLazySingleton<LoginCubit>(
-      () => LoginCubit(getIt(), getIt(), getIt()));
+  getIt
+      .registerFactory<LoginCubit>(() => LoginCubit(getIt(), getIt(), getIt()));
 }
 
 void authDI() {

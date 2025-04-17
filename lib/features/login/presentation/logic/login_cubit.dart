@@ -46,4 +46,10 @@ class LoginCubit extends Cubit<LoginState> {
       }
     }
   }
+
+  void reset() {
+    emailController.clear();
+    passwordController.clear();
+    emit(LoginInitial());
+  }
 }
