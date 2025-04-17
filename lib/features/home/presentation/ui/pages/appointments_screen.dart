@@ -1,4 +1,6 @@
 // appointments_screen.dart
+import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointments_list.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/filter_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
@@ -11,7 +13,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../widgets/appointment_card.dart';
 import '../widgets/appointments_list.dart';
 import '../widgets/empty_appointments.dart';
-import '../widgets/filter_row.dart';
 
 class AppointmentsScreen extends StatefulWidget {
   final String userId;
