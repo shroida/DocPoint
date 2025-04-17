@@ -22,6 +22,10 @@ class AppRouter {
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
+      path: Routes.forgotPasswordScreen,
+      builder: (context, state) => const ForgotPasswordScreen(),
+    ),
+    GoRoute(
       path: Routes.profilePage,
       builder: (context, state) {
         final user = state.extra as User;
