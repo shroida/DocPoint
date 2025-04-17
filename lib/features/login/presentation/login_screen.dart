@@ -2,6 +2,7 @@ import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
+import 'package:docpoint/core/widgets/app_snackbar.dart';
 import 'package:docpoint/core/widgets/app_text_button.dart';
 import 'package:docpoint/core/widgets/navigate_signup_or_login.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
@@ -37,11 +38,10 @@ class LoginScreenState extends State<LoginScreen> {
             child: BlocConsumer<LoginCubit, LoginState>(
               listener: (context, state) {
                 if (state is LoginSuccess) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text('Login successful!'),
-                      backgroundColor: Colors.green,
-                    ),
+                  showAppSnackBar(
+                    context: context,
+                    message: 'Login successful!',
+                    backgroundColor: Colors.green,
                   );
 
                   Future.microtask(() {
@@ -49,11 +49,10 @@ class LoginScreenState extends State<LoginScreen> {
                     context.go(Routes.homePage);
                   });
                 } else if (state is LoginFailure) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Login failed: ${state.errorMessage}'),
-                      backgroundColor: Colors.red,
-                    ),
+                  showAppSnackBar(
+                    context: context,
+                    message: 'Login failed: ${state.errorMessage}',
+                    backgroundColor: Colors.red,
                   );
                 }
               },
