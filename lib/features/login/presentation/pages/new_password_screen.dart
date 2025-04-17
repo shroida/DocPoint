@@ -1,10 +1,12 @@
+import 'package:docpoint/core/routing/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class NewPasswordScreen extends StatefulWidget {
   final String accessToken;
 
-  const NewPasswordScreen({required this.accessToken});
+  const NewPasswordScreen({super.key, required this.accessToken});
 
   @override
   State<NewPasswordScreen> createState() => _NewPasswordScreenState();
@@ -21,9 +23,7 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
     setState(() => _loading = true);
 
     try {
-      await Supabase.instance.client.auth
-          .exchangeCodeForSession(widget.accessToken);
-
+      // Use the token to update the password
       await Supabase.instance.client.auth.updateUser(
         UserAttributes(password: newPassword),
       );
@@ -62,6 +62,12 @@ class _NewPasswordScreenState extends State<NewPasswordScreen> {
                     onPressed: _updatePassword,
                     child: Text("Update Password"),
                   ),
+            ElevatedButton(
+              onPressed: () {
+                context.pushReplacement(Routes.loginScreen);
+              },
+              child: Text("Login"),
+            ),
           ],
         ),
       ),

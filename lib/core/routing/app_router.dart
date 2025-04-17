@@ -14,6 +14,8 @@ import 'package:docpoint/features/login/presentation/pages/reset_password_screen
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:docpoint/features/signup/presentation/ui/signup_screen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -24,10 +26,21 @@ class AppRouter {
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
-      path: '/reset-password',
+      path: '/new-password',
       builder: (context, state) {
-        final code = state.uri.queryParameters['code']!;
-        return NewPasswordScreen(accessToken: code);
+        final token = state.uri.queryParameters['token'];
+        if (token == null) {
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(content: Text("Token is missing")),
+            );
+          });
+          return BlocProvider(
+            create: (_) => getIt<LoginCubit>(), // Provide the LoginCubit here
+            child: const LoginScreen(),
+          );
+        }
+        return NewPasswordScreen(accessToken: token);
       },
     ),
     GoRoute(
@@ -88,7 +101,7 @@ class AppRouter {
               create: (context) => getIt<SignupCubit>(),
               child: const SignupScreen(),
             )),
-  ], initialLocation: Routes.loginScreen);
+  ], initialLocation: Routes.forgotPasswordScreen);
 }
 
 class AppointmentPageArgs {

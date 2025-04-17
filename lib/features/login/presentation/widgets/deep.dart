@@ -8,7 +8,7 @@ import 'package:uni_links5/uni_links.dart';
 class DeepLinkHandler extends StatefulWidget {
   final AppRouter appRouter;
 
-  const DeepLinkHandler({Key? key, required this.appRouter}) : super(key: key);
+  const DeepLinkHandler({super.key, required this.appRouter});
 
   @override
   State<DeepLinkHandler> createState() => _DeepLinkHandlerState();
@@ -38,9 +38,10 @@ class _DeepLinkHandlerState extends State<DeepLinkHandler> {
   }
 
   void _processUri(Uri? uri) {
-    if (uri != null && uri.queryParameters.containsKey('code')) {
-      final code = uri.queryParameters['code']!;
-      widget.appRouter.router.go('/reset-password?code=$code');
+    if (uri != null && uri.queryParameters.containsKey('token')) {
+      final token = uri.queryParameters['token']!;
+      // Navigate to NewPasswordScreen and pass the token as a parameter
+      widget.appRouter.router.go('/new-password?token=$token');
     }
   }
 
