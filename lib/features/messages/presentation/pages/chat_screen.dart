@@ -1,18 +1,24 @@
-import 'package:docpoint/core/styles/app_colors.dart';
-import 'package:docpoint/core/styles/app_styles.dart';
-import 'package:docpoint/core/widgets/app_text_form_field.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+
+import 'package:docpoint/core/styles/app_colors.dart';
+import 'package:docpoint/core/styles/app_styles.dart';
+import 'package:docpoint/core/widgets/app_text_form_field.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({
     super.key,
     required this.friendId,
-    required this.currentUserId,
+    required this.friendName,
+    this.category,
+    required this.image,
   });
   final String friendId;
-  final String currentUserId;
+  final String friendName;
+  final String? category;
+  final String image;
   @override
   ChatScreenState createState() => ChatScreenState();
 }
@@ -44,8 +50,7 @@ class ChatScreenState extends State<ChatScreen> {
           children: [
             CircleAvatar(
               radius: 20.h,
-              backgroundImage: const NetworkImage(
-                  'https://en.wikipedia.org/wiki/Image#/media/File:Image_created_with_a_mobile_phone.png'),
+              backgroundImage: NetworkImage(widget.image),
               backgroundColor: Colors.grey[200],
             ),
             SizedBox(width: 12.w),
@@ -56,14 +61,14 @@ class ChatScreenState extends State<ChatScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  'Doc',
+                  widget.friendName,
                   style: AppStyle.heading3.copyWith(
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
                 Text(
-                  'Dentist',
+                  widget.category ?? '',
                   style: AppStyle.heading1.copyWith(
                     color: Colors.white70,
                     fontSize: 12.w,

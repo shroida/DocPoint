@@ -87,8 +87,12 @@ class ChatsListScreen extends StatelessWidget {
             onTap: () {
               context.push(Routes.chatPage,
                   extra: ChatScreenArgs(
-                      friendId: doctorsList![index].id,
-                      currentUserId: currentUserCubit.currentUser!.id));
+                    image: doctorsList![index].imageUrl ?? '',
+                    category: doctorsList![index].category,
+                    friendName:
+                        '${doctorsList![index].firstName} ${doctorsList![index].lastName}',
+                    friendId: doctorsList![index].id,
+                  ));
             },
             contentPadding: EdgeInsets.zero,
             leading: CircleAvatar(

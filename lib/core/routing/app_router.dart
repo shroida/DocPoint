@@ -37,12 +37,14 @@ class AppRouter {
     GoRoute(
         path: Routes.chatPage,
         builder: (context, state) {
-          final ids = state.extra as ChatScreenArgs;
+          final friendData = state.extra as ChatScreenArgs;
           return BlocProvider(
             create: (context) => getIt<MessageCubit>(),
             child: ChatScreen(
-              currentUserId: ids.,
-              friendId: ids.friendId,
+              friendName: friendData.friendName,
+              image: friendData.image,
+              category: friendData.category,
+              friendId: friendData.friendId,
             ),
           );
         }),
