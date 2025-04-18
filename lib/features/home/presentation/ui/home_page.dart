@@ -4,7 +4,7 @@ import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/core/routing/app_router.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
-import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointments_screen.dart';
+import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_list_screen.dart';
