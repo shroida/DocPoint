@@ -9,8 +9,13 @@ class MessagesRepoImpl implements MessagesRepo {
 
   MessagesRepoImpl(this._messagesDatasource);
   @override
-  Either<Failure, List<Message>> getAllMessages() {
-    
+  Future<Either<Failure, List<Message>>> getAllMessages() async {
+    try {
+      final res = await _messagesDatasource.getMessages();
+      return Right(res); // Successfully return list of messages
+    } catch (e) {
+      return Left(ServerFailure(e.toString())); // Wrap any error in Failure
+    }
   }
 
   @override

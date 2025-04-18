@@ -3,7 +3,7 @@ import 'package:docpoint/features/messages/domain/entities/message.dart';
 import 'package:fpdart/fpdart.dart';
 
 abstract interface class MessagesRepo {
-  Either<Failure, List<Message>> getAllMessages();
+  Future<Either<Failure, List<Message>>> getAllMessages();
   Future<Either<Failure, void>> sendMessage(
       {required String senderId,
       required String receiverId,
