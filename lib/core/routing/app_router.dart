@@ -14,7 +14,7 @@ import 'package:docpoint/features/home/presentation/ui/pages/make_appointment_sc
 import 'package:docpoint/features/home/presentation/ui/pages/profile_screen.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
-import 'package:docpoint/features/messages/presentation/chats_list_screen.dart';
+import 'package:docpoint/features/messages/presentation/pages/chats_list_screen.dart';
 import 'package:docpoint/features/messages/presentation/logic/message_cubit.dart';
 import 'package:docpoint/features/messages/presentation/pages/chat_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
