@@ -10,7 +10,7 @@ import 'package:docpoint/features/home/presentation/ui/pages/profile_screen.dart
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
 import 'package:docpoint/features/messages/domain/usecase/send_message_usecase.dart';
-import 'package:docpoint/features/messages/presentation/chat_screen.dart';
+import 'package:docpoint/features/messages/presentation/pages/chat_screen.dart';
 import 'package:docpoint/features/messages/presentation/logic/message_cubit.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
