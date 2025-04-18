@@ -23,6 +23,9 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  int _selectedIndex = 0; // ✅ Moved here!
+
   @override
   void initState() {
     super.initState();
@@ -42,6 +45,7 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final currentUser = context.read<CurrentUserCubit>().currentUser;
+
     return Scaffold(
       key: scaffoldKey,
       appBar: CustomAppBar(
@@ -53,55 +57,55 @@ class _HomePageState extends State<HomePage> {
       ),
       drawer: const CustomDrawer(),
       bottomNavigationBar: GNav(
-          padding: const EdgeInsets.all(10),
-          gap: 6,
-          tabMargin: EdgeInsets.symmetric(vertical: 10, horizontal: 10.w),
-          activeColor: AppColors.primary,
-          backgroundColor: Colors.white,
-          tabBackgroundColor: const Color(0xFFEBEBEB),
-          onTabChange: (index) {
-            switch (index) {
-              case 0:
-                context.pushReplacement(
-                  Routes.homePage,
-                );
-                break;
-              case 1:
-                context.push(
-                  Routes.chatPage,
-                );
-                break;
-              case 2:
-                context.push(Routes.appointmentPage,
-                    extra: AppointmentPageArgs(
-                        userId:
-                            context.read<CurrentUserCubit>().currentUser!.id,
-                        userType: context.read<CurrentUserCubit>().userType));
-                break;
-              case 3:
-                context.push(Routes.profilePage, extra: currentUser);
-                break;
-              default:
-            }
-          },
-          tabs: const [
-            GButton(
-              icon: Icons.home,
-              text: 'Home',
-            ),
-            GButton(
-              icon: Icons.messenger_rounded,
-              text: 'Messages',
-            ),
-            GButton(
-              icon: Icons.calendar_month,
-              text: 'Appointments',
-            ),
-            GButton(
-              icon: Icons.person,
-              text: 'Profile',
-            ),
-          ]),
+        selectedIndex: _selectedIndex, // ✅ Let GNav reflect selected tab
+        padding: const EdgeInsets.all(10),
+        gap: 6,
+        tabMargin: EdgeInsets.symmetric(vertical: 10, horizontal: 10.w),
+        activeColor: AppColors.primary,
+        backgroundColor: Colors.white,
+        tabBackgroundColor: const Color(0xFFEBEBEB),
+        onTabChange: (index) {
+          setState(() {
+            _selectedIndex = index;
+          });
+          switch (index) {
+            case 0:
+              context.pushReplacement(Routes.homePage);
+              break;
+            case 1:
+              context.push(Routes.chatPage).then((_) {
+                setState(() {
+                  _selectedIndex = 0; // ✅ Force go back to Home on return
+                });
+              });
+              break;
+            case 2:
+              context
+                  .push(
+                Routes.appointmentPage,
+                extra: AppointmentPageArgs(
+                  userId: context.read<CurrentUserCubit>().currentUser!.id,
+                  userType: context.read<CurrentUserCubit>().userType,
+                ),
+              )
+                  .then((_) {
+                setState(() {
+                  _selectedIndex = 0; // ✅ Force go back to Home on return
+                });
+              });
+              break;
+            case 3:
+              context.push(Routes.profilePage, extra: currentUser);
+              break;
+          }
+        },
+        tabs: const [
+          GButton(icon: Icons.home, text: 'Home'),
+          GButton(icon: Icons.messenger_rounded, text: 'Messages'),
+          GButton(icon: Icons.calendar_month, text: 'Appointments'),
+          GButton(icon: Icons.person, text: 'Profile'),
+        ],
+      ),
       body: BlocBuilder<CurrentUserCubit, CurrentUserState>(
         builder: (context, state) {
           if (state is CurrentUserLoading) {
@@ -113,14 +117,13 @@ class _HomePageState extends State<HomePage> {
             if (currentUserCubit.currentUser == null) {
               return const Center(child: Text('User data not available'));
             }
+
             return currentUserCubit.userType == "Patient"
                 ? SafeArea(
                     child: SingleChildScrollView(
                       child: Column(
                         children: [
-                          SizedBox(
-                            height: 20.h,
-                          ),
+                          SizedBox(height: 20.h),
                           const DoctorsListScreen(),
                         ],
                       ),
@@ -128,7 +131,8 @@ class _HomePageState extends State<HomePage> {
                   )
                 : AppointmentsScreen(
                     userId: currentUserCubit.currentUser!.id,
-                    userType: "Doctor");
+                    userType: "Doctor",
+                  );
           }
 
           if (state is CurrentUserError) {
@@ -143,7 +147,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void dispose() {
-    // Clear focus when widget is disposed
     FocusManager.instance.primaryFocus?.unfocus();
     super.dispose();
   }
