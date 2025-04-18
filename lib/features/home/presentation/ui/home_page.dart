@@ -73,9 +73,9 @@ class _HomePageState extends State<HomePage> {
               context.pushReplacement(Routes.homePage);
               break;
             case 1:
-              context.push(Routes.chatPage).then((_) {
+              context.push(Routes.chatsListScreen).then((_) {
                 setState(() {
-                  _selectedIndex = 0; // ✅ Force go back to Home on return
+                  _selectedIndex = 0;
                 });
               });
               break;
