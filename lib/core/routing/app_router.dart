@@ -48,9 +48,12 @@ class AppRouter {
       path: Routes.chatListType,
       builder: (context, state) {
         final data = state.extra as ChatListArgs;
-        return ChatsList(
-          doctorList: data.doctorList,
-          appointmentList: data.appointmentList,
+        return BlocProvider(
+          create: (context) => getIt<MessageCubit>(),
+          child: ChatsList(
+            doctorList: data.doctorList,
+            appointmentList: data.appointmentList,
+          ),
         );
       },
     ),
