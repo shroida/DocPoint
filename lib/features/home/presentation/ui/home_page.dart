@@ -75,8 +75,8 @@ class _HomePageState extends State<HomePage> {
               break;
             case 1:
               context
-                  .push(Routes.chatsListScreenPatientUI,
-                      extra: context.read<HomePageCubit>().doctorList)
+                  .push(Routes.chatsListScreenDoctorUI,
+                      extra: context.read<HomePageCubit>().appointmentList)
                   .then((_) {
                 setState(() {
                   _selectedIndex = 0;

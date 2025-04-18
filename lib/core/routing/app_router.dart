@@ -1,4 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
+import 'package:docpoint/features/messages/presentation/pages/chat_list_screen_for_doctor_ui.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
@@ -32,6 +34,13 @@ class AppRouter {
       builder: (context, state) {
         final doctorList = state.extra as List<DoctorEntity>;
         return ChatsListScreenForPatientUI(doctorsList: doctorList);
+      },
+    ),
+    GoRoute(
+      path: Routes.chatsListScreenDoctorUI,
+      builder: (context, state) {
+        final appointmentsList = state.extra as List<AppointmentEntity>;
+        return ChatListScreenForDoctorUI(appointments: appointmentsList);
       },
     ),
     GoRoute(

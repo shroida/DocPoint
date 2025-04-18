@@ -7,5 +7,6 @@ class Routes {
   static const String profilePage = '/profilePage';
   static const String appointmentPage = '/appointmentPage';
   static const String chatsListScreenPatientUI = '/chatsListScreenPatientUI';
+  static const String chatsListScreenDoctorUI = '/chatsListScreenDoctorUI';
   static const String chatPage = '/chatPage';
 }
