@@ -4,7 +4,6 @@ import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/core/routing/app_router.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
-import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
@@ -75,8 +74,9 @@ class _HomePageState extends State<HomePage> {
               break;
             case 1:
               context
-                  .push(Routes.chatsListScreenDoctorUI,
-                      extra: context.read<HomePageCubit>().appointmentList)
+                  .push(
+                Routes.chatListType,
+              )
                   .then((_) {
                 setState(() {
                   _selectedIndex = 0;
