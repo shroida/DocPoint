@@ -25,7 +25,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  int _selectedIndex = 0; // ✅ Moved here!
+  int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -46,19 +46,28 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     final currentUser = context.read<CurrentUserCubit>().currentUser;
+    if (currentUser == null) {
+      return Scaffold(
+          body: Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    context.pushReplacement(Routes.homePage);
+                  },
+                  child: Text('reload data'))));
+    }
 
     return Scaffold(
       key: scaffoldKey,
       appBar: CustomAppBar(
         scaffoldKey: scaffoldKey,
-        image: currentUser!.imageUrl ?? '',
+        image: currentUser.imageUrl ?? '',
         city: currentUser.city ?? '',
         name: '${currentUser.firstName} ${currentUser.lastName} ',
         title: 'Home',
       ),
       drawer: const CustomDrawer(),
       bottomNavigationBar: GNav(
-        selectedIndex: _selectedIndex, // ✅ Let GNav reflect selected tab
+        selectedIndex: _selectedIndex,
         padding: const EdgeInsets.all(10),
         gap: 6,
         tabMargin: EdgeInsets.symmetric(vertical: 10, horizontal: 10.w),
@@ -100,7 +109,7 @@ class _HomePageState extends State<HomePage> {
               )
                   .then((_) {
                 setState(() {
-                  _selectedIndex = 0; // ✅ Force go back to Home on return
+                  _selectedIndex = 0;
                 });
               });
               break;
@@ -124,8 +133,11 @@ class _HomePageState extends State<HomePage> {
 
           if (state is CurrentUserAuthenticated) {
             final currentUserCubit = context.read<CurrentUserCubit>();
-            if (currentUserCubit.currentUser == null) {
-              return const Center(child: Text('User data not available'));
+            final currentUser = currentUserCubit.currentUser;
+
+            if (currentUser == null) {
+              context.read<CurrentUserCubit>().checkAuthStatus();
+              return const Center(child: CircularProgressIndicator());
             }
 
             return currentUserCubit.userType == "Patient"
