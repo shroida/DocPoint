@@ -30,7 +30,9 @@ class AppRouter {
           final sendMessageParams = state.extra as SendMessageParams;
           return BlocProvider(
             create: (context) => getIt<MessageCubit>(),
-            child: const ChatScreen(),
+            child: ChatScreen(
+              sendMessageParams: sendMessageParams,
+            ),
           );
         }),
     GoRoute(
