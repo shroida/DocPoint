@@ -66,6 +66,11 @@ class _HomePageState extends State<HomePage> {
                   Routes.homePage,
                 );
                 break;
+              case 1:
+                context.pushReplacement(
+                  Routes.chatPage,
+                );
+                break;
               case 2:
                 context.push(Routes.appointmentPage,
                     extra: AppointmentPageArgs(
