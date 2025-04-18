@@ -1,5 +1,5 @@
 import 'package:docpoint/core/error/failure.dart';
-import 'package:docpoint/features/messages/datasource/messages_datasource.dart';
+import 'package:docpoint/features/messages/data/datasource/messages_datasource.dart';
 import 'package:docpoint/features/messages/domain/entities/message.dart';
 import 'package:docpoint/features/messages/domain/repositories/messages_repo.dart';
 import 'package:fpdart/fpdart.dart';
