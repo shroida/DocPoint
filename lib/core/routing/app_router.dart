@@ -1,3 +1,7 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
+
 import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/di/dependency_injection.dart';
@@ -11,13 +15,11 @@ import 'package:docpoint/features/home/presentation/ui/pages/profile_screen.dart
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
 import 'package:docpoint/features/messages/presentation/chats_list_screen.dart';
-import 'package:docpoint/features/messages/presentation/pages/chat_screen.dart';
 import 'package:docpoint/features/messages/presentation/logic/message_cubit.dart';
+import 'package:docpoint/features/messages/presentation/pages/chat_screen.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:docpoint/features/signup/presentation/ui/signup_screen.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 
 class AppRouter {
   final GoRouter router = GoRouter(routes: [
@@ -39,7 +41,7 @@ class AppRouter {
           return BlocProvider(
             create: (context) => getIt<MessageCubit>(),
             child: ChatScreen(
-              currentUserId: ids.currentUserId,
+              currentUserId: ids.,
               friendId: ids.friendId,
             ),
           );
@@ -112,10 +114,13 @@ class AppointmentPageArgs {
 
 class ChatScreenArgs {
   final String friendId;
-  final String currentUserId;
-
+  final String friendName;
+  final String? category;
+  final String image;
   ChatScreenArgs({
     required this.friendId,
-    required this.currentUserId,
+    required this.friendName,
+    this.category,
+    required this.image,
   });
 }
