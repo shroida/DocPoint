@@ -9,7 +9,13 @@ class SendMessageUsecase implements UseCase<void, SendMessageParams> {
   SendMessageUsecase(this._messagesRepo);
   @override
   Future<Either<Failure, void>> call(SendMessageParams params) async {
-    return await _messagesRepo.sendMessage();
+    return await _messagesRepo.sendMessage(
+        senderId: params.senderId,
+        receiverId: params.receiverId,
+        messageText: params.messageText,
+        createdAt: params.createdAt,
+        isRead: params.isRead,
+        parentId: params.parentId);
   }
 }
 
