@@ -9,7 +9,9 @@ import 'package:docpoint/features/home/presentation/ui/pages/make_appointment_sc
 import 'package:docpoint/features/home/presentation/ui/pages/profile_screen.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
+import 'package:docpoint/features/messages/domain/usecase/send_message_usecase.dart';
 import 'package:docpoint/features/messages/presentation/chat_screen.dart';
+import 'package:docpoint/features/messages/presentation/logic/message_cubit.dart';
 import 'package:docpoint/features/onboadring/onboarding_screen.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:docpoint/features/signup/presentation/ui/signup_screen.dart';
@@ -23,9 +25,14 @@ class AppRouter {
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
-      path: Routes.chatPage,
-      builder: (context, state) => ChatScreen(),
-    ),
+        path: Routes.chatPage,
+        builder: (context, state) {
+          final sendMessageParams = state.extra as SendMessageParams;
+          return BlocProvider(
+            create: (context) => getIt<MessageCubit>(),
+            child: const ChatScreen(),
+          );
+        }),
     GoRoute(
       path: Routes.profilePage,
       builder: (context, state) {
@@ -40,8 +47,7 @@ class AppRouter {
       builder: (context, state) {
         final doctor = state.extra as User;
         return BlocProvider<HomePageCubit>(
-          create: (context) =>
-              getIt<HomePageCubit>(), // Create the provider here
+          create: (context) => getIt<HomePageCubit>(),
           child: MakeAppointmentScreen(
             doctor: doctor,
             patientId: context.read<CurrentUserCubit>().currentUser!.id,
