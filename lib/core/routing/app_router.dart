@@ -31,7 +31,7 @@ class AppRouter {
       path: Routes.chatsListScreen,
       builder: (context, state) {
         final doctorList = state.extra as List<DoctorEntity>;
-        return ChatsListScreen(doctorsList: doctorList);
+        return ChatsListScreenForPatientUI(doctorsList: doctorList);
       },
     ),
     GoRoute(

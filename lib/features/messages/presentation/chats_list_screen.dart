@@ -9,9 +9,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
-class ChatsListScreen extends StatelessWidget {
+class ChatsListScreenForPatientUI extends StatelessWidget {
   final List<DoctorEntity>? doctorsList;
-  const ChatsListScreen({super.key, this.doctorsList});
+  const ChatsListScreenForPatientUI({super.key, this.doctorsList});
 
   @override
   Widget build(BuildContext context) {
