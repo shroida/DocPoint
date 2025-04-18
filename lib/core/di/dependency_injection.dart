@@ -21,6 +21,7 @@ import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/messages/data/datasource/messages_datasource.dart';
 import 'package:docpoint/features/messages/data/repositories/messages_repo_impl.dart';
 import 'package:docpoint/features/messages/domain/repositories/messages_repo.dart';
+import 'package:docpoint/features/messages/domain/usecase/get_all_messages_usecase.dart';
 import 'package:docpoint/features/messages/domain/usecase/send_message_usecase.dart';
 import 'package:docpoint/features/messages/presentation/logic/message_cubit.dart';
 import 'package:docpoint/features/signup/data/datasources/sign_up_remote_datasource.dart';
@@ -133,9 +134,11 @@ void messagesDI() {
   getIt.registerFactory<SendMessageUsecase>(
     () => SendMessageUsecase(getIt()),
   );
+
+  getIt.registerFactory<GetAllMessagesUsecase>(
+    () => GetAllMessagesUsecase(getIt()),
+  );
   getIt.registerFactory<MessageCubit>(
-    () => MessageCubit(
-      getIt(),
-    ),
+    () => MessageCubit(getIt(), getIt()),
   );
 }

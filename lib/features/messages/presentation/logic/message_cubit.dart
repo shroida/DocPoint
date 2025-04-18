@@ -13,6 +13,8 @@ class MessageCubit extends Cubit<MessageState> {
   MessageCubit(this._sendMessageUsecase, this._getAllMessagesUsecase)
       : super(MessageInitial());
 
+  List<Message> allMessages = [];
+
   Future<void> sendMessage(SendMessageParams params) async {
     emit(MessageLoading());
     final result = await _sendMessageUsecase(params);
@@ -27,7 +29,10 @@ class MessageCubit extends Cubit<MessageState> {
     final result = await _getAllMessagesUsecase(NoParams());
     result.fold(
       (Failure failure) => emit(MessageError(failure.message)),
-      (List<Message> messages) => emit(MessagesLoaded(messages)),
+      (List<Message> messages) {
+        allMessages = messages;
+        emit(MessagesLoaded(messages));
+      },
     );
   }
 }
