@@ -4,5 +4,11 @@ import 'package:fpdart/fpdart.dart';
 
 abstract interface class MessagesRepo {
   Either<Failure, List<Message>> getAllMessages();
-  Either<Failure, void> sendMessage();
+  Future<Either<Failure, void>> sendMessage(
+      {required String senderId,
+      required String receiverId,
+      required String messageText,
+      required DateTime createdAt,
+      required bool isRead,
+      required String parentId});
 }
