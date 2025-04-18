@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
+import 'package:docpoint/features/messages/domain/entities/message.dart';
 import 'package:docpoint/features/messages/presentation/pages/chat_list_screen_for_doctor_ui.dart';
 import 'package:docpoint/features/messages/presentation/widget/chats_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -64,6 +65,7 @@ class AppRouter {
           return BlocProvider(
             create: (context) => getIt<MessageCubit>(),
             child: ChatScreen(
+              relatedMessages: friendData.relatedMessages,
               friendName: friendData.friendName,
               image: friendData.image,
               category: friendData.category,
@@ -142,9 +144,11 @@ class ChatScreenArgs {
   final String friendName;
   final String? category;
   final String image;
+  final List<Message> relatedMessages;
   ChatScreenArgs({
     required this.friendId,
     required this.friendName,
+    required this.relatedMessages,
     this.category,
     required this.image,
   });

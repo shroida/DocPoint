@@ -51,6 +51,7 @@ class ChatListScreenForDoctorUI extends StatelessWidget {
             onTap: () {
               context.push(Routes.chatPage,
                   extra: ChatScreenArgs(
+                    relatedMessages: [],
                     image: '',
                     category: appointment.category,
                     friendName: appointment.patientName,

@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
+import 'package:docpoint/features/messages/domain/entities/message.dart';
 import 'package:docpoint/features/messages/domain/usecase/send_message_usecase.dart';
 import 'package:docpoint/features/messages/presentation/logic/message_cubit.dart';
 
@@ -17,11 +18,13 @@ class ChatScreen extends StatefulWidget {
     super.key,
     required this.friendId,
     required this.friendName,
+    required this.relatedMessages,
     this.category,
     required this.image,
   });
   final String friendId;
   final String friendName;
+  final List<Message> relatedMessages;
   final String? category;
   final String image;
   @override
@@ -30,7 +33,6 @@ class ChatScreen extends StatefulWidget {
 
 class ChatScreenState extends State<ChatScreen> {
   final TextEditingController _controller = TextEditingController();
-  final List<String> _messages = [];
 
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
@@ -135,11 +137,13 @@ class ChatScreenState extends State<ChatScreen> {
         children: [
           Expanded(
             child: ListView.builder(
-              itemCount: _messages.length,
+              itemCount: widget.relatedMessages.length,
               itemBuilder: (context, index) {
-                final message = _messages[index];
-                final isPatientMessage = index % 2 == 0; // Alternate messages
-                return _buildMessageBubble(message, isPatientMessage);
+                final message = widget.relatedMessages[index];
+                final currentUserId =
+                    context.read<CurrentUserCubit>().currentUser!.id;
+                final isSentByMe = message.senderId == currentUserId;
+                return _buildMessageBubble(message.messageText, isSentByMe);
               },
             ),
           ),
@@ -152,21 +156,21 @@ class ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  Widget _buildMessageBubble(String message, bool isPatientMessage) {
+  Widget _buildMessageBubble(String message, bool isSentByMe) {
     return Align(
-      alignment:
-          isPatientMessage ? Alignment.centerRight : Alignment.centerLeft,
+      alignment: isSentByMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         margin: const EdgeInsets.all(8.0),
         padding: const EdgeInsets.all(12.0),
         decoration: BoxDecoration(
-          color: isPatientMessage ? AppColors.primaryLight : AppColors.surface,
+          color: isSentByMe ? AppColors.primaryLight : AppColors.surface,
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Text(
           message,
           style: AppStyle.body1.copyWith(
-              color: isPatientMessage ? Colors.black : AppColors.textPrimary),
+            color: isSentByMe ? Colors.black : AppColors.textPrimary,
+          ),
         ),
       ),
     );

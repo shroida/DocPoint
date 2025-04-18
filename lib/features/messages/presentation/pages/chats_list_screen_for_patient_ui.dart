@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 
 class ChatsListScreenForPatientUI extends StatefulWidget {
   final List<DoctorEntity>? doctorsList;
@@ -29,6 +30,7 @@ class _ChatsListScreenForPatientUIState
 
   @override
   Widget build(BuildContext context) {
+    final messages = context.read<MessageCubit>().allMessages;
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
@@ -47,82 +49,92 @@ class _ChatsListScreenForPatientUIState
             if (messages.isEmpty) {
               return const Center(child: Text("No chats yet."));
             }
-
-            return ListView.separated(
-              padding: EdgeInsets.all(16.w),
-              itemCount: messages.length,
-              separatorBuilder: (context, index) => Divider(
-                color: AppColors.divider,
-                thickness: 1,
-                height: 20.h,
-              ),
-              itemBuilder: (context, index) {
-                final msg = messages[index];
-                return ListTile(
-                  onTap: () {
-                    context.push(Routes.chatPage,
-                        extra: ChatScreenArgs(
-                          image: '',
-                          category: '', // Add category if you have it
-                          friendName: msg.senderId,
-                          friendId: msg.senderId,
-                        ));
-                  },
-                  contentPadding: EdgeInsets.zero,
-                  leading: CircleAvatar(
-                    radius: 26.r,
-                    child: const Icon(Icons.person),
-                  ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Expanded(
-                        child: Text(
-                          msg.senderId,
-                          style: AppStyle.heading3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Text(
-                        'Yesterday', // Replace with formatted date from msg.createdAt
-                        style: AppStyle.caption,
-                      ),
-                    ],
-                  ),
-                  subtitle: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          msg.messageText,
-                          style: AppStyle.body2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      if (!msg.isRead)
-                        Container(
-                          margin: EdgeInsets.only(left: 6.w),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.w, vertical: 4.h),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          child: Text(
-                            'New',
-                            style:
-                                AppStyle.caption.copyWith(color: Colors.white),
-                          ),
-                        ),
-                    ],
-                  ),
-                );
-              },
-            );
-          } else if (state is MessageError) {
-            return Center(child: Text("Error: ${state.error}"));
-          } else {
-            return const SizedBox();
           }
+          return ListView.separated(
+            padding: EdgeInsets.all(16.w),
+            itemCount: (widget.doctorsList?.length ?? 0),
+            separatorBuilder: (context, index) => Divider(
+              color: AppColors.divider,
+              thickness: 1,
+              height: 20.h,
+            ),
+            itemBuilder: (context, index) {
+              final doctorId = widget.doctorsList![index].id;
+
+              final relatedMessages = messages
+                  .where((msg) =>
+                      msg.receiverId == doctorId || msg.senderId == doctorId)
+                  .toList();
+              relatedMessages
+                  .sort((a, b) => b.createdAt.compareTo(a.createdAt));
+
+              final lastMessage =
+                  relatedMessages.isNotEmpty ? relatedMessages.first : null;
+
+              return ListTile(
+                onTap: () {
+                  context.push(Routes.chatPage,
+                      extra: ChatScreenArgs(
+                        relatedMessages: relatedMessages,
+                        image: widget.doctorsList![index].imageUrl ?? '',
+                        category: widget.doctorsList![index].category,
+                        friendName:
+                            '${widget.doctorsList![index].firstName} ${widget.doctorsList![index].lastName}',
+                        friendId: widget.doctorsList![index].id,
+                      ));
+                },
+                contentPadding: EdgeInsets.zero,
+                leading: CircleAvatar(
+                  radius: 26.r,
+                  child: const Icon(Icons.person),
+                ),
+                title: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Text(
+                        widget.doctorsList![index].firstName,
+                        style: AppStyle.heading3,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Text(
+                      lastMessage != null
+                          ? DateFormat('MMM dd\nhh:mm a')
+                              .format(lastMessage.createdAt)
+                          : '',
+                      style: AppStyle.caption,
+                    ),
+                  ],
+                ),
+                subtitle: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        lastMessage?.messageText ?? "No messages yet",
+                        style: AppStyle.body2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    if (relatedMessages.isNotEmpty)
+                      Container(
+                        margin: EdgeInsets.only(left: 6.w),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 8.w, vertical: 4.h),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary,
+                          borderRadius: BorderRadius.circular(12.r),
+                        ),
+                        child: Text(
+                          relatedMessages.length.toString(),
+                          style: AppStyle.caption.copyWith(color: Colors.white),
+                        ),
+                      ),
+                  ],
+                ),
+              );
+            },
+          );
         },
       ),
     );
