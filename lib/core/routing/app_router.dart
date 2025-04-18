@@ -25,6 +25,10 @@ class AppRouter {
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
+      path: Routes.chatsListScreen,
+      builder: (context, state) => const ChatsListScreen(),
+    ),
+    GoRoute(
         path: Routes.chatPage,
         builder: (context, state) {
           final sendMessageParams = state.extra as SendMessageParams;
