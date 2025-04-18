@@ -10,5 +10,5 @@ abstract interface class MessagesRepo {
       required String messageText,
       required DateTime createdAt,
       required bool isRead,
-      required String parentId});
+      String? parentId});
 }

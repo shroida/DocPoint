@@ -25,7 +25,7 @@ class SendMessageParams {
   final String messageText;
   final DateTime createdAt;
   final bool isRead;
-  final String parentId;
+  final String? parentId;
 
   SendMessageParams(
       {required this.senderId,
@@ -33,5 +33,5 @@ class SendMessageParams {
       required this.messageText,
       required this.createdAt,
       required this.isRead,
-      required this.parentId});
+      this.parentId});
 }
