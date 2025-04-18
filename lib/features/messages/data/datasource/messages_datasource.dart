@@ -1,4 +1,5 @@
 import 'package:docpoint/core/error/server_exeptions.dart';
+import 'package:docpoint/features/messages/data/model/message_model.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class MessagesDatasource {
@@ -9,6 +10,7 @@ abstract interface class MessagesDatasource {
       required DateTime createdAt,
       required bool isRead,
       String? parentId});
+  Future<List<MessageModel>> getMessages();
 }
 
 class MessagesDatasourceImpl implements MessagesDatasource {
@@ -36,6 +38,31 @@ class MessagesDatasourceImpl implements MessagesDatasource {
       };
 
       await _supabaseClient.from('messages').insert(messageData);
+    } catch (e) {
+      throw ServerExceptions(e.toString());
+    }
+  }
+
+  @override
+  Future<List<MessageModel>> getMessages() async {
+    try {
+      final userId = _supabaseClient.auth.currentUser?.id;
+
+      if (userId == null) {
+        throw const ServerExceptions("User is not authenticated.");
+      }
+
+      final response = await _supabaseClient
+          .from('messages')
+          .select()
+          .or('sender_id.eq.$userId,receiver_id.eq.$userId') // <-- filter here
+          .order('created_at', ascending: true);
+
+      final List<MessageModel> allMessages = (response as List)
+          .map((messageJson) => MessageModel.fromJson(messageJson))
+          .toList();
+
+      return allMessages;
     } catch (e) {
       throw ServerExceptions(e.toString());
     }

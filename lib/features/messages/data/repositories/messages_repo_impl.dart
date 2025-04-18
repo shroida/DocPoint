@@ -10,8 +10,7 @@ class MessagesRepoImpl implements MessagesRepo {
   MessagesRepoImpl(this._messagesDatasource);
   @override
   Either<Failure, List<Message>> getAllMessages() {
-    // TODO: implement getAllMessages
-    throw UnimplementedError();
+    
   }
 
   @override
