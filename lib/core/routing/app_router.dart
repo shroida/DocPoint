@@ -28,7 +28,7 @@ class AppRouter {
       builder: (context, state) => const OnboardingScreen(),
     ),
     GoRoute(
-      path: Routes.chatsListScreen,
+      path: Routes.chatsListScreenPatientUI,
       builder: (context, state) {
         final doctorList = state.extra as List<DoctorEntity>;
         return ChatsListScreenForPatientUI(doctorsList: doctorList);
