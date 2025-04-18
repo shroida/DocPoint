@@ -1,5 +1,10 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
+import 'package:docpoint/features/messages/domain/usecase/send_message_usecase.dart';
+import 'package:docpoint/features/messages/presentation/logic/message_cubit.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
@@ -30,7 +35,12 @@ class ChatScreenState extends State<ChatScreen> {
   void _sendMessage() {
     if (_controller.text.isNotEmpty) {
       setState(() {
-        _messages.add(_controller.text);
+        context.read<MessageCubit>().sendMessage(SendMessageParams(
+            createdAt: DateTime.now(),
+            isRead: false,
+            messageText: _controller.text.trim(),
+            receiverId: widget.friendId,
+            senderId: context.read<CurrentUserCubit>().currentUser!.id));
         _controller.clear();
       });
     }
