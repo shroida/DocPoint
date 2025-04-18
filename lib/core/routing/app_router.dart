@@ -45,8 +45,15 @@ class AppRouter {
       },
     ),
     GoRoute(
-        path: Routes.chatListType,
-        builder: (context, state) => const ChatsList()),
+      path: Routes.chatListType,
+      builder: (context, state) {
+        final data = state.extra as ChatListArgs;
+        return ChatsList(
+          doctorList: data.doctorList,
+          appointmentList: data.appointmentList,
+        );
+      },
+    ),
     GoRoute(
         path: Routes.chatPage,
         builder: (context, state) {
@@ -137,5 +144,15 @@ class ChatScreenArgs {
     required this.friendName,
     this.category,
     required this.image,
+  });
+}
+
+class ChatListArgs {
+  final List<DoctorEntity> doctorList;
+  final List<AppointmentEntity> appointmentList;
+
+  ChatListArgs({
+    required this.doctorList,
+    required this.appointmentList,
   });
 }

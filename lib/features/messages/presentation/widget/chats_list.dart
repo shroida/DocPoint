@@ -6,12 +6,13 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ChatsList extends StatelessWidget {
   const ChatsList({super.key});
-
+  
   @override
   Widget build(BuildContext context) {
     bool isDoctor = context.read<CurrentUserCubit>().userType == "Doctor";
+     
     return isDoctor
-        ? const ChatsListScreenForPatientUI()
-        : const ChatListScreenForDoctorUI();
+        ? const ChatsListScreenForPatientUI( doctorsList: [],)
+        : const ChatListScreenForDoctorUI(appointments: [],);
   }
 }
