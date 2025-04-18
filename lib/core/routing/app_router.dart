@@ -2,6 +2,7 @@ import 'package:docpoint/core/common/domain/entites/user.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';
+import 'package:docpoint/features/home/domain/entities/doctor_entity.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/ui/home_page.dart';
 import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen.dart';
@@ -9,7 +10,6 @@ import 'package:docpoint/features/home/presentation/ui/pages/make_appointment_sc
 import 'package:docpoint/features/home/presentation/ui/pages/profile_screen.dart';
 import 'package:docpoint/features/login/presentation/logic/login_cubit.dart';
 import 'package:docpoint/features/login/presentation/login_screen.dart';
-import 'package:docpoint/features/messages/domain/usecase/send_message_usecase.dart';
 import 'package:docpoint/features/messages/presentation/chats_list_screen.dart';
 import 'package:docpoint/features/messages/presentation/pages/chat_screen.dart';
 import 'package:docpoint/features/messages/presentation/logic/message_cubit.dart';
@@ -27,16 +27,20 @@ class AppRouter {
     ),
     GoRoute(
       path: Routes.chatsListScreen,
-      builder: (context, state) => const ChatsListScreen(),
+      builder: (context, state) {
+        final doctorList = state.extra as List<DoctorEntity>;
+        return ChatsListScreen(doctorsList: doctorList);
+      },
     ),
     GoRoute(
         path: Routes.chatPage,
         builder: (context, state) {
-          final sendMessageParams = state.extra as SendMessageParams;
+          final ids = state.extra as ChatScreenArgs;
           return BlocProvider(
             create: (context) => getIt<MessageCubit>(),
             child: ChatScreen(
-              sendMessageParams: sendMessageParams,
+              currentUserId: ids.currentUserId,
+              friendId: ids.friendId,
             ),
           );
         }),
@@ -103,5 +107,15 @@ class AppointmentPageArgs {
   AppointmentPageArgs({
     required this.userId,
     required this.userType,
+  });
+}
+
+class ChatScreenArgs {
+  final String friendId;
+  final String currentUserId;
+
+  ChatScreenArgs({
+    required this.friendId,
+    required this.currentUserId,
   });
 }

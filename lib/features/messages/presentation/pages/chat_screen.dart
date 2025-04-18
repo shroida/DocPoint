@@ -1,14 +1,18 @@
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/core/widgets/app_text_form_field.dart';
-import 'package:docpoint/features/messages/domain/usecase/send_message_usecase.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:go_router/go_router.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.sendMessageParams});
-  final SendMessageParams sendMessageParams;
+  const ChatScreen({
+    super.key,
+    required this.friendId,
+    required this.currentUserId,
+  });
+  final String friendId;
+  final String currentUserId;
   @override
   ChatScreenState createState() => ChatScreenState();
 }
