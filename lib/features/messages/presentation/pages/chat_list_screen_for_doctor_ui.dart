@@ -25,7 +25,12 @@ class ChatListScreenForDoctorUI extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.background,
       appBar: AppBar(
-        leading: const Icon(Icons.arrow_back_ios_new),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            context.pop(); // This will navigate back
+          },
+        ),
         backgroundColor: AppColors.surface,
         elevation: 0,
         centerTitle: true,
