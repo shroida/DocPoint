@@ -86,8 +86,7 @@ class _ChatListScreenForDoctorUIState extends State<ChatListScreenForDoctorUI> {
                     relatedMessages.isNotEmpty ? relatedMessages.first : null;
 
                 return ListTile(
-                  onTap: () {
-                    
+                  onTap: () async {
                     context.push(Routes.chatPage,
                         extra: ChatScreenArgs(
                           relatedMessages: relatedMessages,
@@ -96,7 +95,9 @@ class _ChatListScreenForDoctorUIState extends State<ChatListScreenForDoctorUI> {
                           friendName: uniqueAppointments[index].patientName,
                           friendId: uniqueAppointments[index].id,
                         ));
-
+                    await context
+                        .read<MessageCubit>()
+                        .makeMessagesRead(currentUserCubit.currentUser!.id);
                   },
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
