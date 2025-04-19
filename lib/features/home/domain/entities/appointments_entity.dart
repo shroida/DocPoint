@@ -9,6 +9,7 @@ class AppointmentEntity {
   final String status;
   final String? notes;
   final int? price;
+  final bool? paid;
   final DateTime? createdAt;
   final Duration? duration;
 
@@ -22,6 +23,7 @@ class AppointmentEntity {
     required this.appointmentTime,
     this.status = 'pending',
     this.notes,
+    this.paid,
     this.price,
     this.createdAt,
     this.duration,
