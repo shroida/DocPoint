@@ -167,14 +167,54 @@ class _DetailedAppointmentCardState extends State<DetailedAppointmentCard> {
                   ],
                 ],
               ),
-              if (_confirmedAndWaitToPat) ...[
+              if (_confirmedAndWaitToPat && !_paidSuccessed) ...[
                 const SizedBox(height: 16),
                 _buildPaymentSection(),
-              ],
+              ] else if (_paidSuccessed) ...[
+                const SizedBox(height: 16),
+                _buildPaidSuccessWidget(),
+              ]
             ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildPaidSuccessWidget() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.green.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.green),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.check_circle, color: Colors.green, size: 28),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Payment Received',
+                  style: AppStyle.body1.copyWith(
+                    color: Colors.green.shade700,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  'You have successfully paid \$${widget.appointment.price?.toStringAsFixed(2) ?? "0.00"} for this appointment.',
+                  style:
+                      AppStyle.body2.copyWith(color: AppColors.textSecondary),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -210,11 +250,15 @@ class _DetailedAppointmentCardState extends State<DetailedAppointmentCard> {
                   );
 
                   if (success) {
-                    // Payment was successful - update UI or perform other actions
-                    print('Payment succeeded!');
+                    if (mounted) {
+                      context
+                          .read<HomePageCubit>()
+                          .paidSuccessed(appointmentId: widget.appointment.id);
+                    }
                   } else {
-                    // Payment failed - handle accordingly
-                    print('Payment failed');
+                    if (mounted) {
+                      showAppSnackBar(context: context, message: 'Pay not ');
+                    }
                   }
                 },
                 style: AppStyle.primaryButton.copyWith(
@@ -296,6 +340,7 @@ class _DetailedAppointmentCardState extends State<DetailedAppointmentCard> {
 
   bool get _confirmedAndWaitToPat =>
       widget.appointment.price != null && widget.appointment.price != 0;
+  bool get _paidSuccessed => (widget.appointment.paid ?? false);
 
   bool get _showActions =>
       widget.userType == 'Doctor' &&

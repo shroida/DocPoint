@@ -5,6 +5,7 @@ import 'package:docpoint/features/home/domain/entities/doctor_entity.dart';
 import 'package:docpoint/features/home/domain/usecase/get_all_appointments.dart';
 import 'package:docpoint/features/home/domain/usecase/get_all_doctors.dart';
 import 'package:docpoint/features/home/domain/usecase/make_appointment.dart';
+import 'package:docpoint/features/home/domain/usecase/paid_successed.dart';
 import 'package:docpoint/features/home/domain/usecase/update_status_usecase.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,12 +15,13 @@ class HomePageCubit extends Cubit<HomePageState> {
   final MakeAppointment _makeAppointment;
   final GetAllAppointments _getAllAppointments;
   final UpdateStatusUsecase _updateStatusUsecase;
+  final PaidSuccessed _paidSuccessed;
 
   List<DoctorEntity>? doctorList;
   List<AppointmentEntity>? appointmentList;
 
   HomePageCubit(this._getAllDoctors, this._makeAppointment,
-      this._getAllAppointments, this._updateStatusUsecase)
+      this._getAllAppointments, this._updateStatusUsecase, this._paidSuccessed)
       : super(HomePageInitial());
 
   Future<void> getAllDoctors() async {
@@ -85,6 +87,24 @@ class HomePageCubit extends Cubit<HomePageState> {
       (appointments) {
         appointmentList = appointments;
         emit(HomePageLoaded(doctors: doctorList, appointments: appointments));
+      },
+    );
+  }
+
+  Future<void> paidSuccessed({
+    required String appointmentId,
+  }) async {
+    emit(AppointmentLoading());
+
+    final response = await _paidSuccessed.call(
+      appointmentId,
+    );
+
+    response.fold(
+      (failure) => emit(AppointmentFailure(_mapFailureToMessage(failure))),
+      (success) {
+        emit(
+            HomePageLoaded(doctors: doctorList, appointments: appointmentList));
       },
     );
   }
