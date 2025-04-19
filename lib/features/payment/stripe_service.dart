@@ -25,7 +25,7 @@ class StripeService {
           'Content-Type': 'application/x-www-form-urlencoded',
         },
         body: {
-          'amount': amount, // amount in cents (e.g., 10.00 = 1000)
+          'amount': amount,
           'currency': currency,
           'payment_method_types[]': 'card',
         },

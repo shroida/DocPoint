@@ -1,13 +1,17 @@
+import 'package:docpoint/core/widgets/app_snackbar.dart';
 import 'package:docpoint/features/home/domain/usecase/update_status_usecase.dart';
+import 'package:docpoint/features/payment/stripe_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
+import 'package:flutter_stripe/flutter_stripe.dart' as stripe;
 
-class DetailedAppointmentCard extends StatelessWidget {
+class DetailedAppointmentCard extends StatefulWidget {
   final AppointmentEntity appointment;
   final String userType;
   final VoidCallback onStatusUpdated;
@@ -18,6 +22,56 @@ class DetailedAppointmentCard extends StatelessWidget {
     required this.userType,
     required this.onStatusUpdated,
   });
+
+  @override
+  State<DetailedAppointmentCard> createState() =>
+      _DetailedAppointmentCardState();
+}
+
+class _DetailedAppointmentCardState extends State<DetailedAppointmentCard> {
+  bool loading = false;
+  Future<bool> _makePayment({required int price}) async {
+    try {
+      setState(() => loading = true);
+
+      // Create a PaymentIntent
+      final paymentIntent = await StripeService.createPaymentIntent(
+        amount: (price * 100).toString(),
+        currency: 'usd',
+      );
+
+      // Initialize the Payment Sheet
+      await stripe.Stripe.instance.initPaymentSheet(
+        paymentSheetParameters: stripe.SetupPaymentSheetParameters(
+          paymentIntentClientSecret: paymentIntent['client_secret'],
+          merchantDisplayName: 'Walied Store',
+        ),
+      );
+
+      // Present the Payment Sheet
+      await stripe.Stripe.instance.presentPaymentSheet();
+
+      if (mounted) {
+        showAppSnackBar(
+          message: "Payment successful!",
+          context: context,
+          backgroundColor: Colors.green,
+        );
+      }
+      return true; // Payment succeeded
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("Error: ${e.toString()}")),
+        );
+      }
+      return false; // Payment failed
+    } finally {
+      if (mounted) {
+        setState(() => loading = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +98,7 @@ class DetailedAppointmentCard extends StatelessWidget {
                 style: AppStyle.body1.copyWith(fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 4),
-              Text(appointment.notes!, style: AppStyle.body2),
+              Text(widget.appointment.notes!, style: AppStyle.body2),
             ],
             if (_showActions) ...[
               const SizedBox(height: 16),
@@ -60,9 +114,9 @@ class DetailedAppointmentCard extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        _buildStatusChip(appointment.status),
+        _buildStatusChip(widget.appointment.status),
         Text(
-          DateFormat('MMM dd, yyyy').format(appointment.appointmentTime),
+          DateFormat('MMM dd, yyyy').format(widget.appointment.appointmentTime),
           style: AppStyle.body2.copyWith(color: AppColors.textSecondary),
         ),
       ],
@@ -73,10 +127,10 @@ class DetailedAppointmentCard extends StatelessWidget {
     return Row(
       children: [
         Container(
-          width: 4,
-          height: 60,
+          width: 4.w,
+          height: _confirmedAndWaitToPat ? 180.h : 60.h,
           decoration: BoxDecoration(
-            color: _getStatusColor(appointment.status),
+            color: _getStatusColor(widget.appointment.status),
             borderRadius: BorderRadius.circular(4),
           ),
         ),
@@ -85,12 +139,12 @@ class DetailedAppointmentCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(appointment.category, style: AppStyle.heading3),
+              Text(widget.appointment.category, style: AppStyle.heading3),
               const SizedBox(height: 4),
               Text(
-                userType == 'Doctor'
-                    ? 'Patient: ${appointment.patientName}'
-                    : 'Dr. ${appointment.doctorName}',
+                widget.userType == 'Doctor'
+                    ? 'Patient: ${widget.appointment.patientName}'
+                    : 'Dr. ${widget.appointment.doctorName}',
                 style: AppStyle.body1.copyWith(color: AppColors.textSecondary),
               ),
               const SizedBox(height: 8),
@@ -100,22 +154,82 @@ class DetailedAppointmentCard extends StatelessWidget {
                       size: 16, color: AppColors.primary),
                   const SizedBox(width: 4),
                   Text(
-                    DateFormat('hh:mm a').format(appointment.appointmentTime),
+                    DateFormat('hh:mm a')
+                        .format(widget.appointment.appointmentTime),
                     style: AppStyle.body2,
                   ),
-                  if (appointment.duration != null) ...[
+                  if (widget.appointment.duration != null) ...[
                     const SizedBox(width: 8),
                     Text(
-                      '• ${appointment.duration!.inMinutes} mins',
+                      '• ${widget.appointment.duration!.inMinutes} mins',
                       style: AppStyle.body2,
                     ),
                   ],
                 ],
               ),
+              if (_confirmedAndWaitToPat) ...[
+                const SizedBox(height: 16),
+                _buildPaymentSection(),
+              ],
             ],
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildPaymentSection() {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: AppColors.primaryLight.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: AppColors.primary),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Appointment Fee',
+            style: AppStyle.body1.copyWith(fontWeight: FontWeight.w600),
+          ),
+          const SizedBox(height: 8),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '\$${widget.appointment.price!.toStringAsFixed(2)}',
+                style: AppStyle.heading2.copyWith(
+                  color: AppColors.primaryDark,
+                ),
+              ),
+              ElevatedButton.icon(
+                onPressed: () async {
+                  final success = await _makePayment(
+                    price: widget.appointment.price ?? 0,
+                  );
+
+                  if (success) {
+                    // Payment was successful - update UI or perform other actions
+                    print('Payment succeeded!');
+                  } else {
+                    // Payment failed - handle accordingly
+                    print('Payment failed');
+                  }
+                },
+                style: AppStyle.primaryButton.copyWith(
+                  backgroundColor: WidgetStateProperty.all(AppColors.primary),
+                ),
+                icon: const Icon(Icons.payment, color: Colors.white),
+                label: const Text(
+                  'Pay Now',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
@@ -170,16 +284,20 @@ class DetailedAppointmentCard extends StatelessWidget {
   Future<void> _updateStatus(BuildContext context, String status) async {
     await context.read<HomePageCubit>().updateStatusAppointment(
           UpdateStatusParams(
-            appointmentId: appointment.id,
+            appointmentId: widget.appointment.id,
             status: status,
           ),
         );
-    onStatusUpdated();
+    widget.onStatusUpdated();
   }
 
   bool get _hasNotes =>
-      appointment.notes != null && appointment.notes!.isNotEmpty;
+      widget.appointment.notes != null && widget.appointment.notes!.isNotEmpty;
+
+  bool get _confirmedAndWaitToPat =>
+      widget.appointment.price != null && widget.appointment.price != 0;
 
   bool get _showActions =>
-      userType == 'Doctor' && appointment.status.toLowerCase() == 'pending';
+      widget.userType == 'Doctor' &&
+      widget.appointment.status.toLowerCase() == 'pending';
 }

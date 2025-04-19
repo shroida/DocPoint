@@ -19,7 +19,7 @@ class PaymentScreenState extends State<PaymentScreen> {
 
       // Create a PaymentIntent
       final paymentIntent = await StripeService.createPaymentIntent(
-        amount: '1000', // e.g. $10.00
+        amount: '1000',
         currency: 'usd',
       );
 
