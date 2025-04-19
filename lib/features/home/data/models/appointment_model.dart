@@ -10,6 +10,7 @@ class AppointmentModel extends AppointmentEntity {
       super.status,
       super.notes,
       super.price,
+      super.paid,
       super.createdAt,
       required super.category,
       required super.appointmentTime});
@@ -28,6 +29,7 @@ class AppointmentModel extends AppointmentEntity {
         status: json['status']?.toString() ?? 'pending',
         notes: json['notes']?.toString(),
         price: json['price'],
+        paid: json['paid'],
         createdAt: json['created_at'] != null
             ? DateTime.tryParse(json['created_at'].toString())
             : null,

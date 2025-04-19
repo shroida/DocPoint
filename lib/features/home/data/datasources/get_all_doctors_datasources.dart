@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 abstract interface class GetAllDoctorsDatasources {
   Future<List<DoctorModel>> getAllDoctors();
+  Future<void> paidSucceeded({required String appointmentId});
   Future<void> updateStatusAppointment(
       {required String appointmentId, required String status});
   Future<List<AppointmentModel>> getAllAppointments(
@@ -119,6 +120,24 @@ class GetAllDoctorsDatasourcesImpl implements GetAllDoctorsDatasources {
           .from('appointments')
           .update({
             'status': status,
+          })
+          .eq(
+            'id',
+            appointmentId,
+          )
+          .single();
+    } catch (e) {
+      throw ServerExceptions(e.toString());
+    }
+  }
+
+  @override
+  Future<void> paidSucceeded({required String appointmentId}) async {
+    try {
+      await _supabaseClient
+          .from('appointments')
+          .update({
+            'paid': true,
           })
           .eq(
             'id',
