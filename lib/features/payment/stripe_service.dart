@@ -5,7 +5,7 @@ import 'dart:convert';
 
 class StripeService {
   static const String _publishableKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
-  static const String _secretKey = 'sk_test_BQokikJOvBiI2HlWgH4olfQ2';
+  static const String _secretKey = String.fromEnvironment('STRIPE_SECRET_KEY');
 
   // Initialize Stripe
   static Future<void> init() async {
