@@ -1,12 +1,9 @@
-import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
-import 'package:docpoint/features/home/domain/usecase/update_status_usecase.dart';
-import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointment_card.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointment_list_view.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/filter_row.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
-import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -47,7 +44,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
           ? AppBar(
               title: const Text(
                 'My Appointments',
-                style: TextStyle(color: Colors.white),
+                style:
+                    TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
               ),
               centerTitle: true,
               elevation: 0,
@@ -117,60 +115,17 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
                       },
                     ),
                   SizedBox(height: 16.h),
-                  Expanded(child: _buildAppointmentList(filteredAppointments)),
+                  Expanded(
+                      child: AppointmentListView(
+                    appointments: filteredAppointments,
+                    onRefresh: _loadAppointments,
+                  )),
                 ],
               );
             }
             return const Center(child: Text('No appointments data'));
           },
         ),
-      ),
-    );
-  }
-
-  Widget _buildAppointmentList(List<AppointmentEntity> appointments) {
-    if (appointments.isEmpty) {
-      return Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(Icons.calendar_today,
-                size: 60, color: AppColors.primary.withOpacity(0.3)),
-            const SizedBox(height: 16),
-            Text(
-              'No Appointments Yet',
-              style: AppStyle.heading3.copyWith(color: AppColors.textSecondary),
-            ),
-            const SizedBox(height: 8),
-            const Text(
-              'Book your first appointment to get started',
-              style: AppStyle.body2,
-            ),
-          ],
-        ),
-      );
-    }
-
-    return RefreshIndicator(
-      onRefresh: _loadAppointments,
-      child: ListView.builder(
-        padding: const EdgeInsets.all(16),
-        itemCount: appointments.length,
-        itemBuilder: (context, index) {
-          return DetailedAppointmentCard(
-            appointment: appointments[index],
-            onStatusUpdated: () async {
-              await context.read<HomePageCubit>().updateStatusAppointment(
-                    UpdateStatusParams(
-                      appointmentId: appointments[index].id,
-                      status: 'confirmed',
-                    ),
-                  );
-              _loadAppointments(); // refresh list after status change
-            },
-            userType: context.read<CurrentUserCubit>().userType,
-          );
-        },
       ),
     );
   }

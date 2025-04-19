@@ -60,7 +60,6 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
     try {
       emit(const CurrentUserLoading());
       await _logoutUsecase.call();
-      currentUser = null;
 
       emit(const CurrentUserUnauthenticated());
     } catch (e) {
