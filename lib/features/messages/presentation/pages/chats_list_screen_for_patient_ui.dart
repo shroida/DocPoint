@@ -1,3 +1,4 @@
+import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/routing/app_router.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
@@ -71,7 +72,10 @@ class _ChatsListScreenForPatientUIState
                     relatedMessages.isNotEmpty ? relatedMessages.first : null;
 
                 return ListTile(
-                  onTap: () {
+                  onTap: () async {
+                    final currentUser =
+                        context.read<CurrentUserCubit>().currentUser;
+
                     context.push(Routes.chatPage,
                         extra: ChatScreenArgs(
                           relatedMessages: relatedMessages,
@@ -81,6 +85,9 @@ class _ChatsListScreenForPatientUIState
                               '${widget.doctorsList![index].firstName} ${widget.doctorsList![index].lastName}',
                           friendId: widget.doctorsList![index].id,
                         ));
+                    await context
+                        .read<MessageCubit>()
+                        .makeMessagesRead(currentUser!.id);
                   },
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
