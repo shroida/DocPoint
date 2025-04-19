@@ -87,6 +87,7 @@ class _ChatListScreenForDoctorUIState extends State<ChatListScreenForDoctorUI> {
 
                 return ListTile(
                   onTap: () {
+                    
                     context.push(Routes.chatPage,
                         extra: ChatScreenArgs(
                           relatedMessages: relatedMessages,
@@ -95,6 +96,7 @@ class _ChatListScreenForDoctorUIState extends State<ChatListScreenForDoctorUI> {
                           friendName: uniqueAppointments[index].patientName,
                           friendId: uniqueAppointments[index].id,
                         ));
+
                   },
                   contentPadding: EdgeInsets.zero,
                   leading: CircleAvatar(
