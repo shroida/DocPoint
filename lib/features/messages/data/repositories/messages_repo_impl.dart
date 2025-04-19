@@ -34,4 +34,11 @@ class MessagesRepoImpl implements MessagesRepo {
         isRead: isRead);
     return const Right(null);
   }
+
+  @override
+  Future<Either<Failure, void>> makeMessagesRead(
+      {required String userId}) async {
+    await _messagesDatasource.makeMessagesRead(userId: userId);
+    return const Right(null);
+  }
 }

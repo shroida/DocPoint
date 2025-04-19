@@ -9,6 +9,6 @@ class MakeMessagesRead implements UseCase<void, String> {
   MakeMessagesRead(this._messagesRepo);
   @override
   Future<Either<Failure, void>> call(String userId) async {
-    return await _messagesRepo.makeMessagesRead();
+    return await _messagesRepo.makeMessagesRead(userId: userId);
   }
 }
