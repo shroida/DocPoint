@@ -10,6 +10,9 @@ abstract interface class MessagesDatasource {
       required DateTime createdAt,
       required bool isRead,
       String? parentId});
+  Future<void> makeMessagesRead({
+    required String userId,
+  });
   Future<List<MessageModel>> getMessages();
 }
 
@@ -66,5 +69,12 @@ class MessagesDatasourceImpl implements MessagesDatasource {
     } catch (e) {
       throw ServerExceptions(e.toString());
     }
+  }
+
+  @override
+  Future<void> makeMessagesRead({required String userId}) async {
+    await _supabaseClient
+        .from('messages')
+        .update({'is_read': true}).eq('id', appointmentId);
   }
 }
