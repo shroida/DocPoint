@@ -89,4 +89,11 @@ class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
           ServerFailure('Failed to schedule appointment: ${e.toString()}'));
     }
   }
+
+  @override
+  Future<Either<Failure, void>> paidSuccessed(
+      {required String appointmentId}) async {
+    await _getAllDoctorsDatasources.paidSucceeded(appointmentId: appointmentId);
+    return const Right(null);
+  }
 }

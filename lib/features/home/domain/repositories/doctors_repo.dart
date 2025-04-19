@@ -9,6 +9,9 @@ abstract interface class GetAllDoctorsRepo {
     required String appointmentId,
     required String status,
   });
+  Future<Either<Failure, void>> paidSuccessed({
+    required String appointmentId,
+  });
   Future<Either<Failure, List<AppointmentEntity>>> getAllAppointments({
     required String id,
     required String userType, // Add this
