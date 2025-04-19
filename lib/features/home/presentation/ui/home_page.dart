@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     context.pushReplacement(Routes.homePage);
                   },
-                  child: Text('reload data'))));
+                  child: const Text('reload data'))));
     }
 
     return Scaffold(
