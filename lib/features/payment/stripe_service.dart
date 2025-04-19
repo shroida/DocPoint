@@ -5,6 +5,7 @@ import 'dart:convert';
 
 class StripeService {
   static const String _publishableKey = 'pk_test_TYooMQauvdEDq54NiTphI7jx';
+  // flutter_dotenv package for hiding secret key
   static const String _secretKey = 'sk_test_BQokikJOvBiI2HlWgH4olfQ2';
 
   // Initialize Stripe
