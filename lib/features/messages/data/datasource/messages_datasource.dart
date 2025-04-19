@@ -73,8 +73,7 @@ class MessagesDatasourceImpl implements MessagesDatasource {
 
   @override
   Future<void> makeMessagesRead({required String userId}) async {
-    await _supabaseClient
-        .from('messages')
-        .update({'is_read': true}).eq('id', appointmentId);
+    await _supabaseClient.from('messages').update({'is_read': true}).or(
+        'sender_id.eq.$userId,receiver_id.eq.$userId');
   }
 }
