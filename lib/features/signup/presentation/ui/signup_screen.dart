@@ -86,8 +86,8 @@ class SignupScreenState extends State<SignupScreen> {
                               if (cubitSignup.imageFile == null) {
                                 showAppSnackBar(
                                   context: context,
-                                  message: 'Please choose an image.',
-                                  backgroundColor: Colors.red,
+                                  message: 'Please pick a profile image.',
+                                  backgroundColor: Colors.orange,
                                 );
                               }
                               if (cubitSignup

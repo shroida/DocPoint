@@ -8,24 +8,24 @@ import 'package:docpoint/core/usecase/usecase.dart';
 class CurrentUserCubit extends Cubit<CurrentUserState> {
   final CurrentUserUsecase _currentUserUsecase;
   final LogoutUsecase _logoutUsecase;
+
   CurrentUserCubit(this._currentUserUsecase, this._logoutUsecase)
       : super(const CurrentUserInitial());
+
+  User? currentUser;
   String userType = '';
+
   void setUserType(String type) {
     userType = type;
-    emit(CurrentUserTypeUpdated(userType)); // Make sure you have this state
+    emit(CurrentUserTypeUpdated(userType));
   }
 
   Future<void> updateUser(User user) async {
     emit(const CurrentUserLoading());
     try {
       currentUser = user;
-
-      if (user.userType?.toLowerCase() == 'doctor') {
-        userType = 'Doctor';
-      } else {
-        userType = 'Patient';
-      }
+      userType =
+          user.userType?.toLowerCase() == 'doctor' ? 'Doctor' : 'Patient';
 
       emit(CurrentUserAuthenticated(user));
       emit(CurrentUserTypeUpdated(userType));
@@ -38,11 +38,11 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
     await _currentUserUsecase.call(NoParams());
   }
 
-  User? currentUser; // Change from late to nullable
   Future<void> checkAuthStatus() async {
     emit(const CurrentUserLoading());
-    final res = await _currentUserUsecase.call(NoParams());
-    res.fold(
+    final result = await _currentUserUsecase.call(NoParams());
+
+    result.fold(
       (failure) {
         userType = '';
         emit(const CurrentUserUnauthenticated());
@@ -57,10 +57,9 @@ class CurrentUserCubit extends Cubit<CurrentUserState> {
   }
 
   Future<void> logout() async {
+    emit(const CurrentUserLoading());
     try {
-      emit(const CurrentUserLoading());
       await _logoutUsecase.call();
-
       emit(const CurrentUserUnauthenticated());
     } catch (e) {
       emit(CurrentUserError(e.toString()));

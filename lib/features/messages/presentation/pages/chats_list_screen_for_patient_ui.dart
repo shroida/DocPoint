@@ -89,54 +89,47 @@ class _ChatsListScreenForPatientUIState
                         .read<MessageCubit>()
                         .makeMessagesRead(currentUser!.id);
                   },
-                  contentPadding: EdgeInsets.zero,
+                  contentPadding:
+                      EdgeInsets.symmetric(vertical: 12.h, horizontal: 16.w),
                   leading: CircleAvatar(
-                    radius: 26.r,
-                    child: const Icon(Icons.person),
+                    radius: 30.r,
+                    backgroundImage: widget.doctorsList![index].imageUrl != null
+                        ? NetworkImage(widget.doctorsList![index].imageUrl!)
+                        : null,
+                    child: widget.doctorsList![index].imageUrl == null
+                        ? const Icon(Icons.person, color: AppColors.primary)
+                        : null,
                   ),
-                  title: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  title: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Expanded(
-                        child: Text(
-                          widget.doctorsList![index].firstName,
-                          style: AppStyle.heading3,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        '${widget.doctorsList![index].firstName} ${widget.doctorsList![index].lastName}',
+                        style: AppStyle.heading2
+                            .copyWith(color: AppColors.textPrimary),
+                        overflow: TextOverflow.ellipsis,
                       ),
+                      const SizedBox(
+                          height: 4), // Small space between title and subtitle
+                      Text(
+                        lastMessage?.messageText ?? "No messages yet",
+                        style: AppStyle.body2
+                            .copyWith(color: AppColors.textSecondary),
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
+                  trailing: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
                       Text(
                         lastMessage != null
                             ? DateFormat('MMM dd\nhh:mm a')
                                 .format(lastMessage.createdAt)
                             : '',
-                        style: AppStyle.caption,
+                        style: AppStyle.caption
+                            .copyWith(color: AppColors.textSecondary),
                       ),
-                    ],
-                  ),
-                  subtitle: Row(
-                    children: [
-                      Expanded(
-                        child: Text(
-                          lastMessage?.messageText ?? "No messages yet",
-                          style: AppStyle.body2,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      if (relatedMessages.isNotEmpty)
-                        Container(
-                          margin: EdgeInsets.only(left: 6.w),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 8.w, vertical: 4.h),
-                          decoration: BoxDecoration(
-                            color: AppColors.primary,
-                            borderRadius: BorderRadius.circular(12.r),
-                          ),
-                          child: Text(
-                            relatedMessages.length.toString(),
-                            style:
-                                AppStyle.caption.copyWith(color: Colors.white),
-                          ),
-                        ),
                     ],
                   ),
                 );

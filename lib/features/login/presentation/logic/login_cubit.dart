@@ -42,7 +42,7 @@ class LoginCubit extends Cubit<LoginState> {
       );
     } catch (e) {
       if (!isClosed) {
-        emit(LoginFailure(e.toString()));
+        emit(LoginFailure('Unexpected error occurred. Please try again.'));
       }
     }
   }

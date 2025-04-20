@@ -68,7 +68,8 @@ class LoginScreenState extends State<LoginScreen> {
                         const LoginForm(),
                         SizedBox(height: 10.h),
                         if (state is LoginLoading)
-                          const CircularProgressIndicator()
+                          const Center(
+                              child: CircularProgressIndicator(strokeWidth: 2))
                         else
                           AppTextButton(
                             buttonText: 'Login',
