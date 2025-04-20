@@ -102,6 +102,7 @@ class AppRouter {
         return BlocProvider(
           create: (_) => getIt<HomePageCubit>(),
           child: AppointmentsScreen(
+            showAppbar: extra.showAppbar,
             userId: extra.userId,
             userType: extra.userType,
           ),
@@ -132,8 +133,10 @@ class AppRouter {
 class AppointmentPageArgs {
   final String userId;
   final String userType;
+  final bool showAppbar;
 
-  AppointmentPageArgs({
+  AppointmentPageArgs(
+    this.showAppbar, {
     required this.userId,
     required this.userType,
   });

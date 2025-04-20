@@ -1,21 +1,24 @@
-import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointment_list_view.dart';
-import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/filter_row.dart';
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/core/styles/app_styles.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_cubit.dart';
 import 'package:docpoint/features/home/presentation/logic/home_page_state.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/appointment%20list/appointment_list_view.dart';
+import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/filter_row.dart';
 
 class AppointmentsScreen extends StatefulWidget {
   final String userId;
   final String userType;
-
+  final bool showAppbar;
   const AppointmentsScreen({
     super.key,
     required this.userId,
     required this.userType,
+    required this.showAppbar,
   });
 
   @override
@@ -40,7 +43,8 @@ class _AppointmentsScreenState extends State<AppointmentsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.userType == "Patient"
+      appBar: widget.userType == "Patient" ||
+              widget.userType == "Doctor" && (widget.showAppbar)
           ? AppBar(
               title: const Text(
                 'My Appointments',

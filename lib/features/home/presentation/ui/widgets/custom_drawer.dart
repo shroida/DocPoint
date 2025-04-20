@@ -89,6 +89,7 @@ class CustomDrawer extends StatelessWidget {
                               context.push(
                                 Routes.appointmentPage,
                                 extra: AppointmentPageArgs(
+                                  true,
                                   userId: context
                                       .read<CurrentUserCubit>()
                                       .currentUser!

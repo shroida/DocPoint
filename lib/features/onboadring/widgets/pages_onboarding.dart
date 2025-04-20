@@ -4,23 +4,23 @@ import 'package:docpoint/features/onboadring/onboarding_screen.dart';
 
 final List<OnboardingPage> pages = [
   OnboardingPage(
-    title: "Find Trusted Doctors",
+    title: "Connect with Trusted Doctors",
     description:
-        "Connect with verified healthcare professionals near you with just a few taps.",
+        "Easily find and connect with verified healthcare professionals tailored to your needs.",
     image: "assets/doctor-search.jpg",
     color: const Color(0xFF2A7DBC),
   ),
   OnboardingPage(
-    title: "Instant Appointments",
+    title: "Schedule Appointments Instantly",
     description:
-        "Book same-day or future appointments 24/7 without the phone calls.",
+        "Book same-day or future appointments anytime without the hassle of phone calls.",
     image: "assets/calendar.jpg",
     color: const Color(0xFF4CAF50),
   ),
   OnboardingPage(
-    title: "Health at Your Fingertips",
+    title: "Your Health Records Accessible Anytime",
     description:
-        "Access your medical records, prescriptions, and test results all in one place.",
+        "Securely access your medical records, prescriptions, and test results from your device.",
     image: "assets/health_records.jpg",
     color: const Color(0xFF9C27B0),
   ),

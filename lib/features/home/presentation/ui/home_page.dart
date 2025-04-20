@@ -103,6 +103,7 @@ class _HomePageState extends State<HomePage> {
                   .push(
                 Routes.appointmentPage,
                 extra: AppointmentPageArgs(
+                  true,
                   userId: context.read<CurrentUserCubit>().currentUser!.id,
                   userType: context.read<CurrentUserCubit>().userType,
                 ),
@@ -153,6 +154,7 @@ class _HomePageState extends State<HomePage> {
                     ),
                   )
                 : AppointmentsScreen(
+                    showAppbar: false,
                     userId: currentUserCubit.currentUser!.id,
                     userType: "Doctor",
                   );
