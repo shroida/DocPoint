@@ -8,11 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await StripeService.init(); // Initialize Stripe SDK
-
+  await StripeService.init();
   await setUpGetIt();
 
-  // Initialize auth cubit before creating router
   final authCubit = getIt<CurrentUserCubit>();
   await authCubit.checkAuthStatus();
 

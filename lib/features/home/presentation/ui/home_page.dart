@@ -9,7 +9,6 @@ import 'package:docpoint/features/home/presentation/ui/pages/appointments_screen
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_app_bar.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/custom_drawer.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_list_screen.dart';
-import 'package:docpoint/features/payment/payment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -115,8 +114,8 @@ class _HomePageState extends State<HomePage> {
               });
               break;
             case 3:
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => PaymentScreen()));
+              context.push(Routes.profilePage, extra: currentUser);
+
               break;
           }
         },

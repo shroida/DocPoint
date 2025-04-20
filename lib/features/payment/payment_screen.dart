@@ -40,9 +40,12 @@ class PaymentScreenState extends State<PaymentScreen> {
             backgroundColor: Colors.green);
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text("Error: ${e.toString()}")),
-      );
+      if (mounted) {
+        showAppSnackBar(
+            context: context,
+            message: "Error ${e.toString()}",
+            backgroundColor: Colors.red);
+      }
     } finally {
       setState(() => _loading = false);
     }
