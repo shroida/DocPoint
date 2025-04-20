@@ -53,7 +53,7 @@ class _HomePageState extends State<HomePage> {
                   onPressed: () {
                     context.pushReplacement(Routes.homePage);
                   },
-                  child: Text('reload data'))));
+                  child: const Text('reload data'))));
     }
 
     return Scaffold(
@@ -115,6 +115,7 @@ class _HomePageState extends State<HomePage> {
               break;
             case 3:
               context.push(Routes.profilePage, extra: currentUser);
+
               break;
           }
         },
