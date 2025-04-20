@@ -1,6 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 
-import '../../../../../core/common/domain/entites/user.dart';
+import '../../../../../core/common/domain/entities/user.dart';
 
 class SignupState {}
 

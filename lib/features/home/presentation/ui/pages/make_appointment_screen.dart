@@ -1,4 +1,4 @@
-import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/core/common/domain/entities/user.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/routing/routes.dart';
 import 'package:docpoint/features/home/domain/usecase/make_appointment.dart';

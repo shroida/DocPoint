@@ -6,7 +6,7 @@ import 'package:docpoint/features/messages/presentation/widget/chats_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
-import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/core/common/domain/entities/user.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/routes.dart';

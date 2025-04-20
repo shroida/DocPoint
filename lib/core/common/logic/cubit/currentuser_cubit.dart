@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/core/common/domain/entities/user.dart';
 import 'package:docpoint/core/common/domain/usecase/current_user_usecase.dart';
 import 'package:docpoint/core/common/domain/usecase/logout_usecase.dart';
 import 'package:docpoint/core/common/logic/cubit/current_user_state.dart';

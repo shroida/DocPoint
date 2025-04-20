@@ -1,4 +1,4 @@
-import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/core/common/domain/entities/user.dart';
 
 class UserSignUp extends User {
   UserSignUp(

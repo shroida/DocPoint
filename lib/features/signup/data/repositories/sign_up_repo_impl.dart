@@ -1,4 +1,4 @@
-import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/core/common/domain/entities/user.dart';
 import 'package:docpoint/core/error/failure.dart';
 import 'package:docpoint/core/error/server_exeptions.dart';
 import 'package:docpoint/features/signup/data/datasources/sign_up_remote_datasource.dart';

@@ -1,4 +1,4 @@
-import 'package:docpoint/core/common/domain/entites/user.dart';
+import 'package:docpoint/core/common/domain/entities/user.dart';
 import 'package:docpoint/core/styles/app_colors.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_details.dart';
 import 'package:docpoint/features/home/presentation/ui/widgets/doctor%20list/doctor_image.dart';
