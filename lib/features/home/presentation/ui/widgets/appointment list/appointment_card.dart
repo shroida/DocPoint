@@ -31,11 +31,12 @@ class DetailedAppointmentCard extends StatefulWidget {
 class _DetailedAppointmentCardState extends State<DetailedAppointmentCard> {
   bool loading = false;
   Future<bool> _makePayment({required int price}) async {
-    final context = this.context;
+    // Save all needed references first
+    final cubit = context.read<HomePageCubit>();
+    final appointmentId = widget.appointment.id;
     final scaffoldMessenger = ScaffoldMessenger.of(context);
 
     try {
-      if (!mounted) return false;
       setState(() => loading = true);
 
       final paymentIntent = await StripeService.createPaymentIntent(
@@ -52,18 +53,13 @@ class _DetailedAppointmentCardState extends State<DetailedAppointmentCard> {
 
       await stripe.Stripe.instance.presentPaymentSheet();
 
+      cubit.paidSuccessed(appointmentId: appointmentId);
       scaffoldMessenger.showSnackBar(
         const SnackBar(
           content: Text("Payment successful!"),
           backgroundColor: Colors.green,
         ),
       );
-
-      if (mounted) {
-        context.read<HomePageCubit>().paidSuccessed(
-              appointmentId: widget.appointment.id,
-            );
-      }
 
       return true;
     } catch (e) {
