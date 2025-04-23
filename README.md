@@ -12,3 +12,10 @@ Screens
 Design Specifications
 
 Status Indicators
+
+graph TD
+    A[Onboarding Screen] --> B{Logged In?}
+    B -->|No| C[Login/Signup]
+    B -->|Yes| D{User Type?}
+    D -->|Patient| E[Patient Home]
+    D -->|Doctor| F[Doctor Home]
