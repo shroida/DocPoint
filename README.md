@@ -15,84 +15,70 @@ DocPoint is a user-friendly medical appointment application designed to streamli
 ## 🚀 User Flow
 
 ### 🔐 Authentication Flow
-```mermaid
-graph TD
-    A[📲 Onboarding Screen] --> B{🔒 Logged In?}
-    B -->|No| C[👤 Login/Signup]
-    B -->|Yes| D{👨⚕️ User Type?}
-    D -->|Patient| E[💙 Patient Home]
-    D -->|Doctor| F[💚 Doctor Home]
 
 ![user flow docpoint](https://github.com/user-attachments/assets/0775614d-a26e-4b55-8c3f-bf8076f66cf1)
 
 
-## Features
-### Patient Features
-- Browse available doctors with profiles
+## ✨ Features
+### 💙 Doctor Features
+📅 View and manage appointment requests
 
-- Book appointments with date/time selection
+✅ Accept/🕒 Pending/❌ Decline appointments
 
-- Track appointment status (Pending/Accepted/Cancelled)
+💰 Set consultation fees
 
-- Secure payment integration
+💬 Patient communication via chat
 
-- In-app messaging with doctors
+📝 Professional profile management
 
-- Personal profile management
+### 👨⚕️ Patient Features
+🔍 Browse available doctors with profiles
 
-### Doctor Features
-- View and manage appointment requests
+🗓️ Book appointments with date/time selection
 
-- Accept/decline/pending appointment status
+📊 Track appointment status
 
-- Set consultation fees
+💳 Secure payment integration
 
-- Patient communication via chat
+💬 In-app messaging with doctors
 
-- Professional profile management
+👤 Personal profile management
+📱 Screens
+💙 Patient Screens (Blue Theme)
+🏠 Home Screen
+👨⚕️ Doctor listings with:
 
-## Screens
-### Patient Screens (Blue Theme)
-#### Home Screen
+🖼️ Profile images
 
-Doctor listings with:
+📛 Names and specialties
 
-Profile images
+🗓️ "Book Appointment" buttons
 
-Names and specialties
+📅 Appointment Booking
+🗓️ Date/time picker
 
-"Book Appointment" buttons
+📝 Reason for visit field
 
-Appointment Booking
+✔️ Confirmation screen
 
-Date/time picker
-
-Reason for visit field
-
-Confirmation screen
-
-Appointment Status
-
-Visual indicators for:
-
+📊 Appointment Status
 ✅ Accepted → Proceed to payment
 
-⏳ Pending → Waiting for confirmation
+🕒 Pending → Waiting for confirmation
 
 ❌ Cancelled → Rebooking option
 
-Payment Screen
+💳 Payment Screen
+💳 Secure card entry
 
-Secure card entry
+🎉 Payment confirmation
 
-Payment confirmation
+👤 Profile Screen
+📝 Personal information
 
-Profile Screen
+🏥 Medical history
 
-Personal information
+💬 Chat Screen
+✉️ Messaging interface
 
-Medical history
 
-Chat Screen
-
-Messaging interface
