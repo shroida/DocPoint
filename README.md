@@ -1,17 +1,27 @@
-# DocPoint - Medical Appointment App
-## Overview
-DocPoint is a user-friendly medical appointment application designed to streamline the booking process for patients while providing doctors with efficient appointment management tools. This document outlines the user flow and key features of the application.
+# 🏥 DocPoint - Medical Appointment App
 
-## Table of Contents
-User Flow
+## 🌟 Overview
+DocPoint is a user-friendly medical appointment application designed to streamline the booking process for patients while providing doctors with efficient appointment management tools.
 
-Features
+## 📋 Table of Contents
+1. [🚀 User Flow](#-user-flow)
+2. [✨ Features](#-features)
+3. [📱 Screens](#-screens)
+4. [🎨 Design Specifications](#-design-specifications)
+5. [🔔 Status Indicators](#-status-indicators)
 
-Screens
+---
 
-Design Specifications
+## 🚀 User Flow
 
-Status Indicators
+### 🔐 Authentication Flow
+```mermaid
+graph TD
+    A[📲 Onboarding Screen] --> B{🔒 Logged In?}
+    B -->|No| C[👤 Login/Signup]
+    B -->|Yes| D{👨⚕️ User Type?}
+    D -->|Patient| E[💙 Patient Home]
+    D -->|Doctor| F[💚 Doctor Home]
 
 ![user flow docpoint](https://github.com/user-attachments/assets/0775614d-a26e-4b55-8c3f-bf8076f66cf1)
 
