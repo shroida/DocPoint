@@ -13,9 +13,30 @@ Design Specifications
 
 Status Indicators
 
-graph TD
-    A[Onboarding Screen] --> B{Logged In?}
-    B -->|No| C[Login/Signup]
-    B -->|Yes| D{User Type?}
-    D -->|Patient| E[Patient Home]
-    D -->|Doctor| F[Doctor Home]
+![user flow docpoint](https://github.com/user-attachments/assets/0775614d-a26e-4b55-8c3f-bf8076f66cf1)
+
+
+## Features
+### Patient Features
+Browse available doctors with profiles
+
+Book appointments with date/time selection
+
+Track appointment status (Pending/Accepted/Cancelled)
+
+Secure payment integration
+
+In-app messaging with doctors
+
+Personal profile management
+
+### Doctor Features
+View and manage appointment requests
+
+Accept/decline/pending appointment status
+
+Set consultation fees
+
+Patient communication via chat
+
+Professional profile management
