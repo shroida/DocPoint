@@ -18,25 +18,71 @@ Status Indicators
 
 ## Features
 ### Patient Features
-Browse available doctors with profiles
+- Browse available doctors with profiles
 
-Book appointments with date/time selection
+- Book appointments with date/time selection
 
-Track appointment status (Pending/Accepted/Cancelled)
+- Track appointment status (Pending/Accepted/Cancelled)
 
-Secure payment integration
+- Secure payment integration
 
-In-app messaging with doctors
+- In-app messaging with doctors
 
-Personal profile management
+- Personal profile management
 
 ### Doctor Features
-View and manage appointment requests
+- View and manage appointment requests
 
-Accept/decline/pending appointment status
+- Accept/decline/pending appointment status
 
-Set consultation fees
+- Set consultation fees
 
-Patient communication via chat
+- Patient communication via chat
 
-Professional profile management
+- Professional profile management
+
+## Screens
+### Patient Screens (Blue Theme)
+#### Home Screen
+
+Doctor listings with:
+
+Profile images
+
+Names and specialties
+
+"Book Appointment" buttons
+
+Appointment Booking
+
+Date/time picker
+
+Reason for visit field
+
+Confirmation screen
+
+Appointment Status
+
+Visual indicators for:
+
+✅ Accepted → Proceed to payment
+
+⏳ Pending → Waiting for confirmation
+
+❌ Cancelled → Rebooking option
+
+Payment Screen
+
+Secure card entry
+
+Payment confirmation
+
+Profile Screen
+
+Personal information
+
+Medical history
+
+Chat Screen
+
+Messaging interface
