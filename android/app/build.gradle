@@ -29,6 +29,26 @@ android {
         versionCode = flutter.versionCode
         versionName = flutter.versionName
     }
+      defaultConfig {
+        applicationId = "com.example.docpoint"
+        minSdk = flutter.minSdkVersion
+        targetSdk = flutter.targetSdkVersion
+        versionCode = flutter.versionCode
+        versionName = flutter.versionName
+    }
+
+    flavorDimensions "default"
+    productFlavors {
+        development {
+            dimension "default"
+            applicationIdSuffix ".dev"
+            resValue "string", "app_name", "DocPoint Staging"
+        }
+        production {
+            dimension "default"
+            resValue "string", "app_name", "DocPoint"
+        }
+    }
 
     buildTypes {
         release {
