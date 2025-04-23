@@ -1,16 +1,14 @@
-# docpoint
+# DocPoint - Medical Appointment App
+## Overview
+DocPoint is a user-friendly medical appointment application designed to streamline the booking process for patients while providing doctors with efficient appointment management tools. This document outlines the user flow and key features of the application.
 
-A new Flutter project.
+## Table of Contents
+User Flow
 
-## Getting Started
+Features
 
-This project is a starting point for a Flutter application.
+Screens
 
-A few resources to get you started if this is your first Flutter project:
+Design Specifications
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Status Indicators
