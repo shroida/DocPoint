@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
           body: Center(
               child: ElevatedButton(
                   onPressed: () {
-                    context.pushReplacement(Routes.homePage);
+                    _loadUserData();
                   },
                   child: const Text('reload data'))));
     }
