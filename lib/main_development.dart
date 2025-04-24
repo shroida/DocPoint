@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:docpoint/core/di/dependency_injection.dart';
 import 'package:docpoint/core/routing/app_router.dart';
@@ -13,7 +14,10 @@ Future<void> main() async {
 
   final authCubit = getIt<CurrentUserCubit>();
   await authCubit.checkAuthStatus();
-
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    systemNavigationBarColor: Colors.blue, // navigation bar color
+    statusBarColor: Colors.pink, // status bar color
+  ));
   runApp(
     MultiBlocProvider(
       providers: [

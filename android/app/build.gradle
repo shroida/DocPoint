@@ -42,7 +42,7 @@ android {
         development {
             dimension "default"
             applicationIdSuffix ".dev"
-            resValue "string", "app_name", "DocPoint Staging"
+            resValue "string", "app_name", "DocPoint Development"
         }
         production {
             dimension "default"
