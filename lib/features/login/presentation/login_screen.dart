@@ -64,7 +64,7 @@ class LoginScreenState extends State<LoginScreen> {
                     return Column(
                       children: [
                         const LogoLogin(),
-                        SizedBox(height: 10.h),
+                        SizedBox(height: 60.h),
                         const LoginForm(),
                         SizedBox(height: 10.h),
                         if (state is LoginLoading)
