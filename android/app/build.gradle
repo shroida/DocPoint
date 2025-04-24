@@ -23,16 +23,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId = "com.example.docpoint"
-        // You can update the following values to match your application needs.
-        // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
-        targetSdk = flutter.targetSdkVersion
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
-    }
-      defaultConfig {
         applicationId = "com.example.docpoint"
         minSdk = flutter.minSdkVersion
         targetSdk = flutter.targetSdkVersion
@@ -40,18 +30,20 @@ android {
         versionName = flutter.versionName
     }
 
+
+
     flavorDimensions "default"
-    productFlavors {
-        development {
-            dimension "default"
-            applicationIdSuffix ".dev"
-            resValue "string", "app_name", "DocPoint Development"
-        }
-        production {
-            dimension "default"
-            resValue "string", "app_name", "DocPoint"
-        }
+   productFlavors {
+    development {
+        dimension "default"
+        applicationIdSuffix ".dev"
+        resValue "string", "app_name", "DocPoint Development"
     }
+    production {
+        dimension "default"
+        resValue "string", "app_name", "DocPoint"
+    }
+}
 
     buildTypes {
         release {
