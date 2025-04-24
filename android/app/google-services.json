@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "917141430482",
+    "project_id": "docpoint-6e322",
+    "storage_bucket": "docpoint-6e322.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:917141430482:android:8fd09e6cebfc237f864d0b",
+        "android_client_info": {
+          "package_name": "com.example.docpoint"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXBKoCWsWaKyZpWTvs9XqHV4qSa3tjKkk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
