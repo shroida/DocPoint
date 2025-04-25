@@ -7,7 +7,7 @@ abstract interface class LocalGetAllDoctorsDatasource {
 }
 
 class LocalGetAllDoctorsDatasourceImpl implements LocalGetAllDoctorsDatasource {
-  final Box<Map<String, dynamic>> box;
+  final Box box;
   LocalGetAllDoctorsDatasourceImpl(this.box);
   @override
   List<DoctorModel> getAllDoctors() {

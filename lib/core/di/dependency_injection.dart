@@ -54,7 +54,7 @@ Future<void> setUpGetIt() async {
   // Chat page related dependencies
   messagesDI();
   // Hive related dependencies
-  boxDI();
+  await boxDI();
 }
 
 Future<void> supabaseDI() async {
@@ -113,11 +113,7 @@ void homePageDI() {
 
   getIt.registerLazySingleton<ConnectionChecker>(
       () => ConnectionCheckerImpl(getIt<InternetConnection>()));
-  getIt.registerFactory<GetAllDoctorsDatasources>(
-    () => GetAllDoctorsDatasourcesImpl(
-      getIt(),
-    ),
-  );
+
   getIt.registerFactory<GetAllDoctorsRepo>(
     () => GetAllDoctorsRepoImpl(getIt(), getIt(), getIt()),
   );
@@ -169,8 +165,8 @@ void messagesDI() {
   );
 }
 
-void boxDI() async {
+Future<void> boxDI() async {
   await Hive.initFlutter();
-  final box = await Hive.openBox('blogBox');
+  final box = await Hive.openBox('DoctorsBox');
   getIt.registerLazySingleton<Box>(() => box);
 }
