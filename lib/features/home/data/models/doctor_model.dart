@@ -26,6 +26,20 @@ class DoctorModel extends DoctorEntity {
       category: json['category'] as String,
     );
   }
+  Map<String, dynamic> toJson() {
+    return <String, dynamic>{
+      'id': id,
+      'email': email,
+      'first_name': firstName,
+      'last_name': lastName,
+      'phone_number': phoneNumber,
+      'city': city,
+      'avatar_url': imageUrl,
+      'experience': experience,
+      'category': category,
+    };
+  }
+
   DoctorEntity toEntity() {
     return DoctorEntity(
       userType: "Doctor",
