@@ -32,6 +32,7 @@ import 'package:docpoint/features/signup/domain/repository/sign_up_repo.dart';
 import 'package:docpoint/features/signup/domain/usecase/user_sign_up_usecase.dart';
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final getIt = GetIt.instance;
@@ -49,6 +50,8 @@ Future<void> setUpGetIt() async {
   homePageDI();
   // Chat page related dependencies
   messagesDI();
+  // Hive related dependencies
+  boxDI();
 }
 
 Future<void> supabaseDI() async {
@@ -149,4 +152,10 @@ void messagesDI() {
   getIt.registerFactory<MessageCubit>(
     () => MessageCubit(getIt(), getIt(), getIt()),
   );
+}
+
+void boxDI() async {
+  await Hive.initFlutter();
+  final box = await Hive.openBox('blogBox');
+  getIt.registerLazySingleton<Box>(() => box);
 }
