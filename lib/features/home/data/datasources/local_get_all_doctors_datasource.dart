@@ -6,9 +6,9 @@ abstract interface class LocalGetAllDoctorsDatasource {
   void uploadLocalDoctors({required List<DoctorModel> doctors});
 }
 
-class LocalGetAllDoctorsDatasourceImpL implements LocalGetAllDoctorsDatasource {
+class LocalGetAllDoctorsDatasourceImpl implements LocalGetAllDoctorsDatasource {
   final Box box;
-  LocalGetAllDoctorsDatasourceImpL(this.box);
+  LocalGetAllDoctorsDatasourceImpl(this.box);
   @override
   List<DoctorModel> getAllDoctors() {
     List<DoctorModel> doctors = [];

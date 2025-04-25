@@ -1,6 +1,8 @@
 import 'package:docpoint/core/error/failure.dart';
 import 'package:docpoint/core/error/server_exeptions.dart';
+import 'package:docpoint/core/network/conntection_checker.dart';
 import 'package:docpoint/features/home/data/datasources/get_all_doctors_datasources.dart';
+import 'package:docpoint/features/home/data/datasources/local_get_all_doctors_datasource.dart';
 import 'package:docpoint/features/home/domain/entities/appointments_entity.dart';
 import 'package:docpoint/features/home/domain/entities/doctor_entity.dart';
 import 'package:docpoint/features/home/domain/repositories/doctors_repo.dart';
@@ -8,13 +10,19 @@ import 'package:fpdart/fpdart.dart';
 
 class GetAllDoctorsRepoImpl implements GetAllDoctorsRepo {
   final GetAllDoctorsDatasources _getAllDoctorsDatasources;
-
-  GetAllDoctorsRepoImpl(this._getAllDoctorsDatasources);
-  @override
+  final ConnectionChecker _connectionChecker;
+  final LocalGetAllDoctorsDatasource _localGetAllDoctorsDatasource;
+  GetAllDoctorsRepoImpl(this._getAllDoctorsDatasources, this._connectionChecker,
+      this._localGetAllDoctorsDatasource);
   @override
   Future<Either<Failure, List<DoctorEntity>>> fetchDoctors() async {
     try {
+      if (!await (_connectionChecker.isConnected)) {
+        final doctors = _localGetAllDoctorsDatasource.getAllDoctors();
+        return Right(doctors.map((model) => model.toEntity()).toList());
+      }
       final doctors = await _getAllDoctorsDatasources.getAllDoctors();
+      _localGetAllDoctorsDatasource.uploadLocalDoctors(doctors: doctors);
       return Right(doctors.map((model) => model.toEntity()).toList());
     } on ServerExceptions catch (e) {
       return Left(ServerFailure(e.message));

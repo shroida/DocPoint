@@ -5,7 +5,9 @@ import 'package:docpoint/core/common/domain/usecase/current_user_usecase.dart';
 import 'package:docpoint/core/common/domain/usecase/logout_usecase.dart';
 import 'package:docpoint/core/common/logic/cubit/currentuser_cubit.dart';
 import 'package:docpoint/core/constants/constants.dart';
+import 'package:docpoint/core/network/conntection_checker.dart';
 import 'package:docpoint/features/home/data/datasources/get_all_doctors_datasources.dart';
+import 'package:docpoint/features/home/data/datasources/local_get_all_doctors_datasource.dart';
 import 'package:docpoint/features/home/data/repositories/get_all_doctors_repo_impl.dart';
 import 'package:docpoint/features/home/domain/repositories/doctors_repo.dart';
 import 'package:docpoint/features/home/domain/usecase/get_all_appointments.dart';
@@ -33,6 +35,7 @@ import 'package:docpoint/features/signup/domain/usecase/user_sign_up_usecase.dar
 import 'package:docpoint/features/signup/presentation/logic/cubit/signup_cubit.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/adapters.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 final getIt = GetIt.instance;
@@ -101,10 +104,22 @@ void homePageDI() {
       getIt(),
     ),
   );
-  getIt.registerFactory<GetAllDoctorsRepo>(
-    () => GetAllDoctorsRepoImpl(
+  getIt.registerFactory<LocalGetAllDoctorsDatasource>(
+    () => LocalGetAllDoctorsDatasourceImpl(
       getIt(),
     ),
+  );
+  getIt.registerLazySingleton<InternetConnection>(() => InternetConnection());
+
+  getIt.registerLazySingleton<ConnectionChecker>(
+      () => ConnectionCheckerImpl(getIt<InternetConnection>()));
+  getIt.registerFactory<GetAllDoctorsDatasources>(
+    () => GetAllDoctorsDatasourcesImpl(
+      getIt(),
+    ),
+  );
+  getIt.registerFactory<GetAllDoctorsRepo>(
+    () => GetAllDoctorsRepoImpl(getIt(), getIt(), getIt()),
   );
   getIt.registerFactory<GetAllDoctors>(
     () => GetAllDoctors(
